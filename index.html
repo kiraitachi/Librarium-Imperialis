@@ -5,952 +5,522 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap');
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --gold: #c9a84c;
-    --gold-dark: #8a6a1e;
-    --gold-light: #f0d080;
-    --red: #8b1a1a;
-    --red-light: #c0392b;
-    --bg-primary: #0d0d0d;
-    --bg-secondary: #151515;
-    --bg-card: #1a1a1a;
-    --bg-card2: #1f1f1f;
-    --border: rgba(201,168,76,0.2);
-    --border-strong: rgba(201,168,76,0.5);
-    --text-primary: #e8e0cc;
-    --text-secondary: #9a9080;
-    --text-muted: #5a5040;
-    --read: #2e7d32;
-    --read-bg: rgba(46,125,50,0.15);
-    --reading: #c07820;
-    --reading-bg: rgba(192,120,32,0.15);
-    --unread: #3a3530;
-    --unread-bg: rgba(30,28,24,0.5);
-    --radius: 6px;
-    --radius-lg: 10px;
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --gold:#c9a84c;--gold-dark:#8a6a1e;--gold-light:#f0d080;
+    --bg0:#0d0d0d;--bg1:#141414;--bg2:#1a1a1a;--bg3:#202020;
+    --bdr:rgba(201,168,76,.18);--bdr2:rgba(201,168,76,.44);
+    --tx0:#e8e0cc;--tx1:#9a9080;--tx2:#5a5040;
+    --rd:#2e7d32;--rdg:#c07820;--radius:5px
   }
+  @media(prefers-color-scheme:light){:root{
+    --bg0:#f4efe5;--bg1:#ece5d5;--bg2:#faf6ee;--bg3:#f0e8d8;
+    --bdr:rgba(100,70,10,.14);--bdr2:rgba(100,70,10,.36);
+    --tx0:#1a1208;--tx1:#6b5530;--tx2:#a08060;
+    --rd:#1b5e20;--rdg:#7a4a00;--gold:#7a5010;--gold-light:#a07020
+  }}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg0);color:var(--tx0);min-height:100vh}
 
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg-primary: #f5f0e8;
-      --bg-secondary: #ece6d8;
-      --bg-card: #faf6ee;
-      --bg-card2: #f0ead8;
-      --border: rgba(120,80,10,0.18);
-      --border-strong: rgba(120,80,10,0.4);
-      --text-primary: #1a1208;
-      --text-secondary: #6b5530;
-      --text-muted: #a08060;
-      --read: #1b5e20;
-      --read-bg: rgba(46,125,50,0.1);
-      --reading: #7a4a00;
-      --reading-bg: rgba(192,120,32,0.1);
-      --unread: #c0b8a8;
-      --unread-bg: rgba(180,160,120,0.15);
-      --gold: #8a5a10;
-      --gold-dark: #5a3a00;
-      --gold-light: #b07830;
-    }
+  /* header */
+  .hdr{background:var(--bg1);border-bottom:1px solid var(--bdr2);padding:13px 15px 11px;position:sticky;top:0;z-index:100}
+  .htop{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+  .atitle{font-family:Georgia,serif;font-size:15px;font-weight:700;color:var(--gold);letter-spacing:.05em}
+  .asub{font-size:10px;color:var(--tx2);letter-spacing:.1em;text-transform:uppercase}
+  .prow{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .plbl{font-size:10px;color:var(--tx1);letter-spacing:.08em;text-transform:uppercase}
+  .pnums{font-size:11px;color:var(--tx1)}.pnums strong{color:var(--gold)}
+  .pbg{height:5px;background:var(--bg2);border-radius:3px;overflow:hidden;border:1px solid var(--bdr)}
+  .pf{height:100%;background:linear-gradient(90deg,#2e7d32,#4caf50);border-radius:3px;transition:width .4s}
+  .mstats{display:flex;gap:12px;margin-top:6px}
+  .ms{font-size:10px;display:flex;align-items:center;gap:4px;color:var(--tx1)}
+  .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+  .dr{background:#4caf50}.dg{background:#f0a030}.du{background:var(--tx2)}
+
+  /* tabs */
+  .tabs{display:flex;overflow-x:auto;gap:3px;padding:9px 15px 0;background:var(--bg1);scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{font-size:11px;padding:5px 10px;border-radius:5px 5px 0 0;background:none;border:1px solid transparent;border-bottom:none;color:var(--tx2);cursor:pointer;white-space:nowrap;font-family:inherit}
+  .tab.on{background:var(--bg2);border-color:var(--bdr);color:var(--gold)}
+  .tab:hover:not(.on){color:var(--tx1)}
+
+  /* filters */
+  .flt{display:flex;gap:6px;flex-wrap:wrap;padding:9px 15px;background:var(--bg2);border-bottom:1px solid var(--bdr)}
+  .fsel,.fsrch{font-size:11px;background:var(--bg1);color:var(--tx0);border:1px solid var(--bdr);border-radius:var(--radius);padding:5px 8px;outline:none;font-family:inherit}
+  .fsel{flex:1;min-width:120px;cursor:pointer}.fsrch{flex:2;min-width:150px}
+  .fsrch::placeholder{color:var(--tx2)}.fsrch:focus,.fsel:focus{border-color:var(--gold)}
+  .frst{font-size:10px;background:none;color:var(--tx2);border:1px solid var(--bdr);border-radius:var(--radius);padding:5px 8px;cursor:pointer;font-family:inherit}
+  .frst:hover{color:var(--gold);border-color:var(--bdr2)}
+
+  /* content */
+  .ct{padding:13px 15px}
+  .esec{margin-bottom:22px}
+  .ehdr{display:flex;align-items:center;gap:8px;margin-bottom:11px;padding-bottom:7px;border-bottom:1px solid var(--bdr)}
+  .etitle{font-family:Georgia,serif;font-size:13px;font-weight:700;color:var(--gold);flex:1}
+  .epb{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;width:48px;flex-shrink:0}
+  .epf{height:100%;background:var(--gold)}
+  .epct{font-size:10px;color:var(--tx2);min-width:24px;text-align:right}
+  .ecnt{font-size:10px;color:var(--tx2);background:var(--bg3);border:1px solid var(--bdr);border-radius:10px;padding:1px 7px}
+
+  /* series */
+  .sgrp{margin-bottom:12px}
+  .stitle{font-size:10px;font-weight:700;color:var(--tx1);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;padding-left:7px;border-left:2px solid var(--bdr2)}
+
+  /* books */
+  .bks{display:flex;flex-direction:column;gap:2px}
+  .bk{display:flex;align-items:center;gap:8px;padding:6px 9px;background:var(--bg2);border-radius:var(--radius);border:1px solid var(--bdr);cursor:pointer;transition:border-color .12s,background .12s;min-height:38px}
+  .bk:hover{border-color:var(--bdr2);background:var(--bg3)}
+  /* sub-entry style (audio drama / part) */
+  .bk.sub{margin-left:22px;background:rgba(0,0,0,.2);border-style:dashed}
+  @media(prefers-color-scheme:light){.bk.sub{background:rgba(0,0,0,.04)}}
+  .bnum{font-size:9px;color:var(--tx2);min-width:20px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums}
+  .sbtn{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--bdr2);background:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:transform .12s;padding:0}
+  .sbtn:hover{transform:scale(1.2)}
+  .sr .sbtn{background:var(--rd);border-color:var(--rd)}
+  .sg .sbtn{background:var(--rdg);border-color:var(--rdg)}
+  .btitle{flex:1;font-size:12px;color:var(--tx0);line-height:1.3}
+  .sr .btitle{color:var(--tx1)}.sg .btitle{font-weight:600}
+  .badge{font-size:8px;letter-spacing:.05em;text-transform:uppercase;padding:2px 5px;border-radius:3px;flex-shrink:0;border:1px solid}
+  .bn{background:rgba(30,60,120,.2);color:#7090e0;border-color:rgba(60,100,200,.25)}
+  .ba{background:rgba(80,30,80,.2);color:#c070d0;border-color:rgba(140,50,140,.25)}
+  .bv{background:rgba(20,80,60,.2);color:#50c090;border-color:rgba(30,120,90,.25)}
+  .bad{background:rgba(140,90,10,.2);color:#d0a050;border-color:rgba(180,130,20,.25)}
+  @media(prefers-color-scheme:light){
+    .bn{background:rgba(30,60,180,.07);color:#1840a0;border-color:rgba(30,60,180,.2)}
+    .ba{background:rgba(100,20,120,.07);color:#701090;border-color:rgba(100,20,120,.2)}
+    .bv{background:rgba(10,100,60,.07);color:#0a6040;border-color:rgba(10,100,60,.2)}
+    .bad{background:rgba(140,90,10,.07);color:#7a5000;border-color:rgba(140,90,10,.2)}
   }
-
-  body {
-    font-family: 'Source Sans 3', sans-serif;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    min-height: 100vh;
-    line-height: 1.5;
-  }
-
-  .app-header {
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-strong);
-    padding: 20px 20px 16px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .header-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  .aquila-icon {
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
-  }
-
-  .app-title {
-    font-family: 'Cinzel', serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--gold);
-    letter-spacing: 0.05em;
-    line-height: 1.2;
-  }
-
-  .app-subtitle {
-    font-size: 11px;
-    color: var(--text-muted);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .progress-section { margin-bottom: 12px; }
-
-  .progress-stats {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 6px;
-  }
-
-  .progress-label {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    color: var(--text-secondary);
-    letter-spacing: 0.08em;
-  }
-
-  .progress-numbers {
-    font-size: 12px;
-    color: var(--text-secondary);
-  }
-
-  .progress-numbers strong { color: var(--gold); font-weight: 600; }
-
-  .progress-bar-bg {
-    height: 6px;
-    background: var(--bg-card);
-    border-radius: 3px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-  }
-
-  .progress-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--read) 0%, #4caf50 100%);
-    border-radius: 3px;
-    transition: width 0.4s ease;
-    position: relative;
-  }
-
-  .progress-bar-reading {
-    height: 100%;
-    background: var(--reading);
-    border-radius: 3px;
-    transition: width 0.4s ease;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
-  .mini-stats {
-    display: flex;
-    gap: 12px;
-    margin-top: 8px;
-  }
-
-  .mini-stat {
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--text-secondary);
-  }
-
-  .mini-stat-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .dot-read { background: #4caf50; }
-  .dot-reading { background: #f0a030; }
-  .dot-unread { background: var(--text-muted); }
-
-  .filters {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    padding: 12px 20px;
-    background: var(--bg-card);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .filter-select {
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 12px;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 6px 10px;
-    cursor: pointer;
-    outline: none;
-    flex: 1;
-    min-width: 130px;
-  }
-
-  .filter-select:focus { border-color: var(--gold); }
-
-  .search-box {
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 12px;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 6px 10px;
-    outline: none;
-    flex: 2;
-    min-width: 160px;
-  }
-
-  .search-box::placeholder { color: var(--text-muted); }
-  .search-box:focus { border-color: var(--gold); }
-
-  .reset-btn {
-    font-size: 11px;
-    font-family: 'Source Sans 3', sans-serif;
-    background: none;
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 6px 10px;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-
-  .reset-btn:hover { color: var(--gold); border-color: var(--border-strong); }
-
-  .content { padding: 16px 20px; }
-
-  .era-section { margin-bottom: 28px; }
-
-  .era-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .era-header:hover .era-title { color: var(--gold-light); }
-
-  .era-title {
-    font-family: 'Cinzel', serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--gold);
-    letter-spacing: 0.04em;
-    flex: 1;
-  }
-
-  .era-count {
-    font-size: 11px;
-    color: var(--text-muted);
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2px 8px;
-  }
-
-  .era-progress-bar {
-    height: 3px;
-    background: var(--bg-card2);
-    border-radius: 2px;
-    overflow: hidden;
-    width: 60px;
-    flex-shrink: 0;
-  }
-
-  .era-progress-fill {
-    height: 100%;
-    background: var(--gold);
-    border-radius: 2px;
-  }
-
-  .era-pct {
-    font-size: 10px;
-    color: var(--text-muted);
-    min-width: 28px;
-    text-align: right;
-  }
-
-  .collapse-btn {
-    font-size: 12px;
-    color: var(--text-muted);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 2px;
-    line-height: 1;
-  }
-
-  .series-group { margin-bottom: 16px; }
-
-  .series-title {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    padding-left: 4px;
-    border-left: 2px solid var(--border-strong);
-    padding-left: 8px;
-  }
-
-  .books-list { display: flex; flex-direction: column; gap: 3px; }
-
-  .book-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 10px;
-    background: var(--bg-card);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
-    min-height: 44px;
-  }
-
-  .book-item:hover { border-color: var(--border-strong); background: var(--bg-card2); }
-
-  .book-num {
-    font-size: 10px;
-    color: var(--text-muted);
-    min-width: 24px;
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-    flex-shrink: 0;
-  }
-
-  .book-status-btn {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border-strong);
-    background: none;
-    cursor: pointer;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-    padding: 0;
-  }
-
-  .book-status-btn:hover { transform: scale(1.15); }
-
-  .status-read .book-status-btn {
-    background: var(--read);
-    border-color: var(--read);
-  }
-
-  .status-reading .book-status-btn {
-    background: var(--reading);
-    border-color: var(--reading);
-  }
-
-  .book-title {
-    flex: 1;
-    font-size: 13px;
-    color: var(--text-primary);
-    line-height: 1.3;
-  }
-
-  .status-read .book-title { color: var(--text-secondary); }
-  .status-reading .book-title { color: var(--text-primary); font-weight: 600; }
-
-  .book-type-badge {
-    font-size: 9px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 2px 6px;
-    border-radius: 3px;
-    flex-shrink: 0;
-    border: 1px solid;
-  }
-
-  .type-novel { background: rgba(30,60,120,0.2); color: #6090e0; border-color: rgba(60,100,200,0.3); }
-  .type-anthology { background: rgba(80,30,80,0.2); color: #b060c0; border-color: rgba(140,50,140,0.3); }
-  .type-short { background: rgba(20,80,60,0.2); color: #50b090; border-color: rgba(30,120,90,0.3); }
-  .type-omnibus { background: rgba(100,60,20,0.2); color: #c09050; border-color: rgba(160,100,30,0.3); }
-
-  @media (prefers-color-scheme: light) {
-    .type-novel { background: rgba(30,60,180,0.08); color: #1840a0; border-color: rgba(30,60,180,0.25); }
-    .type-anthology { background: rgba(100,20,120,0.08); color: #701090; border-color: rgba(100,20,120,0.25); }
-    .type-short { background: rgba(10,100,60,0.08); color: #0a6040; border-color: rgba(10,100,60,0.25); }
-    .type-omnibus { background: rgba(120,70,10,0.08); color: #7a4800; border-color: rgba(120,70,10,0.25); }
-  }
-
-  .status-indicator {
-    font-size: 9px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 2px 6px;
-    border-radius: 3px;
-    flex-shrink: 0;
-    border: 1px solid;
-  }
-
-  .ind-read { background: var(--read-bg); color: #66bb6a; border-color: rgba(46,125,50,0.3); }
-  .ind-reading { background: var(--reading-bg); color: #ffa040; border-color: rgba(192,120,32,0.3); }
-  .ind-unread { background: transparent; color: var(--text-muted); border-color: var(--border); display: none; }
-
-  .status-read .ind-read { display: block; }
-  .status-reading .ind-reading { display: block; }
-
-  .empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-muted);
-    font-size: 14px;
-  }
-
-  .empty-state .icon { font-size: 32px; margin-bottom: 12px; }
-
-  .check-svg { display: none; }
-  .status-read .check-svg { display: block; }
-  .book-dot { display: block; }
-  .status-read .book-dot { display: none; }
-  .status-reading .book-dot { display: none; }
-  .reading-svg { display: none; }
-  .status-reading .reading-svg { display: block; }
-  .status-reading .book-dot { display: none; }
-
-  .tooltip {
-    position: fixed;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius);
-    padding: 6px 10px;
-    font-size: 11px;
-    color: var(--text-secondary);
-    pointer-events: none;
-    z-index: 1000;
-    white-space: nowrap;
-    display: none;
-  }
-
-  .tab-row {
-    display: flex;
-    overflow-x: auto;
-    gap: 4px;
-    padding: 10px 20px 0;
-    background: var(--bg-secondary);
-    scrollbar-width: none;
-  }
-
-  .tab-row::-webkit-scrollbar { display: none; }
-
-  .era-tab {
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 11px;
-    padding: 5px 12px;
-    border-radius: var(--radius) var(--radius) 0 0;
-    background: none;
-    border: 1px solid transparent;
-    border-bottom: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.15s;
-  }
-
-  .era-tab.active {
-    background: var(--bg-card);
-    border-color: var(--border);
-    color: var(--gold);
-  }
-
-  .era-tab:hover:not(.active) { color: var(--text-secondary); }
+  .sind{font-size:8px;letter-spacing:.04em;text-transform:uppercase;padding:2px 5px;border-radius:3px;flex-shrink:0;border:1px solid}
+  .si-r{background:rgba(46,125,50,.15);color:#66bb6a;border-color:rgba(46,125,50,.3)}
+  .si-g{background:rgba(192,120,32,.15);color:#ffa040;border-color:rgba(192,120,32,.3)}
+  .empty{text-align:center;padding:32px;color:var(--tx2);font-size:13px}
 </style>
 </head>
 <body>
-
-<div class="tooltip" id="tooltip"></div>
-
-<div class="app-header">
-  <div class="header-top">
-    <svg class="aquila-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M18 2 L20 8 L26 6 L22 12 L28 14 L22 16 L24 22 L18 20 L12 22 L14 16 L8 14 L14 12 L10 6 L16 8 Z" fill="#c9a84c" opacity="0.9"/>
-      <path d="M18 14 L19 18 L18 22 L17 18 Z" fill="#8a6a1e"/>
-      <circle cx="18" cy="14" r="2" fill="#8a6a1e"/>
-      <path d="M6 18 L12 20 L10 26 L6 24 L4 28 L8 22 L4 18 Z" fill="#c9a84c" opacity="0.7"/>
-      <path d="M30 18 L24 20 L26 26 L30 24 L32 28 L28 22 L32 18 Z" fill="#c9a84c" opacity="0.7"/>
-    </svg>
-    <div>
-      <div class="app-title">Librarium Imperialis</div>
-      <div class="app-subtitle">Warhammer 40,000 Reading Tracker</div>
-    </div>
+<div class="hdr">
+  <div class="htop">
+    <svg width="30" height="30" viewBox="0 0 32 32"><path d="M16 2L18 8L24 6L20 11L26 13L20 15L22 21L16 19L10 21L12 15L6 13L12 11L8 6L14 8Z" fill="#c9a84c" opacity=".9"/><path d="M5 17L11 19L9 25L5 23L3 27L7 21L3 17Z" fill="#c9a84c" opacity=".7"/><path d="M27 17L21 19L23 25L27 23L29 27L25 21L29 17Z" fill="#c9a84c" opacity=".7"/></svg>
+    <div><div class="atitle">Librarium Imperialis</div><div class="asub">Warhammer 40,000 · Reading Tracker</div></div>
   </div>
-  <div class="progress-section">
-    <div class="progress-stats">
-      <span class="progress-label">Overall Progress</span>
-      <span class="progress-numbers" id="overall-pct-text">0 of <strong id="total-books">0</strong> books</span>
-    </div>
-    <div class="progress-bar-bg">
-      <div style="position:relative;height:100%;border-radius:3px;overflow:hidden;">
-        <div class="progress-bar-fill" id="overall-bar" style="width:0%"></div>
-      </div>
-    </div>
-    <div class="mini-stats">
-      <div class="mini-stat"><div class="mini-stat-dot dot-read"></div><span id="count-read">0 read</span></div>
-      <div class="mini-stat"><div class="mini-stat-dot dot-reading"></div><span id="count-reading">0 reading</span></div>
-      <div class="mini-stat"><div class="mini-stat-dot dot-unread"></div><span id="count-unread">0 unread</span></div>
+  <div>
+    <div class="prow"><span class="plbl">Overall Progress</span><span class="pnums" id="pn"></span></div>
+    <div class="pbg"><div class="pf" id="pb" style="width:0%"></div></div>
+    <div class="mstats">
+      <div class="ms"><div class="dot dr"></div><span id="cr">0 read</span></div>
+      <div class="ms"><div class="dot dg"></div><span id="cg">0 reading</span></div>
+      <div class="ms"><div class="dot du"></div><span id="cu">0 unread</span></div>
     </div>
   </div>
 </div>
-
-<div class="tab-row" id="era-tabs"></div>
-
-<div class="filters">
-  <input class="search-box" id="search" type="text" placeholder="Search books..." />
-  <select class="filter-select" id="filter-series">
-    <option value="">All series</option>
-  </select>
-  <select class="filter-select" id="filter-status">
+<div class="tabs" id="tabs"></div>
+<div class="flt">
+  <input class="fsrch" id="q" type="text" placeholder="Search books…"/>
+  <select class="fsel" id="fsr"><option value="">All series</option></select>
+  <select class="fsel" id="fst">
     <option value="">All statuses</option>
     <option value="unread">Unread</option>
     <option value="reading">Reading</option>
     <option value="read">Read</option>
   </select>
-  <button class="reset-btn" onclick="resetFilters()">Reset</button>
+  <button class="frst" onclick="resetAll()">Reset</button>
 </div>
-
-<div class="content" id="main-content"></div>
+<div class="ct" id="mc"></div>
 
 <script>
-const ERAS = [
-  { id: "great-crusade", name: "The Great Crusade & Horus Heresy", short: "Horus Heresy" },
-  { id: "post-heresy", name: "Post Heresy & Classic 40k", short: "Post Heresy" },
-  { id: "classic-40k", name: "Classic 40k", short: "Classic 40k" },
-  { id: "post-rift", name: "Post Rift – Modern 40k", short: "Modern 40k" },
+const ERAS=[
+  {id:"hh",  name:"The Great Crusade & Horus Heresy",  short:"Horus Heresy"},
+  {id:"post",name:"Post Heresy & Classic 40k Bridge",   short:"Post Heresy"},
+  {id:"cls", name:"Classic 40k",                        short:"Classic 40k"},
+  {id:"rift",name:"Post Rift – Modern 40k",             short:"Modern 40k"},
 ];
 
-const BOOKS_DATA = [
-  // === ERA 1: Great Crusade & Horus Heresy ===
-  // Horus Heresy Main Series
-  { era:"great-crusade", series:"Horus Heresy", order:1, title:"Horus Rising", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:2, title:"False Gods", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:3, title:"Galaxy in Flames", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:4, title:"The Flight of the Eisenstein", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:5, title:"Fulgrim", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:6, title:"Descent of Angels", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:7, title:"Legion", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:8, title:"Battle for the Abyss", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:9, title:"Mechanicum", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:10, title:"Tales of Heresy", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:11, title:"Fallen Angels", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:12, title:"A Thousand Sons", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:13, title:"Nemesis", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:14, title:"The First Heretic", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:15, title:"Prospero Burns", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:16, title:"Age of Darkness", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:17, title:"The Outcast Dead", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:18, title:"Deliverance Lost", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:19, title:"Know No Fear", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:20, title:"The Primarchs", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:21, title:"Fear to Tread", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:22, title:"Shadows of Treachery", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:23, title:"Angel Exterminatus", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:24, title:"Betrayer", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:25, title:"Mark of Calth", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:26, title:"Vulkan Lives", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:27, title:"The Unremembered Empire", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:28, title:"Scars", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:29, title:"Vengeful Spirit", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:30, title:"The Damnation of Pythos", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:31, title:"Legacies of Betrayal", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:32, title:"Deathfire", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:33, title:"War Without End", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:34, title:"Pharos", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:35, title:"Eye of Terra", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:36, title:"The Path of Heaven", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:37, title:"The Silent War", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:38, title:"Angels of Caliban", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:39, title:"Praetorian of Dorn", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:40, title:"Corax", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:41, title:"The Master of Mankind", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:42, title:"Garro: Weapon of Fate", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:43, title:"Shattered Legions", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:44, title:"The Crimson King", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:45, title:"Tallarn", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:46, title:"Ruinstorm", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:47, title:"Old Earth", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:48, title:"The Burden of Loyalty", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:49, title:"Wolfsbane", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:50, title:"Born of Flame", type:"anthology" },
-  { era:"great-crusade", series:"Horus Heresy", order:51, title:"Mortis", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:52, title:"Plague War", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy", order:53, title:"The Buried Dagger", type:"novel" },
-  // Horus Heresy Primarchs
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:1, title:"Roboute Guilliman: Lord of Ultramar", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:2, title:"Leman Russ: The Great Wolf", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:3, title:"Magnus the Red: Master of Prospero", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:4, title:"Perturabo: The Hammer of Olympia", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:5, title:"Lorgar: Bearer of the Word", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:6, title:"Fulgrim: The Palatine Phoenix", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:7, title:"Ferrus Manus: Gorgon of Medusa", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:8, title:"Jaghatai Khan: Warhawk of Chogoris", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:9, title:"Vulkan: Lord of Drakes", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:10, title:"Corax: Lord of Shadows", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:11, title:"Angron: Slave of Nuceria", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:12, title:"Konrad Curze: The Night Haunter", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:13, title:"Mortarion: The Pale King", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:14, title:"Sanguinius: The Great Angel", type:"novel" },
-  { era:"great-crusade", series:"Horus Heresy – Primarchs", order:15, title:"Lion El'Jonson: Lord of the First", type:"novel" },
-  // Siege of Terra
-  { era:"great-crusade", series:"Siege of Terra", order:1, title:"The Solar War", type:"novel" },
-  { era:"great-crusade", series:"Siege of Terra", order:2, title:"The Lost and the Damned", type:"novel" },
-  { era:"great-crusade", series:"Siege of Terra", order:3, title:"The First Wall", type:"novel" },
-  { era:"great-crusade", series:"Siege of Terra", order:4, title:"Saturnine", type:"novel" },
-  { era:"great-crusade", series:"Siege of Terra", order:5, title:"Mortis", type:"novel" },
-  { era:"great-crusade", series:"Siege of Terra", order:6, title:"Warhawk", type:"novel" },
-  { era:"great-crusade", series:"Siege of Terra", order:7, title:"Echoes of Eternity", type:"novel" },
-  { era:"great-crusade", series:"Siege of Terra", order:8, title:"End and the Death, Part 1", type:"novel" },
-  { era:"great-crusade", series:"Siege of Terra", order:9, title:"End and the Death, Part 2", type:"novel" },
-  { era:"great-crusade", series:"Siege of Terra", order:10, title:"End and the Death, Part 3", type:"novel" },
-  // HH Characters
-  { era:"great-crusade", series:"The Horus Heresy: Characters", order:1, title:"Garro: Oath of Moment", type:"short" },
-  { era:"great-crusade", series:"The Horus Heresy: Characters", order:2, title:"Garro: Legion of One", type:"short" },
-  { era:"great-crusade", series:"The Horus Heresy: Characters", order:3, title:"Garro: Burden of Duty", type:"short" },
-  { era:"great-crusade", series:"The Horus Heresy: Characters", order:4, title:"Garro: Shield of Lies", type:"short" },
+// type: novel | anthology | novella | audio
+// sub:true = audio drama / part entry (indented, dashed)
+// parent: shows this is a sub-entry of the named parent book
+const RAW=[
+  // ═══════════════════════════════════════════════════
+  //  ERA 1 — HORUS HERESY MAIN SERIES (54 volumes)
+  // ═══════════════════════════════════════════════════
+  {era:"hh",ser:"Horus Heresy – Main Series",o:1, t:"Horus Rising",                 tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:2, t:"False Gods",                   tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:3, t:"Galaxy in Flames",             tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:4, t:"The Flight of the Eisenstein", tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:5, t:"Fulgrim",                      tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:6, t:"Descent of Angels",            tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:7, t:"Legion",                       tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:8, t:"Battle for the Abyss",         tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:9, t:"Mechanicum",                   tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:10,t:"Tales of Heresy",              tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:11,t:"Fallen Angels",                tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:12,t:"A Thousand Sons",              tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:13,t:"Nemesis",                      tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:14,t:"The First Heretic",            tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:15,t:"Prospero Burns",               tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:16,t:"Age of Darkness",              tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:17,t:"The Outcast Dead",             tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:18,t:"Deliverance Lost",             tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:19,t:"Know No Fear",                 tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:20,t:"The Primarchs",                tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:21,t:"Fear to Tread",                tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:22,t:"Shadows of Treachery",         tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:23,t:"Angel Exterminatus",           tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:24,t:"Betrayer",                     tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:25,t:"Mark of Calth",               tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:26,t:"Vulkan Lives",                 tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:27,t:"The Unremembered Empire",      tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:28,t:"Scars",                        tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:29,t:"Vengeful Spirit",              tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:30,t:"The Damnation of Pythos",      tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:31,t:"Legacies of Betrayal",         tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:32,t:"Deathfire",                    tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:33,t:"War Without End",              tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:34,t:"Pharos",                       tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:35,t:"Eye of Terra",                 tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:36,t:"The Path of Heaven",           tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:37,t:"The Silent War",               tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:38,t:"Angels of Caliban",            tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:39,t:"Praetorian of Dorn",           tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:40,t:"Corax",                        tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:41,t:"The Master of Mankind",        tp:"novel"},
+  // ── #42 Garro: Weapons of Fate — with all sub-parts ──
+  {era:"hh",ser:"Horus Heresy – Main Series",o:42,t:"Garro: Weapons of Fate",       tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:42.1,t:"The Sword: Oath of Moment",   tp:"audio"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:42.2,t:"The Sword: Sword of Truth",   tp:"audio"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:42.3,t:"The Shield: Burden of Duty", tp:"audio"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:42.4,t:"The Shield: Legion of One",  tp:"audio"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:42.5,t:"Shield of Lies",                       tp:"audio"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:42.6,t:"Ashes of Fealty",                      tp:"audio"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:42.7,t:"Vow of Faith",               tp:"novella"},
+  // ── back to main series ──
+  {era:"hh",ser:"Horus Heresy – Main Series",o:43,t:"Shattered Legions",            tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:44,t:"The Crimson King",             tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:45,t:"Tallarn",                      tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:46,t:"Ruinstorm",                    tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:47,t:"Old Earth",                    tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:48,t:"The Burden of Loyalty",        tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:49,t:"Wolfsbane",                    tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:50,t:"Born of Flame",                tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:51,t:"Slaves to Darkness",           tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:52,t:"Heralds of the Siege",         tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:53,t:"Titandeath",                   tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Main Series",o:54,t:"The Buried Dagger",            tp:"novel"},
 
-  // === ERA 2: Post Heresy & Classic 40k ===
-  { era:"post-heresy", series:"The Inquisition", order:1, title:"Inquisitor (Eisenhorn #1)", type:"novel" },
-  { era:"post-heresy", series:"The Inquisition", order:2, title:"Ravenor", type:"novel" },
-  { era:"post-heresy", series:"The Inquisition", order:3, title:"Ravenor Returned", type:"novel" },
-  { era:"post-heresy", series:"The Inquisition", order:4, title:"Ravenor Rogue", type:"novel" },
-  { era:"post-heresy", series:"Eisenhorn", order:1, title:"Xenos", type:"novel" },
-  { era:"post-heresy", series:"Eisenhorn", order:2, title:"Malleus", type:"novel" },
-  { era:"post-heresy", series:"Eisenhorn", order:3, title:"Hereticus", type:"novel" },
-  { era:"post-heresy", series:"Eisenhorn", order:4, title:"The Magos", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Conquests", order:1, title:"The Devastation of Baal", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Conquests", order:2, title:"Lazarus: Enmity's Edge", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Conquests", order:3, title:"Apocalypse", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Conquests", order:4, title:"Farsight: Crisis of Faith", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Conquests", order:5, title:"Sons of the Emperor", type:"anthology" },
-  { era:"post-heresy", series:"Space Marine Conquests", order:6, title:"Farsight: Empire of Lies", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Conquests", order:7, title:"Dontoria: A War of Darkness", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Battles", order:1, title:"The Battle of the Fang", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Battles", order:2, title:"Helsreach", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Battles", order:3, title:"Rynn's World", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Battles", order:4, title:"Purging of Kadillus", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Battles", order:5, title:"Fall of Damnos", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Battles", order:6, title:"Hunt for Voldorius", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Battles", order:7, title:"The Gildar Rift", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Battles", order:8, title:"Legion of the Damned", type:"novel" },
-  { era:"post-heresy", series:"Space Marine Battles", order:9, title:"Architect of Fate", type:"anthology" },
+  // ═══════════════════════════════════════════════════
+  //  HORUS HERESY – PRIMARCHS (17 novels + 4 anthologies)
+  // ═══════════════════════════════════════════════════
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:1, t:"Roboute Guilliman: Lord of Ultramar",   tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:2, t:"Leman Russ: The Great Wolf",            tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:3, t:"Magnus the Red: Master of Prospero",    tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:4, t:"Perturabo: Hammer of Olympia",          tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:5, t:"Lorgar: Bearer of the Word",            tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:6, t:"Fulgrim: The Palatine Phoenix",         tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:7, t:"Ferrus Manus: The Gorgon of Medusa",   tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:8, t:"Jaghatai Khan: Warhawk of Chogoris",   tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:9, t:"Vulkan: Lord of Drakes",               tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:10,t:"Corax: Lord of Shadows",               tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:11,t:"Angron: Slave of Nuceria",             tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:12,t:"Konrad Curze: The Night Haunter",      tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:13,t:"Lion El'Jonson: Lord of the First",    tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:14,t:"Alpharius: Head of the Hydra",         tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:15,t:"Mortarion: The Pale King",             tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:16,t:"Rogal Dorn: The Emperor's Crusader",   tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:17,t:"Sanguinius: The Great Angel",          tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:18,t:"Sons of the Emperor (Anthology)",      tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:19,t:"Scions of the Emperor (Anthology)",    tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:20,t:"Blood of the Emperor (Anthology)",     tp:"anthology"},
+  {era:"hh",ser:"Horus Heresy – Primarchs",o:21,t:"Heirs of the Emperor (Anthology)",     tp:"anthology"},
 
-  // === ERA 3: Classic 40k ===
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:1, title:"First and Only", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:2, title:"Ghostmaker", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:3, title:"Necropolis", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:4, title:"Honour Guard", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:5, title:"The Guns of Tanith", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:6, title:"Straight Silver", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:7, title:"Sabbat Martyr", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:8, title:"Traitor General", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:9, title:"His Last Command", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:10, title:"The Armour of Contempt", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:11, title:"Only in Death", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:12, title:"Blood Pact", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:13, title:"Salvation's Reach", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:14, title:"The Warmaster", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:15, title:"Anarch", type:"novel" },
-  { era:"classic-40k", series:"Gaunt's Ghosts", order:16, title:"The Vincula Insurgency", type:"novel" },
-  { era:"classic-40k", series:"Space Wolves", order:1, title:"Space Wolf", type:"novel" },
-  { era:"classic-40k", series:"Space Wolves", order:2, title:"Ragnar's Claw", type:"novel" },
-  { era:"classic-40k", series:"Space Wolves", order:3, title:"Grey Hunter", type:"novel" },
-  { era:"classic-40k", series:"Space Wolves", order:4, title:"Soul Drinker", type:"novel" },
-  { era:"classic-40k", series:"Space Wolves", order:5, title:"Wolf Blade", type:"novel" },
-  { era:"classic-40k", series:"Space Wolves", order:6, title:"Sons of Fenris", type:"novel" },
-  { era:"classic-40k", series:"Space Wolves", order:7, title:"Wolf's Honour", type:"novel" },
-  { era:"classic-40k", series:"Ultramarines", order:1, title:"Nightbringer", type:"novel" },
-  { era:"classic-40k", series:"Ultramarines", order:2, title:"Warriors of Ultramar", type:"novel" },
-  { era:"classic-40k", series:"Ultramarines", order:3, title:"Dead Sky, Black Sun", type:"novel" },
-  { era:"classic-40k", series:"Ultramarines", order:4, title:"The Killing Ground", type:"novel" },
-  { era:"classic-40k", series:"Ultramarines", order:5, title:"Courage and Honour", type:"novel" },
-  { era:"classic-40k", series:"Ultramarines", order:6, title:"The Chapter's Due", type:"novel" },
-  { era:"classic-40k", series:"Ultramarines", order:7, title:"Know No Fear (40k)", type:"novel" },
-  { era:"classic-40k", series:"Blood Angels", order:1, title:"Deus Encarmine", type:"novel" },
-  { era:"classic-40k", series:"Blood Angels", order:2, title:"Deus Sanguinius", type:"novel" },
-  { era:"classic-40k", series:"Blood Angels", order:3, title:"Red Fury", type:"novel" },
-  { era:"classic-40k", series:"Blood Angels", order:4, title:"Black Tide", type:"novel" },
-  { era:"classic-40k", series:"Dark Angels", order:1, title:"Angels of Darkness", type:"novel" },
-  { era:"classic-40k", series:"Dark Angels", order:2, title:"Ravenwing", type:"novel" },
-  { era:"classic-40k", series:"Dark Angels", order:3, title:"Master of Sanctity", type:"novel" },
-  { era:"classic-40k", series:"Dark Angels", order:4, title:"The Unforgiven", type:"novel" },
-  { era:"classic-40k", series:"Dark Angels", order:5, title:"Jain Zar: The Storm of Silence", type:"novel" },
-  { era:"classic-40k", series:"Night Lords", order:1, title:"Soul Hunter", type:"novel" },
-  { era:"classic-40k", series:"Night Lords", order:2, title:"Blood Reaver", type:"novel" },
-  { era:"classic-40k", series:"Night Lords", order:3, title:"Void Stalker", type:"novel" },
-  { era:"classic-40k", series:"Iron Warriors", order:1, title:"Storm of Iron", type:"novel" },
-  { era:"classic-40k", series:"Iron Warriors", order:2, title:"Iron Warrior", type:"anthology" },
-  { era:"classic-40k", series:"Ciaphas Cain", order:1, title:"For the Emperor", type:"novel" },
-  { era:"classic-40k", series:"Ciaphas Cain", order:2, title:"Caves of Ice", type:"novel" },
-  { era:"classic-40k", series:"Ciaphas Cain", order:3, title:"The Traitor's Hand", type:"novel" },
-  { era:"classic-40k", series:"Ciaphas Cain", order:4, title:"Death or Glory", type:"novel" },
-  { era:"classic-40k", series:"Ciaphas Cain", order:5, title:"Duty Calls", type:"novel" },
-  { era:"classic-40k", series:"Ciaphas Cain", order:6, title:"Cain's Last Stand", type:"novel" },
-  { era:"classic-40k", series:"Ciaphas Cain", order:7, title:"The Emperor's Finest", type:"novel" },
-  { era:"classic-40k", series:"Ciaphas Cain", order:8, title:"The Last Ditch", type:"novel" },
-  { era:"classic-40k", series:"Ciaphas Cain", order:9, title:"The Greater Good", type:"novel" },
-  { era:"classic-40k", series:"Ciaphas Cain", order:10, title:"Choose Your Enemies", type:"novel" },
-  { era:"classic-40k", series:"Ciaphas Cain", order:11, title:"Vainglorious", type:"novel" },
-  { era:"classic-40k", series:"Grey Knights", order:1, title:"Grey Knights", type:"novel" },
-  { era:"classic-40k", series:"Grey Knights", order:2, title:"Dark Adeptus", type:"novel" },
-  { era:"classic-40k", series:"Grey Knights", order:3, title:"Hammer of Daemons", type:"novel" },
-  { era:"classic-40k", series:"Forge of War", order:1, title:"Dead Men Walking", type:"novel" },
-  { era:"classic-40k", series:"Forge of War", order:2, title:"Flesh and Iron", type:"novel" },
-  { era:"classic-40k", series:"Word Bearers", order:1, title:"Dark Apostle", type:"novel" },
-  { era:"classic-40k", series:"Word Bearers", order:2, title:"Dark Disciple", type:"novel" },
-  { era:"classic-40k", series:"Word Bearers", order:3, title:"Dark Creed", type:"novel" },
-  { era:"classic-40k", series:"Warhammer 40,000 Standalone", order:1, title:"Fifteen Hours", type:"novel" },
-  { era:"classic-40k", series:"Warhammer 40,000 Standalone", order:2, title:"13th Legion", type:"novel" },
-  { era:"classic-40k", series:"Warhammer 40,000 Standalone", order:3, title:"Kill Team", type:"novel" },
-  { era:"classic-40k", series:"Warhammer 40,000 Standalone", order:4, title:"Rebel Winter", type:"novel" },
-  { era:"classic-40k", series:"Warhammer 40,000 Standalone", order:5, title:"The Purging of Kadillus", type:"novel" },
-  { era:"classic-40k", series:"Warhammer 40,000 Standalone", order:6, title:"Titanicus", type:"novel" },
-  { era:"classic-40k", series:"Warhammer 40,000 Standalone", order:7, title:"Double Eagle", type:"novel" },
-  { era:"classic-40k", series:"Warhammer 40,000 Standalone", order:8, title:"Brothers of the Snake", type:"novel" },
-  { era:"classic-40k", series:"Warhammer 40,000 Standalone", order:9, title:"Talon of Horus", type:"novel" },
-  { era:"classic-40k", series:"Warhammer 40,000 Standalone", order:10, title:"Black Legion", type:"novel" },
+  // ═══════════════════════════════════════════════════
+  //  HORUS HERESY – CHARACTERS (4 novels)
+  // ═══════════════════════════════════════════════════
+  {era:"hh",ser:"Horus Heresy – Characters",o:1,t:"Valdor: Birth of the Imperium",        tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Characters",o:2,t:"Luther: First of the Fallen",          tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Characters",o:3,t:"Sigismund: The Eternal Crusader",      tp:"novel"},
+  {era:"hh",ser:"Horus Heresy – Characters",o:4,t:"Eidolon: The Auric Hammer",            tp:"novel"},
 
-  // === ERA 4: Post Rift - Modern 40k ===
-  { era:"post-rift", series:"Dark Imperium", order:1, title:"Dark Imperium", type:"novel" },
-  { era:"post-rift", series:"Dark Imperium", order:2, title:"Plague War", type:"novel" },
-  { era:"post-rift", series:"Dark Imperium", order:3, title:"Godblight", type:"novel" },
-  { era:"post-rift", series:"Grim Repast", order:1, title:"Grim Repast", type:"novel" },
-  { era:"post-rift", series:"Kal Jerico", order:1, title:"Kal Jerico: Sinner's Reward", type:"novel" },
-  { era:"post-rift", series:"Indomitus", order:1, title:"Indomitus", type:"novel" },
-  { era:"post-rift", series:"Indomitus", order:2, title:"Sons of the Emperor", type:"anthology" },
-  { era:"post-rift", series:"Dawn of Fire", order:1, title:"Avenging Son", type:"novel" },
-  { era:"post-rift", series:"Dawn of Fire", order:2, title:"The Gate of Bones", type:"novel" },
-  { era:"post-rift", series:"Dawn of Fire", order:3, title:"The Wolf of Ash and Fire", type:"novel" },
-  { era:"post-rift", series:"Dawn of Fire", order:4, title:"Throne of Light", type:"novel" },
-  { era:"post-rift", series:"Dawn of Fire", order:5, title:"The Iron Kingdom", type:"novel" },
-  { era:"post-rift", series:"Dawn of Fire", order:6, title:"The Sea of Souls", type:"novel" },
-  { era:"post-rift", series:"Dawn of Fire", order:7, title:"The Edge of Silence", type:"novel" },
-  { era:"post-rift", series:"Space Marine Conquests (Rift)", order:1, title:"Devastation of Baal", type:"novel" },
-  { era:"post-rift", series:"Space Marine Conquests (Rift)", order:2, title:"Orks: Da Big Waaagh!", type:"novel" },
-  { era:"post-rift", series:"Space Marine Conquests (Rift)", order:3, title:"Farsight: Empire of Lies", type:"novel" },
-  { era:"post-rift", series:"Space Marine Conquests (Rift)", order:4, title:"Hour of the Huntress", type:"novel" },
-  { era:"post-rift", series:"Space Marine Conquests (Rift)", order:5, title:"Crusade of Vengeance", type:"novel" },
-  { era:"post-rift", series:"Black Legion", order:1, title:"Talon of Horus", type:"novel" },
-  { era:"post-rift", series:"Black Legion", order:2, title:"Black Legion", type:"novel" },
-  { era:"post-rift", series:"Adepta Sororitas", order:1, title:"Faith & Fire", type:"novel" },
-  { era:"post-rift", series:"Adepta Sororitas", order:2, title:"Hammer & Anvil", type:"novel" },
-  { era:"post-rift", series:"Adepta Sororitas", order:3, title:"Heart of Flame", type:"novel" },
-  { era:"post-rift", series:"Adepta Sororitas", order:4, title:"The Book of Martyrs", type:"anthology" },
-  { era:"post-rift", series:"Adepta Sororitas", order:5, title:"The Rose in Darkness", type:"novel" },
-  { era:"post-rift", series:"Necrons", order:1, title:"The Infinite and the Divine", type:"novel" },
-  { era:"post-rift", series:"Necrons", order:2, title:"Severed", type:"novel" },
-  { era:"post-rift", series:"Leagues of Votann", order:1, title:"The Twice-Dead King: Ruin", type:"novel" },
-  { era:"post-rift", series:"Leagues of Votann", order:2, title:"The Twice-Dead King: Reign", type:"novel" },
-  { era:"post-rift", series:"T'au", order:1, title:"Greater Good", type:"novel" },
-  { era:"post-rift", series:"T'au", order:2, title:"War of Secrets", type:"novel" },
-  { era:"post-rift", series:"Warhammer Crime", order:1, title:"Bloodlines", type:"novel" },
-  { era:"post-rift", series:"Warhammer Crime", order:2, title:"Flesh and Steel", type:"novel" },
-  { era:"post-rift", series:"Warhammer Crime", order:3, title:"No Good Men", type:"novel" },
-  { era:"post-rift", series:"Warhammer Crime", order:4, title:"Grim Repast", type:"novel" },
-  { era:"post-rift", series:"Warhammer Crime", order:5, title:"The Vorbis Conspiracy", type:"novel" },
-  { era:"post-rift", series:"Warhammer Horror", order:1, title:"Maledictions", type:"anthology" },
-  { era:"post-rift", series:"Warhammer Horror", order:2, title:"Invocations", type:"anthology" },
-  { era:"post-rift", series:"Warhammer Horror", order:3, title:"Harrowed Worlds", type:"anthology" },
-  { era:"post-rift", series:"Warhammer Horror", order:4, title:"Depths of Treachery", type:"anthology" },
-  { era:"post-rift", series:"Warhammer Horror", order:5, title:"Perdition's Flame", type:"anthology" },
-  { era:"post-rift", series:"Vaults of Terra", order:1, title:"The Carrion Throne", type:"novel" },
-  { era:"post-rift", series:"Vaults of Terra", order:2, title:"The Hollow Mountain", type:"novel" },
-  { era:"post-rift", series:"Vaults of Terra", order:3, title:"The Dark City", type:"novel" },
-  { era:"post-rift", series:"Primarchs (Modern 40k)", order:1, title:"Roboute Guilliman: A Step into Darkness", type:"novel" },
-  { era:"post-rift", series:"Primarchs (Modern 40k)", order:2, title:"Mortarion: The Darkness Below", type:"novel" },
-  { era:"post-rift", series:"Primarchs (Modern 40k)", order:3, title:"Magnus the Red: Ahriman's Crimson Path", type:"novel" },
+  // ═══════════════════════════════════════════════════
+  //  SIEGE OF TERRA (8 main + 3 novellas + 1 anthology)
+  // ═══════════════════════════════════════════════════
+  {era:"hh",ser:"Siege of Terra",o:1, t:"The Solar War",                tp:"novel"},
+  {era:"hh",ser:"Siege of Terra",o:2, t:"The Lost and the Damned",      tp:"novel"},
+  {era:"hh",ser:"Siege of Terra",o:3, t:"The First Wall",               tp:"novel"},
+  {era:"hh",ser:"Siege of Terra",o:3.5,t:"Sons of Selenar",             tp:"novella"},
+  {era:"hh",ser:"Siege of Terra",o:4, t:"Saturnine",                    tp:"novel"},
+  {era:"hh",ser:"Siege of Terra",o:4.5,t:"Fury of Magnus",              tp:"novella"},
+  {era:"hh",ser:"Siege of Terra",o:5, t:"Mortis",                       tp:"novel"},
+  {era:"hh",ser:"Siege of Terra",o:6, t:"Warhawk",                      tp:"novel"},
+  {era:"hh",ser:"Siege of Terra",o:7, t:"Echoes of Eternity",           tp:"novel"},
+  {era:"hh",ser:"Siege of Terra",o:7.5,t:"Garro: Knight of Grey",       tp:"novella"},
+  {era:"hh",ser:"Siege of Terra",o:8, t:"The End and the Death Vol. I",  tp:"novel"},
+  {era:"hh",ser:"Siege of Terra",o:9, t:"The End and the Death Vol. II", tp:"novel"},
+  {era:"hh",ser:"Siege of Terra",o:10,t:"The End and the Death Vol. III",tp:"novel"},
+  {era:"hh",ser:"Siege of Terra",o:11,t:"Era of Ruin (Anthology)",       tp:"anthology"},
+
+  // ═══════════════════════════════════════════════════
+  //  ERA 2 — POST HERESY
+  // ═══════════════════════════════════════════════════
+  {era:"post",ser:"Eisenhorn",o:1,t:"Xenos",          tp:"novel"},
+  {era:"post",ser:"Eisenhorn",o:2,t:"Malleus",         tp:"novel"},
+  {era:"post",ser:"Eisenhorn",o:3,t:"Hereticus",       tp:"novel"},
+  {era:"post",ser:"Eisenhorn",o:4,t:"The Magos",       tp:"novel"},
+  {era:"post",ser:"Ravenor",  o:1,t:"Ravenor",         tp:"novel"},
+  {era:"post",ser:"Ravenor",  o:2,t:"Ravenor Returned",tp:"novel"},
+  {era:"post",ser:"Ravenor",  o:3,t:"Ravenor Rogue",   tp:"novel"},
+  {era:"post",ser:"Space Marine Battles",o:1, t:"Rynn's World",          tp:"novel"},
+  {era:"post",ser:"Space Marine Battles",o:2, t:"Helsreach",             tp:"novel"},
+  {era:"post",ser:"Space Marine Battles",o:3, t:"Battle of the Fang",    tp:"novel"},
+  {era:"post",ser:"Space Marine Battles",o:4, t:"Hunt for Voldorius",    tp:"novel"},
+  {era:"post",ser:"Space Marine Battles",o:5, t:"Purging of Kadillus",   tp:"novel"},
+  {era:"post",ser:"Space Marine Battles",o:6, t:"Fall of Damnos",        tp:"novel"},
+  {era:"post",ser:"Space Marine Battles",o:7, t:"Architect of Fate",     tp:"anthology"},
+  {era:"post",ser:"Space Marine Battles",o:8, t:"The Gildar Rift",       tp:"novel"},
+  {era:"post",ser:"Space Marine Battles",o:9, t:"Legion of the Damned",  tp:"novel"},
+  {era:"post",ser:"Space Marine Battles",o:10,t:"Flesh and Iron",        tp:"novel"},
+  {era:"post",ser:"Space Marine Battles",o:11,t:"Death of Integrity",    tp:"novel"},
+  {era:"post",ser:"Space Marine Battles",o:12,t:"The Siege of Castellax",tp:"novel"},
+
+  // ═══════════════════════════════════════════════════
+  //  ERA 3 — CLASSIC 40K
+  // ═══════════════════════════════════════════════════
+  {era:"cls",ser:"Gaunt's Ghosts",o:1, t:"First and Only",          tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:2, t:"Ghostmaker",              tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:3, t:"Necropolis",              tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:4, t:"Honour Guard",            tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:5, t:"The Guns of Tanith",      tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:6, t:"Straight Silver",         tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:7, t:"Sabbat Martyr",           tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:8, t:"Traitor General",         tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:9, t:"His Last Command",        tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:10,t:"The Armour of Contempt",  tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:11,t:"Only in Death",           tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:12,t:"Blood Pact",              tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:13,t:"Salvation's Reach",       tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:14,t:"The Warmaster",           tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:15,t:"Anarch",                  tp:"novel"},
+  {era:"cls",ser:"Gaunt's Ghosts",o:16,t:"The Vincula Insurgency",  tp:"novel"},
+  {era:"cls",ser:"Ciaphas Cain",  o:1, t:"For the Emperor",         tp:"novel"},
+  {era:"cls",ser:"Ciaphas Cain",  o:2, t:"Caves of Ice",            tp:"novel"},
+  {era:"cls",ser:"Ciaphas Cain",  o:3, t:"The Traitor's Hand",      tp:"novel"},
+  {era:"cls",ser:"Ciaphas Cain",  o:4, t:"Death or Glory",          tp:"novel"},
+  {era:"cls",ser:"Ciaphas Cain",  o:5, t:"Duty Calls",              tp:"novel"},
+  {era:"cls",ser:"Ciaphas Cain",  o:6, t:"Cain's Last Stand",       tp:"novel"},
+  {era:"cls",ser:"Ciaphas Cain",  o:7, t:"The Emperor's Finest",    tp:"novel"},
+  {era:"cls",ser:"Ciaphas Cain",  o:8, t:"The Last Ditch",          tp:"novel"},
+  {era:"cls",ser:"Ciaphas Cain",  o:9, t:"The Greater Good",        tp:"novel"},
+  {era:"cls",ser:"Ciaphas Cain",  o:10,t:"Choose Your Enemies",     tp:"novel"},
+  {era:"cls",ser:"Ciaphas Cain",  o:11,t:"Vainglorious",            tp:"novel"},
+  {era:"cls",ser:"Ultramarines",  o:1, t:"Nightbringer",            tp:"novel"},
+  {era:"cls",ser:"Ultramarines",  o:2, t:"Warriors of Ultramar",    tp:"novel"},
+  {era:"cls",ser:"Ultramarines",  o:3, t:"Dead Sky, Black Sun",     tp:"novel"},
+  {era:"cls",ser:"Ultramarines",  o:4, t:"The Killing Ground",      tp:"novel"},
+  {era:"cls",ser:"Ultramarines",  o:5, t:"Courage and Honour",      tp:"novel"},
+  {era:"cls",ser:"Ultramarines",  o:6, t:"The Chapter's Due",       tp:"novel"},
+  {era:"cls",ser:"Space Wolves",  o:1, t:"Space Wolf",              tp:"novel"},
+  {era:"cls",ser:"Space Wolves",  o:2, t:"Ragnar's Claw",           tp:"novel"},
+  {era:"cls",ser:"Space Wolves",  o:3, t:"Grey Hunter",             tp:"novel"},
+  {era:"cls",ser:"Space Wolves",  o:4, t:"Wolf Blade",              tp:"novel"},
+  {era:"cls",ser:"Space Wolves",  o:5, t:"Sons of Fenris",          tp:"novel"},
+  {era:"cls",ser:"Space Wolves",  o:6, t:"Wolf's Honour",           tp:"novel"},
+  {era:"cls",ser:"Blood Angels",  o:1, t:"Deus Encarmine",          tp:"novel"},
+  {era:"cls",ser:"Blood Angels",  o:2, t:"Deus Sanguinius",         tp:"novel"},
+  {era:"cls",ser:"Blood Angels",  o:3, t:"Red Fury",                tp:"novel"},
+  {era:"cls",ser:"Blood Angels",  o:4, t:"Black Tide",              tp:"novel"},
+  {era:"cls",ser:"Dark Angels",   o:1, t:"Angels of Darkness",      tp:"novel"},
+  {era:"cls",ser:"Dark Angels",   o:2, t:"Ravenwing",               tp:"novel"},
+  {era:"cls",ser:"Dark Angels",   o:3, t:"Master of Sanctity",      tp:"novel"},
+  {era:"cls",ser:"Dark Angels",   o:4, t:"The Unforgiven",          tp:"novel"},
+  {era:"cls",ser:"Night Lords",   o:1, t:"Soul Hunter",             tp:"novel"},
+  {era:"cls",ser:"Night Lords",   o:2, t:"Blood Reaver",            tp:"novel"},
+  {era:"cls",ser:"Night Lords",   o:3, t:"Void Stalker",            tp:"novel"},
+  {era:"cls",ser:"Iron Warriors", o:1, t:"Storm of Iron",           tp:"novel"},
+  {era:"cls",ser:"Iron Warriors", o:2, t:"Iron Warrior",            tp:"anthology"},
+  {era:"cls",ser:"Word Bearers",  o:1, t:"Dark Apostle",            tp:"novel"},
+  {era:"cls",ser:"Word Bearers",  o:2, t:"Dark Disciple",           tp:"novel"},
+  {era:"cls",ser:"Word Bearers",  o:3, t:"Dark Creed",              tp:"novel"},
+  {era:"cls",ser:"Grey Knights",  o:1, t:"Grey Knights",            tp:"novel"},
+  {era:"cls",ser:"Grey Knights",  o:2, t:"Dark Adeptus",            tp:"novel"},
+  {era:"cls",ser:"Grey Knights",  o:3, t:"Hammer of Daemons",       tp:"novel"},
+  {era:"cls",ser:"40k Standalone",o:1, t:"Fifteen Hours",           tp:"novel"},
+  {era:"cls",ser:"40k Standalone",o:2, t:"13th Legion",             tp:"novel"},
+  {era:"cls",ser:"40k Standalone",o:3, t:"Lord of the Night",       tp:"novel"},
+  {era:"cls",ser:"40k Standalone",o:4, t:"Double Eagle",            tp:"novel"},
+  {era:"cls",ser:"40k Standalone",o:5, t:"Titanicus",               tp:"novel"},
+  {era:"cls",ser:"40k Standalone",o:6, t:"Brothers of the Snake",   tp:"novel"},
+  {era:"cls",ser:"40k Standalone",o:7, t:"Dead Men Walking",        tp:"novel"},
+
+  // ═══════════════════════════════════════════════════
+  //  ERA 4 — MODERN 40K / POST RIFT
+  // ═══════════════════════════════════════════════════
+  {era:"rift",ser:"Dark Imperium",  o:1,t:"Dark Imperium",          tp:"novel"},
+  {era:"rift",ser:"Dark Imperium",  o:2,t:"Plague War",             tp:"novel"},
+  {era:"rift",ser:"Dark Imperium",  o:3,t:"Godblight",              tp:"novel"},
+  {era:"rift",ser:"Dawn of Fire",   o:1,t:"Avenging Son",           tp:"novel"},
+  {era:"rift",ser:"Dawn of Fire",   o:2,t:"The Gate of Bones",      tp:"novel"},
+  {era:"rift",ser:"Dawn of Fire",   o:3,t:"The Wolf of Ash and Fire",tp:"novel"},
+  {era:"rift",ser:"Dawn of Fire",   o:4,t:"Throne of Light",        tp:"novel"},
+  {era:"rift",ser:"Dawn of Fire",   o:5,t:"The Iron Kingdom",       tp:"novel"},
+  {era:"rift",ser:"Dawn of Fire",   o:6,t:"The Sea of Souls",       tp:"novel"},
+  {era:"rift",ser:"Dawn of Fire",   o:7,t:"The Edge of Silence",    tp:"novel"},
+  {era:"rift",ser:"Indomitus",      o:1,t:"Indomitus",              tp:"novel"},
+  {era:"rift",ser:"Vaults of Terra",o:1,t:"The Carrion Throne",     tp:"novel"},
+  {era:"rift",ser:"Vaults of Terra",o:2,t:"The Hollow Mountain",    tp:"novel"},
+  {era:"rift",ser:"Vaults of Terra",o:3,t:"The Dark City",          tp:"novel"},
+  {era:"rift",ser:"Black Legion",   o:1,t:"Talon of Horus",         tp:"novel"},
+  {era:"rift",ser:"Black Legion",   o:2,t:"Black Legion",           tp:"novel"},
+  {era:"rift",ser:"Adepta Sororitas",o:1,t:"Faith & Fire",          tp:"novel"},
+  {era:"rift",ser:"Adepta Sororitas",o:2,t:"Hammer & Anvil",        tp:"novel"},
+  {era:"rift",ser:"Adepta Sororitas",o:3,t:"Heart of Flame",        tp:"novel"},
+  {era:"rift",ser:"Adepta Sororitas",o:4,t:"The Book of Martyrs",   tp:"anthology"},
+  {era:"rift",ser:"Adepta Sororitas",o:5,t:"The Rose in Darkness",  tp:"novel"},
+  {era:"rift",ser:"Necrons",        o:1,t:"The Infinite and the Divine",tp:"novel"},
+  {era:"rift",ser:"Necrons",        o:2,t:"Severed",                tp:"novel"},
+  {era:"rift",ser:"Leagues of Votann",o:1,t:"The Twice-Dead King: Ruin",tp:"novel"},
+  {era:"rift",ser:"Leagues of Votann",o:2,t:"The Twice-Dead King: Reign",tp:"novel"},
+  {era:"rift",ser:"T'au",           o:1,t:"Greater Good",           tp:"novel"},
+  {era:"rift",ser:"T'au",           o:2,t:"War of Secrets",         tp:"novel"},
+  {era:"rift",ser:"T'au",           o:3,t:"Farsight: Crisis of Faith",tp:"novel"},
+  {era:"rift",ser:"T'au",           o:4,t:"Farsight: Empire of Lies",tp:"novel"},
+  {era:"rift",ser:"Warhammer Crime",o:1,t:"Bloodlines",             tp:"novel"},
+  {era:"rift",ser:"Warhammer Crime",o:2,t:"Flesh and Steel",        tp:"novel"},
+  {era:"rift",ser:"Warhammer Crime",o:3,t:"No Good Men",            tp:"novel"},
+  {era:"rift",ser:"Warhammer Crime",o:4,t:"Grim Repast",            tp:"novel"},
+  {era:"rift",ser:"Warhammer Crime",o:5,t:"The Vorbis Conspiracy",  tp:"novel"},
+  {era:"rift",ser:"Warhammer Horror",o:1,t:"Maledictions",          tp:"anthology"},
+  {era:"rift",ser:"Warhammer Horror",o:2,t:"Invocations",           tp:"anthology"},
+  {era:"rift",ser:"Warhammer Horror",o:3,t:"Harrowed Worlds",       tp:"anthology"},
+  {era:"rift",ser:"Warhammer Horror",o:4,t:"Depths of Treachery",   tp:"anthology"},
+  {era:"rift",ser:"Warhammer Horror",o:5,t:"Perdition's Flame",     tp:"anthology"},
+  {era:"rift",ser:"Space Marine Conquests",o:1,t:"The Devastation of Baal",tp:"novel"},
+  {era:"rift",ser:"Space Marine Conquests",o:2,t:"Lazarus: Enmity's Edge",tp:"novel"},
+  {era:"rift",ser:"Space Marine Conquests",o:3,t:"Apocalypse",       tp:"novel"},
+  {era:"rift",ser:"Space Marine Conquests",o:4,t:"Hour of the Huntress",tp:"novel"},
 ];
 
-// Assign IDs
-const books = BOOKS_DATA.map((b, i) => ({ ...b, id: i }));
+// assign ids
+const books = RAW.map((b,i)=>({...b,id:i}));
 
-// Load state
-let state = JSON.parse(localStorage.getItem('wh40k_tracker') || '{}');
-let activeEra = 'all';
-let filterSeries = '';
-let filterStatus = '';
-let searchQuery = '';
+// ── State ──
+let state={};
+try{state=JSON.parse(localStorage.getItem('wh40k_v3')||'{}')}catch(e){}
+let aEra='all',fSer='',fSt='',fQ='';
 
-function getStatus(id) { return state[id] || 'unread'; }
-function cycleStatus(id) {
-  const s = getStatus(id);
-  const next = s === 'unread' ? 'reading' : s === 'reading' ? 'read' : 'unread';
-  state[id] = next;
-  try { localStorage.setItem('wh40k_tracker', JSON.stringify(state)); } catch(e){}
+const gs=id=>state[id]||'unread';
+function cycle(id){
+  const s=gs(id),n=s==='unread'?'reading':s==='reading'?'read':'unread';
+  state[id]=n;
+  try{localStorage.setItem('wh40k_v3',JSON.stringify(state))}catch(e){}
   render();
 }
 
-function getFilteredBooks() {
-  return books.filter(b => {
-    if (activeEra !== 'all' && b.era !== activeEra) return false;
-    if (filterSeries && b.series !== filterSeries) return false;
-    if (filterStatus && getStatus(b.id) !== filterStatus) return false;
-    if (searchQuery && !b.title.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+// ── Progress ──
+function updateProg(){
+  // exclude sub-entries from count (they share status tracking with parent context)
+  const countable=books.filter(b=>!b.sub);
+  const tot=countable.length;
+  const rd=countable.filter(b=>gs(b.id)==='read').length;
+  const rg=countable.filter(b=>gs(b.id)==='reading').length;
+  const pct=tot?Math.round(rd/tot*100):0;
+  document.getElementById('pn').innerHTML=`${rd} of <strong>${tot}</strong> books (${pct}%)`;
+  document.getElementById('pb').style.width=pct+'%';
+  document.getElementById('cr').textContent=rd+' read';
+  document.getElementById('cg').textContent=rg+' reading';
+  document.getElementById('cu').textContent=(tot-rd-rg)+' unread';
+}
+
+// ── Tabs ──
+function buildTabs(){
+  const c=document.getElementById('tabs');
+  c.innerHTML=[{id:'all',short:'All Eras'},...ERAS].map(e=>`<button class="tab ${e.id===aEra?'on':''}" onclick="setEra('${e.id}')">${e.short}</button>`).join('');
+}
+
+// ── Series filter ──
+function popSeries(){
+  const sel=document.getElementById('fsr');
+  const cur=sel.value;
+  const src=aEra==='all'?books:books.filter(b=>b.era===aEra);
+  const series=[...new Set(src.filter(b=>!b.sub).map(b=>b.ser))].sort();
+  sel.innerHTML='<option value="">All series</option>'+series.map(s=>`<option value="${s}"${s===cur?' selected':''}>${s}</option>`).join('');
+}
+
+function setEra(e){aEra=e;fSer='';document.getElementById('fsr').value='';buildTabs();popSeries();renderContent();}
+function resetAll(){aEra='all';fSer='';fSt='';fQ='';document.getElementById('fsr').value='';document.getElementById('fst').value='';document.getElementById('q').value='';buildTabs();popSeries();renderContent();}
+
+function getFiltered(){
+  return books.filter(b=>{
+    if(aEra!=='all'&&b.era!==aEra)return false;
+    if(fSer&&b.ser!==fSer)return false;
+    if(fSt&&!b.sub&&gs(b.id)!==fSt)return false;
+    if(fSt&&b.sub)return false; // hide sub-entries when filtering by status
+    if(fQ&&!b.t.toLowerCase().includes(fQ.toLowerCase()))return false;
     return true;
   });
 }
 
-function updateProgress() {
-  const total = books.length;
-  const read = books.filter(b => getStatus(b.id) === 'read').length;
-  const reading = books.filter(b => getStatus(b.id) === 'reading').length;
-  const unread = total - read - reading;
-  const pct = total ? Math.round(read / total * 100) : 0;
-  document.getElementById('total-books').textContent = total;
-  document.getElementById('overall-pct-text').innerHTML = `${read} of <strong id="total-books">${total}</strong> books`;
-  document.getElementById('overall-bar').style.width = pct + '%';
-  document.getElementById('count-read').textContent = read + ' read';
-  document.getElementById('count-reading').textContent = reading + ' reading';
-  document.getElementById('count-unread').textContent = unread + ' unread';
+function icon(st){
+  if(st==='read')return`<svg width="10"height="10"viewBox="0 0 10 10"><polyline points="1.5,5 3.8,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  if(st==='reading')return`<svg width="10"height="10"viewBox="0 0 10 10"><circle cx="5"cy="5"r="3"fill="white"/></svg>`;
+  return`<span style="width:5px;height:5px;border-radius:50%;background:var(--tx2);display:inline-block;"></span>`;
 }
 
-function populateSeriesFilter() {
-  const sel = document.getElementById('filter-series');
-  const currentVal = sel.value;
-  const srcBooks = activeEra === 'all' ? books : books.filter(b => b.era === activeEra);
-  const series = [...new Set(srcBooks.map(b => b.series))].sort();
-  sel.innerHTML = '<option value="">All series</option>' + series.map(s => `<option value="${s}" ${s===currentVal?'selected':''}>${s}</option>`).join('');
-}
+function tpClass(tp){return tp==='anthology'?'ba':tp==='novella'?'bv':tp==='audio'?'bad':'bn';}
+function tpLabel(tp){return tp==='anthology'?'Antho':tp==='novella'?'Novella':tp==='audio'?'Audio':'Novel';}
 
-function buildEraTabs() {
-  const container = document.getElementById('era-tabs');
-  const tabs = [{ id:'all', short:'All Eras' }, ...ERAS];
-  container.innerHTML = tabs.map(e =>
-    `<button class="era-tab ${e.id === activeEra ? 'active' : ''}" onclick="setEra('${e.id}')">${e.short}</button>`
-  ).join('');
-}
+function renderContent(){
+  updateProg();
+  const filtered=getFiltered();
+  const mc=document.getElementById('mc');
+  if(!filtered.length){mc.innerHTML='<div class="empty">No books match your filters.</div>';return;}
 
-function setEra(eraId) {
-  activeEra = eraId;
-  filterSeries = '';
-  document.getElementById('filter-series').value = '';
-  buildEraTabs();
-  populateSeriesFilter();
-  renderContent();
-}
+  const erasToShow=aEra==='all'?ERAS.map(e=>e.id):[aEra];
+  let html='';
 
-function resetFilters() {
-  activeEra = 'all';
-  filterSeries = '';
-  filterStatus = '';
-  searchQuery = '';
-  document.getElementById('filter-series').value = '';
-  document.getElementById('filter-status').value = '';
-  document.getElementById('search').value = '';
-  buildEraTabs();
-  populateSeriesFilter();
-  renderContent();
-}
+  for(const eraId of erasToShow){
+    const eraBooks=filtered.filter(b=>b.era===eraId);
+    if(!eraBooks.length)continue;
+    const eraDef=ERAS.find(e=>e.id===eraId);
+    const allInEra=books.filter(b=>b.era===eraId&&!b.sub).length;
+    const readInEra=books.filter(b=>b.era===eraId&&!b.sub&&gs(b.id)==='read').length;
+    const pct=allInEra?Math.round(readInEra/allInEra*100):0;
 
-function renderContent() {
-  updateProgress();
-  const filtered = getFilteredBooks();
-  const content = document.getElementById('main-content');
-
-  if (filtered.length === 0) {
-    content.innerHTML = '<div class="empty-state"><div class="icon">📖</div><div>No books match your filters.<br><span style="font-size:12px;color:var(--text-muted)">The Librarium holds no records matching your query.</span></div></div>';
-    return;
-  }
-
-  // Group by era then series
-  const erasToShow = activeEra === 'all' ? ERAS.map(e => e.id) : [activeEra];
-  let html = '';
-
-  for (const eraId of erasToShow) {
-    const eraBooks = filtered.filter(b => b.era === eraId);
-    if (!eraBooks.length) continue;
-    const eraDef = ERAS.find(e => e.id === eraId);
-    const totalInEra = books.filter(b => b.era === eraId).length;
-    const readInEra = books.filter(b => b.era === eraId && getStatus(b.id) === 'read').length;
-    const pct = totalInEra ? Math.round(readInEra / totalInEra * 100) : 0;
-
-    // Group by series
-    const seriesList = [...new Set(eraBooks.map(b => b.series))];
-
-    html += `<div class="era-section">
-      <div class="era-header">
-        <span class="era-title">${eraDef.name}</span>
-        <div class="era-progress-bar"><div class="era-progress-fill" style="width:${pct}%"></div></div>
-        <span class="era-pct">${pct}%</span>
-        <span class="era-count">${eraBooks.length}</span>
+    const seriesList=[...new Set(eraBooks.map(b=>b.ser))];
+    html+=`<div class="esec">
+      <div class="ehdr">
+        <span class="etitle">${eraDef.name}</span>
+        <div class="epb"><div class="epf" style="width:${pct}%"></div></div>
+        <span class="epct">${pct}%</span>
+        <span class="ecnt">${eraBooks.filter(b=>!b.sub).length}</span>
       </div>`;
 
-    for (const series of seriesList) {
-      const seriesBooks = eraBooks.filter(b => b.series === series).sort((a,b) => a.order - b.order);
-      html += `<div class="series-group">
-        <div class="series-title">${series}</div>
-        <div class="books-list">`;
-      for (const book of seriesBooks) {
-        const status = getStatus(book.id);
-        const typeCls = `type-${book.type === 'short story' ? 'short' : book.type}`;
-        const typeLabel = book.type === 'anthology' ? 'Anthology' : book.type === 'short' ? 'Short' : book.type === 'omnibus' ? 'Omnibus' : 'Novel';
-        const checkIcon = status === 'read'
-          ? `<svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
-          : status === 'reading'
-          ? `<svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="3" fill="white"/></svg>`
-          : `<span style="width:6px;height:6px;border-radius:50%;background:var(--text-muted);display:inline-block;"></span>`;
-        html += `<div class="book-item status-${status}" onclick="cycleStatus(${book.id})">
-          <span class="book-num">${book.order}</span>
-          <button class="book-status-btn" title="Click to cycle status">${checkIcon}</button>
-          <span class="book-title">${book.title}</span>
-          <span class="book-type-badge ${typeCls}">${typeLabel}</span>
-          ${status !== 'unread' ? `<span class="status-indicator ind-${status}">${status === 'read' ? 'Read' : 'Reading'}</span>` : ''}
+    for(const ser of seriesList){
+      const sb=eraBooks.filter(b=>b.ser===ser).sort((a,b)=>a.o-b.o);
+      html+=`<div class="sgrp"><div class="stitle">${ser}</div><div class="bks">`;
+      for(const bk of sb){
+        const st=bk.sub?gs(bk.id):gs(bk.id);
+        const isSub=!!bk.sub;
+        const numStr=isSub?'':String(bk.o%1===0?bk.o:bk.o);
+        const ind=!isSub&&st!=='unread'?`<span class="sind si-${st==='read'?'r':'g'}">${st==='read'?'Read':'Reading'}</span>`:'';
+        html+=`<div class="bk${isSub?' sub':''} s${st==='read'?'r':st==='reading'?'g':''}" onclick="cycle(${bk.id})">
+          <span class="bnum">${isSub?'':numStr}</span>
+          <button class="sbtn" title="Cycle status">${icon(st)}</button>
+          <span class="btitle">${bk.t}</span>
+          <span class="badge ${tpClass(bk.tp)}">${tpLabel(bk.tp)}</span>
+          ${ind}
         </div>`;
       }
-      html += `</div></div>`;
+      html+=`</div></div>`;
     }
-    html += `</div>`;
+    html+=`</div>`;
   }
-
-  content.innerHTML = html;
+  mc.innerHTML=html;
 }
 
-function render() {
-  updateProgress();
-  renderContent();
-}
+function render(){updateProg();renderContent();}
 
-// Init
-document.getElementById('filter-series').addEventListener('change', e => {
-  filterSeries = e.target.value;
-  renderContent();
-});
-document.getElementById('filter-status').addEventListener('change', e => {
-  filterStatus = e.target.value;
-  renderContent();
-});
-document.getElementById('search').addEventListener('input', e => {
-  searchQuery = e.target.value;
-  renderContent();
-});
+document.getElementById('fsr').addEventListener('change',e=>{fSer=e.target.value;renderContent();});
+document.getElementById('fst').addEventListener('change',e=>{fSt=e.target.value;renderContent();});
+document.getElementById('q').addEventListener('input',e=>{fQ=e.target.value;renderContent();});
 
-buildEraTabs();
-populateSeriesFilter();
-render();
+buildTabs();popSeries();render();
 </script>
 </body>
 </html>
