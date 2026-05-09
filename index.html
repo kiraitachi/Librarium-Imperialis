@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,88 +6,92 @@
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
-    --gold:#c9a84c;--gold-dark:#8a6a1e;--gold-light:#f0d080;
-    --bg0:#0d0d0d;--bg1:#141414;--bg2:#1a1a1a;--bg3:#202020;
+    --gold:#c9a84c;--bg0:#0d0d0d;--bg1:#141414;--bg2:#1a1a1a;--bg3:#202020;
     --bdr:rgba(201,168,76,.18);--bdr2:rgba(201,168,76,.44);
     --tx0:#e8e0cc;--tx1:#9a9080;--tx2:#5a5040;
-    --rd:#2e7d32;--rdg:#c07820;--radius:5px
+    --rd:#2e7d32;--rdg:#c07820;--r:5px
   }
   @media(prefers-color-scheme:light){:root{
     --bg0:#f4efe5;--bg1:#ece5d5;--bg2:#faf6ee;--bg3:#f0e8d8;
     --bdr:rgba(100,70,10,.14);--bdr2:rgba(100,70,10,.36);
     --tx0:#1a1208;--tx1:#6b5530;--tx2:#a08060;
-    --rd:#1b5e20;--rdg:#7a4a00;--gold:#7a5010;--gold-light:#a07020
+    --rd:#1b5e20;--rdg:#7a4a00;--gold:#7a5010
   }}
   body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg0);color:var(--tx0);min-height:100vh}
 
-  /* header */
+  /* ── Header ── */
   .hdr{background:var(--bg1);border-bottom:1px solid var(--bdr2);padding:13px 15px 11px;position:sticky;top:0;z-index:100}
   .htop{display:flex;align-items:center;gap:10px;margin-bottom:11px}
-  .atitle{font-family:Georgia,serif;font-size:15px;font-weight:700;color:var(--gold);letter-spacing:.05em}
+  .atit{font-family:Georgia,serif;font-size:15px;font-weight:700;color:var(--gold);letter-spacing:.05em}
   .asub{font-size:10px;color:var(--tx2);letter-spacing:.1em;text-transform:uppercase}
-  .prow{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .prow{display:flex;justify-content:space-between;margin-bottom:4px}
   .plbl{font-size:10px;color:var(--tx1);letter-spacing:.08em;text-transform:uppercase}
-  .pnums{font-size:11px;color:var(--tx1)}.pnums strong{color:var(--gold)}
+  .pnum{font-size:11px;color:var(--tx1)}.pnum strong{color:var(--gold)}
   .pbg{height:5px;background:var(--bg2);border-radius:3px;overflow:hidden;border:1px solid var(--bdr)}
   .pf{height:100%;background:linear-gradient(90deg,#2e7d32,#4caf50);border-radius:3px;transition:width .4s}
-  .mstats{display:flex;gap:12px;margin-top:6px}
+  .mst{display:flex;gap:12px;margin-top:6px}
   .ms{font-size:10px;display:flex;align-items:center;gap:4px;color:var(--tx1)}
   .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
   .dr{background:#4caf50}.dg{background:#f0a030}.du{background:var(--tx2)}
 
-  /* tabs */
+  /* ── Tabs ── */
   .tabs{display:flex;overflow-x:auto;gap:3px;padding:9px 15px 0;background:var(--bg1);scrollbar-width:none}
   .tabs::-webkit-scrollbar{display:none}
   .tab{font-size:11px;padding:5px 10px;border-radius:5px 5px 0 0;background:none;border:1px solid transparent;border-bottom:none;color:var(--tx2);cursor:pointer;white-space:nowrap;font-family:inherit}
   .tab.on{background:var(--bg2);border-color:var(--bdr);color:var(--gold)}
   .tab:hover:not(.on){color:var(--tx1)}
 
-  /* filters */
+  /* ── Filters ── */
   .flt{display:flex;gap:6px;flex-wrap:wrap;padding:9px 15px;background:var(--bg2);border-bottom:1px solid var(--bdr)}
-  .fsel,.fsrch{font-size:11px;background:var(--bg1);color:var(--tx0);border:1px solid var(--bdr);border-radius:var(--radius);padding:5px 8px;outline:none;font-family:inherit}
+  .fsel,.fsrch{font-size:11px;background:var(--bg1);color:var(--tx0);border:1px solid var(--bdr);border-radius:var(--r);padding:5px 8px;outline:none;font-family:inherit}
   .fsel{flex:1;min-width:120px;cursor:pointer}.fsrch{flex:2;min-width:150px}
   .fsrch::placeholder{color:var(--tx2)}.fsrch:focus,.fsel:focus{border-color:var(--gold)}
-  .frst{font-size:10px;background:none;color:var(--tx2);border:1px solid var(--bdr);border-radius:var(--radius);padding:5px 8px;cursor:pointer;font-family:inherit}
+  .frst{font-size:10px;background:none;color:var(--tx2);border:1px solid var(--bdr);border-radius:var(--r);padding:5px 8px;cursor:pointer;font-family:inherit}
   .frst:hover{color:var(--gold);border-color:var(--bdr2)}
 
-  /* content */
+  /* ── Content ── */
   .ct{padding:13px 15px}
   .esec{margin-bottom:22px}
   .ehdr{display:flex;align-items:center;gap:8px;margin-bottom:11px;padding-bottom:7px;border-bottom:1px solid var(--bdr)}
-  .etitle{font-family:Georgia,serif;font-size:13px;font-weight:700;color:var(--gold);flex:1}
+  .etit{font-family:Georgia,serif;font-size:13px;font-weight:700;color:var(--gold);flex:1}
   .epb{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;width:48px;flex-shrink:0}
   .epf{height:100%;background:var(--gold)}
   .epct{font-size:10px;color:var(--tx2);min-width:24px;text-align:right}
   .ecnt{font-size:10px;color:var(--tx2);background:var(--bg3);border:1px solid var(--bdr);border-radius:10px;padding:1px 7px}
 
-  /* series */
+  /* ── Series ── */
   .sgrp{margin-bottom:12px}
-  .stitle{font-size:10px;font-weight:700;color:var(--tx1);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;padding-left:7px;border-left:2px solid var(--bdr2)}
+  .stit{font-size:10px;font-weight:700;color:var(--tx1);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;padding-left:7px;border-left:2px solid var(--bdr2)}
 
-  /* books */
+  /* ── Book rows ── */
   .bks{display:flex;flex-direction:column;gap:2px}
-  .bk{display:flex;align-items:center;gap:8px;padding:6px 9px;background:var(--bg2);border-radius:var(--radius);border:1px solid var(--bdr);cursor:pointer;transition:border-color .12s,background .12s;min-height:38px}
+  .bk{display:flex;align-items:center;gap:8px;padding:6px 9px;background:var(--bg2);border-radius:var(--r);border:1px solid var(--bdr);cursor:pointer;transition:border-color .12s,background .12s;min-height:38px}
   .bk:hover{border-color:var(--bdr2);background:var(--bg3)}
-  /* sub-entry style (audio drama / part) */
-  .bk.sub{margin-left:22px;background:rgba(0,0,0,.2);border-style:dashed}
-  @media(prefers-color-scheme:light){.bk.sub{background:rgba(0,0,0,.04)}}
-  .bnum{font-size:9px;color:var(--tx2);min-width:20px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums}
+  .bnum{font-size:9px;color:var(--tx2);min-width:22px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums}
   .sbtn{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--bdr2);background:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:transform .12s;padding:0}
   .sbtn:hover{transform:scale(1.2)}
   .sr .sbtn{background:var(--rd);border-color:var(--rd)}
   .sg .sbtn{background:var(--rdg);border-color:var(--rdg)}
-  .btitle{flex:1;font-size:12px;color:var(--tx0);line-height:1.3}
-  .sr .btitle{color:var(--tx1)}.sg .btitle{font-weight:600}
+  .btit{flex:1;font-size:12px;color:var(--tx0);line-height:1.3}
+  .sr .btit{color:var(--tx1)}.sg .btit{font-weight:600}
+
+  /* ── Badges ── */
   .badge{font-size:8px;letter-spacing:.05em;text-transform:uppercase;padding:2px 5px;border-radius:3px;flex-shrink:0;border:1px solid}
-  .bn{background:rgba(30,60,120,.2);color:#7090e0;border-color:rgba(60,100,200,.25)}
-  .ba{background:rgba(80,30,80,.2);color:#c070d0;border-color:rgba(140,50,140,.25)}
-  .bv{background:rgba(20,80,60,.2);color:#50c090;border-color:rgba(30,120,90,.25)}
+  .bn {background:rgba(30,60,120,.2);color:#7090e0;border-color:rgba(60,100,200,.25)}
+  .ba {background:rgba(80,30,80,.2);color:#c070d0;border-color:rgba(140,50,140,.25)}
+  .bv {background:rgba(20,80,60,.2);color:#50c090;border-color:rgba(30,120,90,.25)}
   .bad{background:rgba(140,90,10,.2);color:#d0a050;border-color:rgba(180,130,20,.25)}
+  .bs {background:rgba(60,100,120,.2);color:#60b0d0;border-color:rgba(40,100,140,.25)}
+  .bo {background:rgba(100,40,20,.2);color:#d07050;border-color:rgba(160,60,30,.25)}
+  .bsg{background:rgba(180,30,30,.2);color:#e07070;border-color:rgba(200,40,40,.25)}
   @media(prefers-color-scheme:light){
-    .bn{background:rgba(30,60,180,.07);color:#1840a0;border-color:rgba(30,60,180,.2)}
-    .ba{background:rgba(100,20,120,.07);color:#701090;border-color:rgba(100,20,120,.2)}
-    .bv{background:rgba(10,100,60,.07);color:#0a6040;border-color:rgba(10,100,60,.2)}
+    .bn {background:rgba(30,60,180,.07);color:#1840a0;border-color:rgba(30,60,180,.2)}
+    .ba {background:rgba(100,20,120,.07);color:#701090;border-color:rgba(100,20,120,.2)}
+    .bv {background:rgba(10,100,60,.07);color:#0a6040;border-color:rgba(10,100,60,.2)}
     .bad{background:rgba(140,90,10,.07);color:#7a5000;border-color:rgba(140,90,10,.2)}
+    .bs {background:rgba(20,80,120,.07);color:#1a6090;border-color:rgba(20,80,120,.2)}
+    .bo {background:rgba(140,50,20,.07);color:#903010;border-color:rgba(140,50,20,.2)}
+    .bsg{background:rgba(180,20,20,.07);color:#a01010;border-color:rgba(180,20,20,.2)}
   }
   .sind{font-size:8px;letter-spacing:.04em;text-transform:uppercase;padding:2px 5px;border-radius:3px;flex-shrink:0;border:1px solid}
   .si-r{background:rgba(46,125,50,.15);color:#66bb6a;border-color:rgba(46,125,50,.3)}
@@ -97,22 +100,35 @@
 </style>
 </head>
 <body>
+
 <div class="hdr">
   <div class="htop">
-    <svg width="30" height="30" viewBox="0 0 32 32"><path d="M16 2L18 8L24 6L20 11L26 13L20 15L22 21L16 19L10 21L12 15L6 13L12 11L8 6L14 8Z" fill="#c9a84c" opacity=".9"/><path d="M5 17L11 19L9 25L5 23L3 27L7 21L3 17Z" fill="#c9a84c" opacity=".7"/><path d="M27 17L21 19L23 25L27 23L29 27L25 21L29 17Z" fill="#c9a84c" opacity=".7"/></svg>
-    <div><div class="atitle">Librarium Imperialis</div><div class="asub">Warhammer 40,000 · Reading Tracker</div></div>
+    <svg width="30" height="30" viewBox="0 0 32 32">
+      <path d="M16 2L18 8L24 6L20 11L26 13L20 15L22 21L16 19L10 21L12 15L6 13L12 11L8 6L14 8Z" fill="#c9a84c" opacity=".9"/>
+      <path d="M5 17L11 19L9 25L5 23L3 27L7 21L3 17Z" fill="#c9a84c" opacity=".7"/>
+      <path d="M27 17L21 19L23 25L27 23L29 27L25 21L29 17Z" fill="#c9a84c" opacity=".7"/>
+    </svg>
+    <div>
+      <div class="atit">Librarium Imperialis</div>
+      <div class="asub">Warhammer 40,000 · Reading Tracker</div>
+    </div>
   </div>
   <div>
-    <div class="prow"><span class="plbl">Overall Progress</span><span class="pnums" id="pn"></span></div>
+    <div class="prow">
+      <span class="plbl">Overall Progress</span>
+      <span class="pnum" id="pn"></span>
+    </div>
     <div class="pbg"><div class="pf" id="pb" style="width:0%"></div></div>
-    <div class="mstats">
+    <div class="mst">
       <div class="ms"><div class="dot dr"></div><span id="cr">0 read</span></div>
       <div class="ms"><div class="dot dg"></div><span id="cg">0 reading</span></div>
       <div class="ms"><div class="dot du"></div><span id="cu">0 unread</span></div>
     </div>
   </div>
 </div>
+
 <div class="tabs" id="tabs"></div>
+
 <div class="flt">
   <input class="fsrch" id="q" type="text" placeholder="Search books…"/>
   <select class="fsel" id="fsr"><option value="">All series</option></select>
@@ -124,321 +140,533 @@
   </select>
   <button class="frst" onclick="resetAll()">Reset</button>
 </div>
+
 <div class="ct" id="mc"></div>
 
 <script>
 const ERAS=[
-  {id:"hh",  name:"The Great Crusade & Horus Heresy",  short:"Horus Heresy"},
-  {id:"post",name:"Post Heresy & Classic 40k Bridge",   short:"Post Heresy"},
-  {id:"cls", name:"Classic 40k",                        short:"Classic 40k"},
-  {id:"rift",name:"Post Rift – Modern 40k",             short:"Modern 40k"},
+  {id:"hh",  name:"The Great Crusade & Horus Heresy", short:"Horus Heresy"},
+  {id:"post",name:"Post Heresy & Classic 40k Bridge",  short:"Post Heresy"},
+  {id:"cls", name:"Classic 40k",                       short:"Classic 40k"},
+  {id:"rift",name:"Post Rift – Modern 40k",            short:"Modern 40k"},
 ];
 
-// type: novel | anthology | novella | audio
-// sub:true = audio drama / part entry (indented, dashed)
-// parent: shows this is a sub-entry of the named parent book
+// tp: novel|anthology|novella|audio|short|omnibus|saga
 const RAW=[
-  // ═══════════════════════════════════════════════════
-  //  ERA 1 — HORUS HERESY MAIN SERIES (54 volumes)
-  // ═══════════════════════════════════════════════════
-  {era:"hh",ser:"Horus Heresy – Main Series",o:1, t:"Horus Rising",                 tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:2, t:"False Gods",                   tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:3, t:"Galaxy in Flames",             tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:4, t:"The Flight of the Eisenstein", tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:5, t:"Fulgrim",                      tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:6, t:"Descent of Angels",            tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:7, t:"Legion",                       tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:8, t:"Battle for the Abyss",         tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:9, t:"Mechanicum",                   tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:10,t:"Tales of Heresy",              tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:11,t:"Fallen Angels",                tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:12,t:"A Thousand Sons",              tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:13,t:"Nemesis",                      tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:14,t:"The First Heretic",            tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:15,t:"Prospero Burns",               tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:16,t:"Age of Darkness",              tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:17,t:"The Outcast Dead",             tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:18,t:"Deliverance Lost",             tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:19,t:"Know No Fear",                 tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:20,t:"The Primarchs",                tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:21,t:"Fear to Tread",                tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:22,t:"Shadows of Treachery",         tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:23,t:"Angel Exterminatus",           tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:24,t:"Betrayer",                     tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:25,t:"Mark of Calth",               tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:26,t:"Vulkan Lives",                 tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:27,t:"The Unremembered Empire",      tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:28,t:"Scars",                        tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:29,t:"Vengeful Spirit",              tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:30,t:"The Damnation of Pythos",      tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:31,t:"Legacies of Betrayal",         tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:32,t:"Deathfire",                    tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:33,t:"War Without End",              tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:34,t:"Pharos",                       tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:35,t:"Eye of Terra",                 tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:36,t:"The Path of Heaven",           tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:37,t:"The Silent War",               tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:38,t:"Angels of Caliban",            tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:39,t:"Praetorian of Dorn",           tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:40,t:"Corax",                        tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:41,t:"The Master of Mankind",        tp:"novel"},
-  // ── #42 Garro: Weapons of Fate — with all sub-parts ──
-  {era:"hh",ser:"Horus Heresy – Main Series",o:42,t:"Garro: Weapons of Fate",       tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:42.1,t:"The Sword: Oath of Moment",   tp:"audio"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:42.2,t:"The Sword: Sword of Truth",   tp:"audio"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:42.3,t:"The Shield: Burden of Duty", tp:"audio"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:42.4,t:"The Shield: Legion of One",  tp:"audio"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:42.5,t:"Shield of Lies",                       tp:"audio"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:42.6,t:"Ashes of Fealty",                      tp:"audio"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:42.7,t:"Vow of Faith",               tp:"novella"},
-  // ── back to main series ──
-  {era:"hh",ser:"Horus Heresy – Main Series",o:43,t:"Shattered Legions",            tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:44,t:"The Crimson King",             tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:45,t:"Tallarn",                      tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:46,t:"Ruinstorm",                    tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:47,t:"Old Earth",                    tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:48,t:"The Burden of Loyalty",        tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:49,t:"Wolfsbane",                    tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:50,t:"Born of Flame",                tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:51,t:"Slaves to Darkness",           tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:52,t:"Heralds of the Siege",         tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:53,t:"Titandeath",                   tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Main Series",o:54,t:"The Buried Dagger",            tp:"novel"},
 
-  // ═══════════════════════════════════════════════════
-  //  HORUS HERESY – PRIMARCHS (17 novels + 4 anthologies)
-  // ═══════════════════════════════════════════════════
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:1, t:"Roboute Guilliman: Lord of Ultramar",   tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:2, t:"Leman Russ: The Great Wolf",            tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:3, t:"Magnus the Red: Master of Prospero",    tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:4, t:"Perturabo: Hammer of Olympia",          tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:5, t:"Lorgar: Bearer of the Word",            tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:6, t:"Fulgrim: The Palatine Phoenix",         tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:7, t:"Ferrus Manus: The Gorgon of Medusa",   tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:8, t:"Jaghatai Khan: Warhawk of Chogoris",   tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:9, t:"Vulkan: Lord of Drakes",               tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:10,t:"Corax: Lord of Shadows",               tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:11,t:"Angron: Slave of Nuceria",             tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:12,t:"Konrad Curze: The Night Haunter",      tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:13,t:"Lion El'Jonson: Lord of the First",    tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:14,t:"Alpharius: Head of the Hydra",         tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:15,t:"Mortarion: The Pale King",             tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:16,t:"Rogal Dorn: The Emperor's Crusader",   tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:17,t:"Sanguinius: The Great Angel",          tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:18,t:"Sons of the Emperor (Anthology)",      tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:19,t:"Scions of the Emperor (Anthology)",    tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:20,t:"Blood of the Emperor (Anthology)",     tp:"anthology"},
-  {era:"hh",ser:"Horus Heresy – Primarchs",o:21,t:"Heirs of the Emperor (Anthology)",     tp:"anthology"},
+// ══════════════════════════════════════════════════════════════════
+// ERA 1 — HORUS HERESY
+// ══════════════════════════════════════════════════════════════════
 
-  // ═══════════════════════════════════════════════════
-  //  HORUS HERESY – CHARACTERS (4 novels)
-  // ═══════════════════════════════════════════════════
-  {era:"hh",ser:"Horus Heresy – Characters",o:1,t:"Valdor: Birth of the Imperium",        tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Characters",o:2,t:"Luther: First of the Fallen",          tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Characters",o:3,t:"Sigismund: The Eternal Crusader",      tp:"novel"},
-  {era:"hh",ser:"Horus Heresy – Characters",o:4,t:"Eidolon: The Auric Hammer",            tp:"novel"},
+// ── HH MAIN SERIES (54) ────────────────────────────────────────
+{era:"hh",ser:"HH – Main Series",o:1, t:"Horus Rising",                     tp:"novel",   auth:"Dan Abnett"},
+{era:"hh",ser:"HH – Main Series",o:2, t:"False Gods",                        tp:"novel",   auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Main Series",o:3, t:"Galaxy in Flames",                  tp:"novel",   auth:"Ben Counter"},
+{era:"hh",ser:"HH – Main Series",o:4, t:"The Flight of the Eisenstein",      tp:"novel",   auth:"James Swallow"},
+{era:"hh",ser:"HH – Main Series",o:5, t:"Fulgrim",                           tp:"novel",   auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Main Series",o:6, t:"Descent of Angels",                 tp:"novel",   auth:"Mitchel Scanlon"},
+{era:"hh",ser:"HH – Main Series",o:7, t:"Legion",                            tp:"novel",   auth:"Dan Abnett"},
+{era:"hh",ser:"HH – Main Series",o:8, t:"Battle for the Abyss",              tp:"novel",   auth:"Ben Counter"},
+{era:"hh",ser:"HH – Main Series",o:9, t:"Mechanicum",                        tp:"novel",   auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Main Series",o:10,t:"Tales of Heresy",                   tp:"anthology",auth:"ed. Lindsey Priestley & Nick Kyme"},
+{era:"hh",ser:"HH – Main Series",o:11,t:"Fallen Angels",                     tp:"novel",   auth:"Mike Lee"},
+{era:"hh",ser:"HH – Main Series",o:12,t:"A Thousand Sons",                   tp:"novel",   auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Main Series",o:13,t:"Nemesis",                           tp:"novel",   auth:"James Swallow"},
+{era:"hh",ser:"HH – Main Series",o:14,t:"The First Heretic",                 tp:"novel",   auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Main Series",o:15,t:"Prospero Burns",                    tp:"novel",   auth:"Dan Abnett"},
+{era:"hh",ser:"HH – Main Series",o:16,t:"Age of Darkness",                   tp:"anthology",auth:"ed. Christian Dunn"},
+{era:"hh",ser:"HH – Main Series",o:17,t:"The Outcast Dead",                  tp:"novel",   auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Main Series",o:18,t:"Deliverance Lost",                  tp:"novel",   auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Main Series",o:19,t:"Know No Fear",                      tp:"novel",   auth:"Dan Abnett"},
+{era:"hh",ser:"HH – Main Series",o:20,t:"The Primarchs",                     tp:"anthology",auth:"ed. Christian Dunn"},
+{era:"hh",ser:"HH – Main Series",o:21,t:"Fear to Tread",                     tp:"novel",   auth:"James Swallow"},
+{era:"hh",ser:"HH – Main Series",o:22,t:"Shadows of Treachery",              tp:"anthology",auth:"ed. Christian Dunn & Nick Kyme"},
+{era:"hh",ser:"HH – Main Series",o:23,t:"Angel Exterminatus",                tp:"novel",   auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Main Series",o:24,t:"Betrayer",                          tp:"novel",   auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Main Series",o:25,t:"Mark of Calth",                     tp:"anthology",auth:"ed. Laurie Goulding"},
+{era:"hh",ser:"HH – Main Series",o:26,t:"Vulkan Lives",                      tp:"novel",   auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Main Series",o:27,t:"The Unremembered Empire",           tp:"novel",   auth:"Dan Abnett"},
+{era:"hh",ser:"HH – Main Series",o:28,t:"Scars",                             tp:"novel",   auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Main Series",o:29,t:"Vengeful Spirit",                   tp:"novel",   auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Main Series",o:30,t:"The Damnation of Pythos",           tp:"novel",   auth:"David Annandale"},
+{era:"hh",ser:"HH – Main Series",o:31,t:"Legacies of Betrayal",              tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Main Series",o:32,t:"Deathfire",                         tp:"novel",   auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Main Series",o:33,t:"War Without End",                   tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Main Series",o:34,t:"Pharos",                            tp:"novel",   auth:"Guy Haley"},
+{era:"hh",ser:"HH – Main Series",o:35,t:"Eye of Terra",                      tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Main Series",o:36,t:"The Path of Heaven",                tp:"novel",   auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Main Series",o:37,t:"The Silent War",                    tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Main Series",o:38,t:"Angels of Caliban",                 tp:"novel",   auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Main Series",o:39,t:"Praetorian of Dorn",                tp:"novel",   auth:"John French"},
+{era:"hh",ser:"HH – Main Series",o:40,t:"Corax",                             tp:"anthology",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Main Series",o:41,t:"The Master of Mankind",             tp:"novel",   auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Main Series",o:42,t:"Garro",                             tp:"anthology",auth:"James Swallow"},
+{era:"hh",ser:"HH – Main Series",o:43,t:"Shattered Legions",                 tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Main Series",o:44,t:"The Crimson King",                  tp:"novel",   auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Main Series",o:45,t:"Tallarn",                           tp:"anthology",auth:"John French"},
+{era:"hh",ser:"HH – Main Series",o:46,t:"Ruinstorm",                         tp:"novel",   auth:"David Annandale"},
+{era:"hh",ser:"HH – Main Series",o:47,t:"Old Earth",                         tp:"novel",   auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Main Series",o:48,t:"The Burden of Loyalty",             tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Main Series",o:49,t:"Wolfsbane",                         tp:"novel",   auth:"Guy Haley"},
+{era:"hh",ser:"HH – Main Series",o:50,t:"Born of Flame",                     tp:"anthology",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Main Series",o:51,t:"Slaves to Darkness",                tp:"novel",   auth:"John French"},
+{era:"hh",ser:"HH – Main Series",o:52,t:"Heralds of the Siege",              tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Main Series",o:53,t:"Titandeath",                        tp:"novel",   auth:"Guy Haley"},
+{era:"hh",ser:"HH – Main Series",o:54,t:"The Buried Dagger",                 tp:"novel",   auth:"James Swallow"},
 
-  // ═══════════════════════════════════════════════════
-  //  SIEGE OF TERRA (8 main + 3 novellas + 1 anthology)
-  // ═══════════════════════════════════════════════════
-  {era:"hh",ser:"Siege of Terra",o:1, t:"The Solar War",                tp:"novel"},
-  {era:"hh",ser:"Siege of Terra",o:2, t:"The Lost and the Damned",      tp:"novel"},
-  {era:"hh",ser:"Siege of Terra",o:3, t:"The First Wall",               tp:"novel"},
-  {era:"hh",ser:"Siege of Terra",o:3.5,t:"Sons of Selenar",             tp:"novella"},
-  {era:"hh",ser:"Siege of Terra",o:4, t:"Saturnine",                    tp:"novel"},
-  {era:"hh",ser:"Siege of Terra",o:4.5,t:"Fury of Magnus",              tp:"novella"},
-  {era:"hh",ser:"Siege of Terra",o:5, t:"Mortis",                       tp:"novel"},
-  {era:"hh",ser:"Siege of Terra",o:6, t:"Warhawk",                      tp:"novel"},
-  {era:"hh",ser:"Siege of Terra",o:7, t:"Echoes of Eternity",           tp:"novel"},
-  {era:"hh",ser:"Siege of Terra",o:7.5,t:"Garro: Knight of Grey",       tp:"novella"},
-  {era:"hh",ser:"Siege of Terra",o:8, t:"The End and the Death Vol. I",  tp:"novel"},
-  {era:"hh",ser:"Siege of Terra",o:9, t:"The End and the Death Vol. II", tp:"novel"},
-  {era:"hh",ser:"Siege of Terra",o:10,t:"The End and the Death Vol. III",tp:"novel"},
-  {era:"hh",ser:"Siege of Terra",o:11,t:"Era of Ruin (Anthology)",       tp:"anthology"},
+// ── HH SAGA (curated re-release) ───────────────────────────────
 
-  // ═══════════════════════════════════════════════════
-  //  ERA 2 — POST HERESY
-  // ═══════════════════════════════════════════════════
-  {era:"post",ser:"Eisenhorn",o:1,t:"Xenos",          tp:"novel"},
-  {era:"post",ser:"Eisenhorn",o:2,t:"Malleus",         tp:"novel"},
-  {era:"post",ser:"Eisenhorn",o:3,t:"Hereticus",       tp:"novel"},
-  {era:"post",ser:"Eisenhorn",o:4,t:"The Magos",       tp:"novel"},
-  {era:"post",ser:"Ravenor",  o:1,t:"Ravenor",         tp:"novel"},
-  {era:"post",ser:"Ravenor",  o:2,t:"Ravenor Returned",tp:"novel"},
-  {era:"post",ser:"Ravenor",  o:3,t:"Ravenor Rogue",   tp:"novel"},
-  {era:"post",ser:"Space Marine Battles",o:1, t:"Rynn's World",          tp:"novel"},
-  {era:"post",ser:"Space Marine Battles",o:2, t:"Helsreach",             tp:"novel"},
-  {era:"post",ser:"Space Marine Battles",o:3, t:"Battle of the Fang",    tp:"novel"},
-  {era:"post",ser:"Space Marine Battles",o:4, t:"Hunt for Voldorius",    tp:"novel"},
-  {era:"post",ser:"Space Marine Battles",o:5, t:"Purging of Kadillus",   tp:"novel"},
-  {era:"post",ser:"Space Marine Battles",o:6, t:"Fall of Damnos",        tp:"novel"},
-  {era:"post",ser:"Space Marine Battles",o:7, t:"Architect of Fate",     tp:"anthology"},
-  {era:"post",ser:"Space Marine Battles",o:8, t:"The Gildar Rift",       tp:"novel"},
-  {era:"post",ser:"Space Marine Battles",o:9, t:"Legion of the Damned",  tp:"novel"},
-  {era:"post",ser:"Space Marine Battles",o:10,t:"Flesh and Iron",        tp:"novel"},
-  {era:"post",ser:"Space Marine Battles",o:11,t:"Death of Integrity",    tp:"novel"},
-  {era:"post",ser:"Space Marine Battles",o:12,t:"The Siege of Castellax",tp:"novel"},
+// ── SIEGE OF TERRA ─────────────────────────────────────────────
+{era:"hh",ser:"Siege of Terra",o:1, t:"The Solar War",                    tp:"novel",  auth:"John French"},
+{era:"hh",ser:"Siege of Terra",o:2, t:"The Lost and the Damned",          tp:"novel",  auth:"Guy Haley"},
+{era:"hh",ser:"Siege of Terra",o:3, t:"The First Wall",                   tp:"novel",  auth:"Gav Thorpe"},
+{era:"hh",ser:"Siege of Terra",o:4, t:"Sons of the Selenar",              tp:"novella",auth:"Graham McNeill"},
+{era:"hh",ser:"Siege of Terra",o:5, t:"Saturnine",                        tp:"novel",  auth:"Dan Abnett"},
+{era:"hh",ser:"Siege of Terra",o:6, t:"The Fury of Magnus",               tp:"novella",auth:"Graham McNeill"},
+{era:"hh",ser:"Siege of Terra",o:7, t:"Mortis",                           tp:"novel",  auth:"John French"},
+{era:"hh",ser:"Siege of Terra",o:8, t:"Warhawk",                          tp:"novel",  auth:"Chris Wraight"},
+{era:"hh",ser:"Siege of Terra",o:9, t:"Echoes of Eternity",               tp:"novel",  auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"Siege of Terra",o:10,t:"Garro: Knight of Grey",            tp:"novella",auth:"James Swallow"},
+{era:"hh",ser:"Siege of Terra",o:11,t:"The End and the Death: Volume I",  tp:"novel",  auth:"Dan Abnett"},
+{era:"hh",ser:"Siege of Terra",o:12,t:"The End and the Death: Volume II", tp:"novel",  auth:"Dan Abnett"},
+{era:"hh",ser:"Siege of Terra",o:13,t:"The End and the Death: Volume III",tp:"novel",  auth:"Dan Abnett"},
+{era:"hh",ser:"Siege of Terra",o:14,t:"Era of Ruin",                      tp:"anthology",auth:"various"},
 
-  // ═══════════════════════════════════════════════════
-  //  ERA 3 — CLASSIC 40K
-  // ═══════════════════════════════════════════════════
-  {era:"cls",ser:"Gaunt's Ghosts",o:1, t:"First and Only",          tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:2, t:"Ghostmaker",              tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:3, t:"Necropolis",              tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:4, t:"Honour Guard",            tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:5, t:"The Guns of Tanith",      tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:6, t:"Straight Silver",         tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:7, t:"Sabbat Martyr",           tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:8, t:"Traitor General",         tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:9, t:"His Last Command",        tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:10,t:"The Armour of Contempt",  tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:11,t:"Only in Death",           tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:12,t:"Blood Pact",              tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:13,t:"Salvation's Reach",       tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:14,t:"The Warmaster",           tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:15,t:"Anarch",                  tp:"novel"},
-  {era:"cls",ser:"Gaunt's Ghosts",o:16,t:"The Vincula Insurgency",  tp:"novel"},
-  {era:"cls",ser:"Ciaphas Cain",  o:1, t:"For the Emperor",         tp:"novel"},
-  {era:"cls",ser:"Ciaphas Cain",  o:2, t:"Caves of Ice",            tp:"novel"},
-  {era:"cls",ser:"Ciaphas Cain",  o:3, t:"The Traitor's Hand",      tp:"novel"},
-  {era:"cls",ser:"Ciaphas Cain",  o:4, t:"Death or Glory",          tp:"novel"},
-  {era:"cls",ser:"Ciaphas Cain",  o:5, t:"Duty Calls",              tp:"novel"},
-  {era:"cls",ser:"Ciaphas Cain",  o:6, t:"Cain's Last Stand",       tp:"novel"},
-  {era:"cls",ser:"Ciaphas Cain",  o:7, t:"The Emperor's Finest",    tp:"novel"},
-  {era:"cls",ser:"Ciaphas Cain",  o:8, t:"The Last Ditch",          tp:"novel"},
-  {era:"cls",ser:"Ciaphas Cain",  o:9, t:"The Greater Good",        tp:"novel"},
-  {era:"cls",ser:"Ciaphas Cain",  o:10,t:"Choose Your Enemies",     tp:"novel"},
-  {era:"cls",ser:"Ciaphas Cain",  o:11,t:"Vainglorious",            tp:"novel"},
-  {era:"cls",ser:"Ultramarines",  o:1, t:"Nightbringer",            tp:"novel"},
-  {era:"cls",ser:"Ultramarines",  o:2, t:"Warriors of Ultramar",    tp:"novel"},
-  {era:"cls",ser:"Ultramarines",  o:3, t:"Dead Sky, Black Sun",     tp:"novel"},
-  {era:"cls",ser:"Ultramarines",  o:4, t:"The Killing Ground",      tp:"novel"},
-  {era:"cls",ser:"Ultramarines",  o:5, t:"Courage and Honour",      tp:"novel"},
-  {era:"cls",ser:"Ultramarines",  o:6, t:"The Chapter's Due",       tp:"novel"},
-  {era:"cls",ser:"Space Wolves",  o:1, t:"Space Wolf",              tp:"novel"},
-  {era:"cls",ser:"Space Wolves",  o:2, t:"Ragnar's Claw",           tp:"novel"},
-  {era:"cls",ser:"Space Wolves",  o:3, t:"Grey Hunter",             tp:"novel"},
-  {era:"cls",ser:"Space Wolves",  o:4, t:"Wolf Blade",              tp:"novel"},
-  {era:"cls",ser:"Space Wolves",  o:5, t:"Sons of Fenris",          tp:"novel"},
-  {era:"cls",ser:"Space Wolves",  o:6, t:"Wolf's Honour",           tp:"novel"},
-  {era:"cls",ser:"Blood Angels",  o:1, t:"Deus Encarmine",          tp:"novel"},
-  {era:"cls",ser:"Blood Angels",  o:2, t:"Deus Sanguinius",         tp:"novel"},
-  {era:"cls",ser:"Blood Angels",  o:3, t:"Red Fury",                tp:"novel"},
-  {era:"cls",ser:"Blood Angels",  o:4, t:"Black Tide",              tp:"novel"},
-  {era:"cls",ser:"Dark Angels",   o:1, t:"Angels of Darkness",      tp:"novel"},
-  {era:"cls",ser:"Dark Angels",   o:2, t:"Ravenwing",               tp:"novel"},
-  {era:"cls",ser:"Dark Angels",   o:3, t:"Master of Sanctity",      tp:"novel"},
-  {era:"cls",ser:"Dark Angels",   o:4, t:"The Unforgiven",          tp:"novel"},
-  {era:"cls",ser:"Night Lords",   o:1, t:"Soul Hunter",             tp:"novel"},
-  {era:"cls",ser:"Night Lords",   o:2, t:"Blood Reaver",            tp:"novel"},
-  {era:"cls",ser:"Night Lords",   o:3, t:"Void Stalker",            tp:"novel"},
-  {era:"cls",ser:"Iron Warriors", o:1, t:"Storm of Iron",           tp:"novel"},
-  {era:"cls",ser:"Iron Warriors", o:2, t:"Iron Warrior",            tp:"anthology"},
-  {era:"cls",ser:"Word Bearers",  o:1, t:"Dark Apostle",            tp:"novel"},
-  {era:"cls",ser:"Word Bearers",  o:2, t:"Dark Disciple",           tp:"novel"},
-  {era:"cls",ser:"Word Bearers",  o:3, t:"Dark Creed",              tp:"novel"},
-  {era:"cls",ser:"Grey Knights",  o:1, t:"Grey Knights",            tp:"novel"},
-  {era:"cls",ser:"Grey Knights",  o:2, t:"Dark Adeptus",            tp:"novel"},
-  {era:"cls",ser:"Grey Knights",  o:3, t:"Hammer of Daemons",       tp:"novel"},
-  {era:"cls",ser:"40k Standalone",o:1, t:"Fifteen Hours",           tp:"novel"},
-  {era:"cls",ser:"40k Standalone",o:2, t:"13th Legion",             tp:"novel"},
-  {era:"cls",ser:"40k Standalone",o:3, t:"Lord of the Night",       tp:"novel"},
-  {era:"cls",ser:"40k Standalone",o:4, t:"Double Eagle",            tp:"novel"},
-  {era:"cls",ser:"40k Standalone",o:5, t:"Titanicus",               tp:"novel"},
-  {era:"cls",ser:"40k Standalone",o:6, t:"Brothers of the Snake",   tp:"novel"},
-  {era:"cls",ser:"40k Standalone",o:7, t:"Dead Men Walking",        tp:"novel"},
+// ── THE SCOURING ───────────────────────────────────────────────
+{era:"hh",ser:"HH – The Scouring",o:1,t:"Ashes of the Imperium",          tp:"novel",  auth:"Chris Wraight"},
 
-  // ═══════════════════════════════════════════════════
-  //  ERA 4 — MODERN 40K / POST RIFT
-  // ═══════════════════════════════════════════════════
-  {era:"rift",ser:"Dark Imperium",  o:1,t:"Dark Imperium",          tp:"novel"},
-  {era:"rift",ser:"Dark Imperium",  o:2,t:"Plague War",             tp:"novel"},
-  {era:"rift",ser:"Dark Imperium",  o:3,t:"Godblight",              tp:"novel"},
-  {era:"rift",ser:"Dawn of Fire",   o:1,t:"Avenging Son",           tp:"novel"},
-  {era:"rift",ser:"Dawn of Fire",   o:2,t:"The Gate of Bones",      tp:"novel"},
-  {era:"rift",ser:"Dawn of Fire",   o:3,t:"The Wolf of Ash and Fire",tp:"novel"},
-  {era:"rift",ser:"Dawn of Fire",   o:4,t:"Throne of Light",        tp:"novel"},
-  {era:"rift",ser:"Dawn of Fire",   o:5,t:"The Iron Kingdom",       tp:"novel"},
-  {era:"rift",ser:"Dawn of Fire",   o:6,t:"The Sea of Souls",       tp:"novel"},
-  {era:"rift",ser:"Dawn of Fire",   o:7,t:"The Edge of Silence",    tp:"novel"},
-  {era:"rift",ser:"Indomitus",      o:1,t:"Indomitus",              tp:"novel"},
-  {era:"rift",ser:"Vaults of Terra",o:1,t:"The Carrion Throne",     tp:"novel"},
-  {era:"rift",ser:"Vaults of Terra",o:2,t:"The Hollow Mountain",    tp:"novel"},
-  {era:"rift",ser:"Vaults of Terra",o:3,t:"The Dark City",          tp:"novel"},
-  {era:"rift",ser:"Black Legion",   o:1,t:"Talon of Horus",         tp:"novel"},
-  {era:"rift",ser:"Black Legion",   o:2,t:"Black Legion",           tp:"novel"},
-  {era:"rift",ser:"Adepta Sororitas",o:1,t:"Faith & Fire",          tp:"novel"},
-  {era:"rift",ser:"Adepta Sororitas",o:2,t:"Hammer & Anvil",        tp:"novel"},
-  {era:"rift",ser:"Adepta Sororitas",o:3,t:"Heart of Flame",        tp:"novel"},
-  {era:"rift",ser:"Adepta Sororitas",o:4,t:"The Book of Martyrs",   tp:"anthology"},
-  {era:"rift",ser:"Adepta Sororitas",o:5,t:"The Rose in Darkness",  tp:"novel"},
-  {era:"rift",ser:"Necrons",        o:1,t:"The Infinite and the Divine",tp:"novel"},
-  {era:"rift",ser:"Necrons",        o:2,t:"Severed",                tp:"novel"},
-  {era:"rift",ser:"Leagues of Votann",o:1,t:"The Twice-Dead King: Ruin",tp:"novel"},
-  {era:"rift",ser:"Leagues of Votann",o:2,t:"The Twice-Dead King: Reign",tp:"novel"},
-  {era:"rift",ser:"T'au",           o:1,t:"Greater Good",           tp:"novel"},
-  {era:"rift",ser:"T'au",           o:2,t:"War of Secrets",         tp:"novel"},
-  {era:"rift",ser:"T'au",           o:3,t:"Farsight: Crisis of Faith",tp:"novel"},
-  {era:"rift",ser:"T'au",           o:4,t:"Farsight: Empire of Lies",tp:"novel"},
-  {era:"rift",ser:"Warhammer Crime",o:1,t:"Bloodlines",             tp:"novel"},
-  {era:"rift",ser:"Warhammer Crime",o:2,t:"Flesh and Steel",        tp:"novel"},
-  {era:"rift",ser:"Warhammer Crime",o:3,t:"No Good Men",            tp:"novel"},
-  {era:"rift",ser:"Warhammer Crime",o:4,t:"Grim Repast",            tp:"novel"},
-  {era:"rift",ser:"Warhammer Crime",o:5,t:"The Vorbis Conspiracy",  tp:"novel"},
-  {era:"rift",ser:"Warhammer Horror",o:1,t:"Maledictions",          tp:"anthology"},
-  {era:"rift",ser:"Warhammer Horror",o:2,t:"Invocations",           tp:"anthology"},
-  {era:"rift",ser:"Warhammer Horror",o:3,t:"Harrowed Worlds",       tp:"anthology"},
-  {era:"rift",ser:"Warhammer Horror",o:4,t:"Depths of Treachery",   tp:"anthology"},
-  {era:"rift",ser:"Warhammer Horror",o:5,t:"Perdition's Flame",     tp:"anthology"},
-  {era:"rift",ser:"Space Marine Conquests",o:1,t:"The Devastation of Baal",tp:"novel"},
-  {era:"rift",ser:"Space Marine Conquests",o:2,t:"Lazarus: Enmity's Edge",tp:"novel"},
-  {era:"rift",ser:"Space Marine Conquests",o:3,t:"Apocalypse",       tp:"novel"},
-  {era:"rift",ser:"Space Marine Conquests",o:4,t:"Hour of the Huntress",tp:"novel"},
+// ── PRIMARCHS NOVELS ───────────────────────────────────────────
+{era:"hh",ser:"HH – Primarchs",o:1, t:"Roboute Guilliman: Lord of Ultramar",   tp:"novel",    auth:"David Annandale"},
+{era:"hh",ser:"HH – Primarchs",o:2, t:"Leman Russ: The Great Wolf",            tp:"novel",    auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Primarchs",o:3, t:"Magnus the Red: Master of Prospero",    tp:"novel",    auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Primarchs",o:4, t:"Perturabo: The Hammer of Olympia",      tp:"novel",    auth:"Guy Haley"},
+{era:"hh",ser:"HH – Primarchs",o:5, t:"Lorgar: Bearer of the Word",            tp:"novel",    auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Primarchs",o:6, t:"Fulgrim: The Palatine Phoenix",          tp:"novel",    auth:"Josh Reynolds"},
+{era:"hh",ser:"HH – Primarchs",o:7, t:"Ferrus Manus: The Gorgon of Medusa",   tp:"novel",    auth:"David Guymer"},
+{era:"hh",ser:"HH – Primarchs",o:8, t:"Jaghatai Khan: Warhawk of Chogoris",   tp:"novel",    auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Primarchs",o:9, t:"Vulkan: Lord of Drakes",               tp:"novel",    auth:"David Annandale"},
+{era:"hh",ser:"HH – Primarchs",o:10,t:"Sons of the Emperor",                  tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Primarchs",o:11,t:"Corax: Lord of Shadows",               tp:"novel",    auth:"Guy Haley"},
+{era:"hh",ser:"HH – Primarchs",o:12,t:"Angron: Slave of Nuceria",             tp:"novel",    auth:"Ian St. Martin"},
+{era:"hh",ser:"HH – Primarchs",o:13,t:"Scions of the Emperor",                tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Primarchs",o:14,t:"Konrad Curze: The Night Haunter",      tp:"novel",    auth:"Guy Haley"},
+{era:"hh",ser:"HH – Primarchs",o:15,t:"Lion El'Jonson: Lord of the First",    tp:"novel",    auth:"David Guymer"},
+{era:"hh",ser:"HH – Primarchs",o:16,t:"Alpharius: Head of the Hydra",         tp:"novel",    auth:"Mike Brooks"},
+{era:"hh",ser:"HH – Primarchs",o:17,t:"Blood of the Emperor",                 tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Primarchs",o:18,t:"Mortarion: The Pale King",             tp:"novel",    auth:"David Annandale"},
+{era:"hh",ser:"HH – Primarchs",o:19,t:"Rogal Dorn: The Emperor's Crusader",   tp:"novel",    auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Primarchs",o:20,t:"Sanguinius: The Great Angel",          tp:"novel",    auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Primarchs",o:21,t:"Heirs of the Emperor",                 tp:"anthology",auth:"various"},
+
+// ── PRIMARCHS SHORT STORIES ────────────────────────────────────
+{era:"hh",ser:"HH – Primarchs (Short Stories)",o:1,t:"Grandfather's Gift",         tp:"short",auth:"Guy Haley"},
+{era:"hh",ser:"HH – Primarchs (Short Stories)",o:2,t:"The Atonement of Fire",      tp:"short",auth:"David Annandale"},
+{era:"hh",ser:"HH – Primarchs (Short Stories)",o:3,t:"A Lesson in Iron",           tp:"short",auth:"David Guymer"},
+{era:"hh",ser:"HH – Primarchs (Short Stories)",o:4,t:"Ghost of Nuceria",           tp:"short",auth:"Ian St. Martin"},
+{era:"hh",ser:"HH – Primarchs (Short Stories)",o:5,t:"The Passing of Angels",      tp:"short",auth:"John French"},
+{era:"hh",ser:"HH – Primarchs (Short Stories)",o:6,t:"The Abyssal Edge",           tp:"short",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Primarchs (Short Stories)",o:7,t:"Mercy of the Dragon",        tp:"short",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Primarchs (Short Stories)",o:8,t:"Will of the Legion",         tp:"short",auth:"Andy Clark"},
+{era:"hh",ser:"HH – Primarchs (Short Stories)",o:9,t:"Embers of Extinction",       tp:"short",auth:"Brandon Easton"},
+
+// ── PRIMARCHS AUDIO DRAMAS ─────────────────────────────────────
+{era:"hh",ser:"HH – Primarchs (Audio Dramas)",o:1,t:"Perturabo: Stone and Iron",          tp:"audio",auth:"Robbie MacNiven"},
+{era:"hh",ser:"HH – Primarchs (Audio Dramas)",o:2,t:"Malcador: First Lord of the Imperium",tp:"audio",auth:"Laurie Goulding"},
+{era:"hh",ser:"HH – Primarchs (Audio Dramas)",o:3,t:"Konrad Curze: A Lesson in Darkness", tp:"audio",auth:"Ian St. Martin"},
+{era:"hh",ser:"HH – Primarchs (Audio Dramas)",o:4,t:"The Lords of Terra",                 tp:"audio",auth:"various"},
+{era:"hh",ser:"HH – Primarchs (Audio Dramas)",o:5,t:"Illyrium",                            tp:"audio",auth:"Darius Hinks"},
+{era:"hh",ser:"HH – Primarchs (Audio Dramas)",o:6,t:"The Revelation of the Word",         tp:"audio",auth:"David Annandale"},
+{era:"hh",ser:"HH – Primarchs (Audio Dramas)",o:7,t:"Morningstar",                        tp:"audio",auth:"Graham McNeill"},
+
+// ── HH CHARACTERS ──────────────────────────────────────────────
+{era:"hh",ser:"HH – Characters",o:1,t:"Valdor: Birth of the Imperium",        tp:"novel",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Characters",o:2,t:"Luther: First of the Fallen",          tp:"novel",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Characters",o:3,t:"Sigismund: The Eternal Crusader",      tp:"novel",auth:"John French"},
+{era:"hh",ser:"HH – Characters",o:4,t:"Eidolon: The Auric Hammer",            tp:"novel",auth:"Marc Collins"},
+{era:"hh",ser:"HH – Characters",o:5,t:"Zardu Layak: The Crimson Apostle",     tp:"novel",auth:"Rich McCormick"},
+
+// ── OFFICIAL NOVELLAS ──────────────────────────────────────────
+{era:"hh",ser:"HH – Official Novellas",o:1, t:"Promethean Sun",          tp:"novella",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Official Novellas",o:2, t:"Aurelian",                tp:"novella",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Official Novellas",o:3, t:"Brotherhood of the Storm", tp:"novella",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Official Novellas",o:4, t:"The Reflection Crack'd",   tp:"novella",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Official Novellas",o:5, t:"Feat of Iron",             tp:"novella",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Official Novellas",o:6, t:"The Lion",                 tp:"novella",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Official Novellas",o:7, t:"The Serpent Beneath",      tp:"novella",auth:"Rob Sanders"},
+{era:"hh",ser:"HH – Official Novellas",o:8, t:"Corax: Soulforge",         tp:"novella",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Official Novellas",o:9, t:"Scorched Earth",           tp:"novella",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Official Novellas",o:10,t:"Tallarn: Executioner",     tp:"novella",auth:"John French"},
+{era:"hh",ser:"HH – Official Novellas",o:11,t:"Prince of Crows",          tp:"novella",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Official Novellas",o:12,t:"The Crimson Fist",         tp:"novella",auth:"John French"},
+{era:"hh",ser:"HH – Official Novellas",o:13,t:"The Purge",                tp:"novella",auth:"Anthony Reynolds"},
+{era:"hh",ser:"HH – Official Novellas",o:14,t:"Ravenlord",                tp:"novella",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Official Novellas",o:15,t:"The Seventh Serpent",      tp:"novella",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Official Novellas",o:16,t:"Tallarn: Ironclad",        tp:"novella",auth:"John French"},
+{era:"hh",ser:"HH – Official Novellas",o:17,t:"Cybernetica",              tp:"novella",auth:"Rob Sanders"},
+{era:"hh",ser:"HH – Official Novellas",o:18,t:"Wolf King",                tp:"novella",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Official Novellas",o:19,t:"The Honoured",             tp:"novella",auth:"Rob Sanders"},
+{era:"hh",ser:"HH – Official Novellas",o:20,t:"The Unburdened",           tp:"novella",auth:"David Annandale"},
+{era:"hh",ser:"HH – Official Novellas",o:21,t:"Garro: Vow of Faith",      tp:"novella",auth:"James Swallow"},
+{era:"hh",ser:"HH – Official Novellas",o:22,t:"Sons of the Forge",        tp:"novella",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Official Novellas",o:23,t:"Dreadwing",                tp:"novella",auth:"David Guymer"},
+{era:"hh",ser:"HH – Official Novellas",o:24,t:"Spear of Ultramar",        tp:"novella",auth:"David Annandale"},
+
+// ── COLLECTIONS & SPECIAL ANTHOLOGIES ─────────────────────────
+{era:"hh",ser:"HH – Collections & Anthologies",o:1, t:"Angron",                            tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:2, t:"The Imperial Truth",                tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:3, t:"Sedition's Gate",                   tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:4, t:"Echoes of Ruin",                    tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:5, t:"Death and Defiance",                tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:6, t:"Blades of the Traitor",             tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:7, t:"Meduson",                           tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:8, t:"Betrayal at Calth",                 tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:9, t:"Echoes of Imperium",                tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:10,t:"Virtues of the Sons / Sins of the Father",tp:"anthology",auth:"Andy Smillie"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:11,t:"Echoes of Revelation",              tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:12,t:"Lupercal's War",                    tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:13,t:"Cthonia's Reckoning",               tp:"anthology",auth:"various"},
+{era:"hh",ser:"HH – Collections & Anthologies",o:14,t:"Dropsite Massacre",                 tp:"novel",    auth:"John French"},
+
+// ── OMNIBUS EDITIONS ───────────────────────────────────────────
+{era:"hh",ser:"HH – Omnibus Editions",o:1,t:"Crusade's End",          tp:"omnibus",auth:"various"},
+{era:"hh",ser:"HH – Omnibus Editions",o:2,t:"The Razing of Prospero", tp:"omnibus",auth:"various"},
+{era:"hh",ser:"HH – Omnibus Editions",o:3,t:"The Last Phoenix",       tp:"omnibus",auth:"various"},
+
+// ── HH SHORT STORIES ──────────────────────────────────────────
+{era:"hh",ser:"HH – Short Stories",o:1,  t:"The Lightning Tower",                          tp:"short",auth:"Dan Abnett"},
+{era:"hh",ser:"HH – Short Stories",o:2,  t:"The Dark King",                                tp:"short",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Short Stories",o:3,  t:"Blood Games",                                  tp:"short",auth:"Dan Abnett"},
+{era:"hh",ser:"HH – Short Stories",o:4,  t:"Wolf at the Door",                             tp:"short",auth:"Mike Lee"},
+{era:"hh",ser:"HH – Short Stories",o:5,  t:"Scions of the Storm",                          tp:"short",auth:"Anthony Reynolds"},
+{era:"hh",ser:"HH – Short Stories",o:6,  t:"The Voice",                                    tp:"short",auth:"James Swallow"},
+{era:"hh",ser:"HH – Short Stories",o:7,  t:"Call of the Lion",                             tp:"short",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Short Stories",o:8,  t:"The Last Church",                              tp:"short",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Short Stories",o:9,  t:"After Desh'ea",                                tp:"short",auth:"Matthew Farrer"},
+{era:"hh",ser:"HH – Short Stories",o:10, t:"Rules of Engagement",                          tp:"short",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Short Stories",o:11, t:"Liar's Due",                                   tp:"short",auth:"James Swallow"},
+{era:"hh",ser:"HH – Short Stories",o:12, t:"Forgotten Sons",                               tp:"short",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Short Stories",o:13, t:"The Last Remembrancer",                        tp:"short",auth:"John French"},
+{era:"hh",ser:"HH – Short Stories",o:14, t:"Rebirth",                                      tp:"short",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Short Stories",o:15, t:"The Face of Treachery",                        tp:"short",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Short Stories",o:16, t:"Little Horus",                                 tp:"short",auth:"Dan Abnett"},
+{era:"hh",ser:"HH – Short Stories",o:17, t:"The Iron Within",                              tp:"short",auth:"Rob Sanders"},
+{era:"hh",ser:"HH – Short Stories",o:18, t:"Savage Weapons",                               tp:"short",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Short Stories",o:19, t:"Army of One",                                  tp:"short",auth:"Rob Sanders"},
+{era:"hh",ser:"HH – Short Stories",o:20, t:"Kryptos",                                      tp:"short",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Short Stories",o:21, t:"Distant Echoes of Old Night",                  tp:"short",auth:"Rob Sanders"},
+{era:"hh",ser:"HH – Short Stories",o:22, t:"Lost Sons",                                    tp:"short",auth:"James Swallow"},
+{era:"hh",ser:"HH – Short Stories",o:23, t:"Death of a Silversmith",                       tp:"short",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Short Stories",o:24, t:"The Divine Word",                              tp:"short",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Short Stories",o:25, t:"The Kaban Project",                            tp:"short",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Short Stories",o:26, t:"The Gates of Terra",                           tp:"short",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Short Stories",o:27, t:"Lord of the Red Sands",                        tp:"short",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Short Stories",o:28, t:"Serpent",                                      tp:"short",auth:"John French"},
+{era:"hh",ser:"HH – Short Stories",o:29, t:"Luna Mendax",                                  tp:"short",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Short Stories",o:30, t:"Riven",                                        tp:"short",auth:"John French"},
+{era:"hh",ser:"HH – Short Stories",o:31, t:"Bjorn: Lone Wolf",                             tp:"short",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Short Stories",o:32, t:"The Wolf of Ash and Fire",                     tp:"short",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Short Stories",o:33, t:"Heart of the Conqueror",                       tp:"short",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Short Stories",o:34, t:"Child of Night",                               tp:"short",auth:"John French"},
+{era:"hh",ser:"HH – Short Stories",o:35, t:"The Devine Adoratrice",                        tp:"short",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Short Stories",o:36, t:"Daemonology",                                  tp:"short",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Short Stories",o:37, t:"Sins of the Father",                           tp:"short",auth:"Andy Smillie"},
+{era:"hh",ser:"HH – Short Stories",o:38, t:"The Final Compliance of Sixty-Three Fourteen", tp:"short",auth:"Guy Haley"},
+{era:"hh",ser:"HH – Short Stories",o:39, t:"Vorax",                                        tp:"short",auth:"Matthew Farrer"},
+{era:"hh",ser:"HH – Short Stories",o:40, t:"The Value of Fear",                            tp:"short",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Short Stories",o:41, t:"Brotherhood of the Moon",                      tp:"short",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Short Stories",o:42, t:"Virtues of the Sons",                          tp:"short",auth:"Andy Smillie"},
+{era:"hh",ser:"HH – Short Stories",o:43, t:"Imperfect",                                    tp:"short",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Short Stories",o:44, t:"Howl of the Hearthworld",                      tp:"short",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Short Stories",o:45, t:"A Safe and Shadowed Place",                    tp:"short",auth:"Guy Haley"},
+{era:"hh",ser:"HH – Short Stories",o:46, t:"Gunsight",                                     tp:"short",auth:"James Swallow"},
+{era:"hh",ser:"HH – Short Stories",o:47, t:"Black Oculus",                                 tp:"short",auth:"John French"},
+{era:"hh",ser:"HH – Short Stories",o:48, t:"Wolf Mother",                                  tp:"short",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Short Stories",o:49, t:"Twisted",                                      tp:"short",auth:"Guy Haley"},
+{era:"hh",ser:"HH – Short Stories",o:50, t:"Chirurgeon",                                   tp:"short",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Short Stories",o:51, t:"Tallarn: Witness",                             tp:"short",auth:"John French"},
+{era:"hh",ser:"HH – Short Stories",o:52, t:"Ironfire",                                     tp:"short",auth:"Rob Sanders"},
+{era:"hh",ser:"HH – Short Stories",o:53, t:"Hands of the Emperor",                         tp:"short",auth:"Rob Sanders"},
+{era:"hh",ser:"HH – Short Stories",o:54, t:"By the Lion's Command",                        tp:"short",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Short Stories",o:55, t:"All That Remains",                             tp:"short",auth:"James Swallow"},
+{era:"hh",ser:"HH – Short Stories",o:56, t:"The Phoenician",                               tp:"short",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Short Stories",o:57, t:"Artefacts",                                    tp:"short",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Short Stories",o:58, t:"Ghosts Speak Not",                             tp:"short",auth:"James Swallow"},
+{era:"hh",ser:"HH – Short Stories",o:59, t:"Patience",                                     tp:"short",auth:"James Swallow"},
+{era:"hh",ser:"HH – Short Stories",o:60, t:"Tallarn: Siren",                               tp:"short",auth:"John French"},
+{era:"hh",ser:"HH – Short Stories",o:61, t:"Inheritor",                                    tp:"short",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Short Stories",o:62, t:"Blackshield",                                  tp:"short",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Short Stories",o:63, t:"Myriad",                                       tp:"short",auth:"Rob Sanders"},
+{era:"hh",ser:"HH – Short Stories",o:64, t:"Into Exile",                                   tp:"short",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Short Stories",o:65, t:"The Grey Raven",                               tp:"short",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Short Stories",o:66, t:"The Painted Count",                            tp:"short",auth:"Guy Haley"},
+{era:"hh",ser:"HH – Short Stories",o:67, t:"Exocytosis",                                   tp:"short",auth:"James Swallow"},
+{era:"hh",ser:"HH – Short Stories",o:68, t:"The Last Son of Prospero",                     tp:"short",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Short Stories",o:69, t:"Ordo Sinister",                                tp:"short",auth:"John French"},
+{era:"hh",ser:"HH – Short Stories",o:70, t:"The Ember Wolves",                             tp:"short",auth:"Rob Sanders"},
+{era:"hh",ser:"HH – Short Stories",o:71, t:"Restorer",                                     tp:"short",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Short Stories",o:72, t:"The Laurel of Defiance",                       tp:"short",auth:"Guy Haley"},
+{era:"hh",ser:"HH – Short Stories",o:73, t:"Immortal Duty",                                tp:"short",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Short Stories",o:76, t:"Duty Waits",                                   tp:"short",auth:"Guy Haley"},
+{era:"hh",ser:"HH – Short Stories",o:77, t:"Magisterium",                                  tp:"short",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Short Stories",o:78, t:"Now Peals Midnight",                           tp:"short",auth:"John French"},
+{era:"hh",ser:"HH – Short Stories",o:79, t:"Dreams of Unity",                              tp:"short",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Short Stories",o:80, t:"The Board is Set",                             tp:"short",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Short Stories",o:81, t:"Champion of Oaths",                            tp:"short",auth:"John French"},
+{era:"hh",ser:"HH – Short Stories",o:82, t:"Child of Chaos",                               tp:"short",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Short Stories",o:83, t:"Massacre",                                     tp:"short",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Short Stories",o:84, t:"Two Metaphysical Blades",                      tp:"short",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Short Stories",o:85, t:"Prologue to Nikaea",                           tp:"short",auth:"David Annandale"},
+{era:"hh",ser:"HH – Short Stories",o:86, t:"Old Wounds, New Scars",                        tp:"short",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Short Stories",o:87, t:"Abyssal",                                      tp:"short",auth:"David Annandale"},
+{era:"hh",ser:"HH – Short Stories",o:88, t:"The Last Council",                             tp:"short",auth:"L.J. Goulding"},
+{era:"hh",ser:"HH – Short Stories",o:89, t:"A Rose Watered with Blood",                    tp:"short",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Short Stories",o:90, t:"Bringer of Sorrow",                            tp:"short",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Short Stories",o:91, t:"Lantern's Light",                              tp:"short",auth:"James Swallow"},
+{era:"hh",ser:"HH – Short Stories",o:92, t:"The Serpent's Dance",                          tp:"short",auth:"Mike Brooks"},
+{era:"hh",ser:"HH – Short Stories",o:93, t:"The Lightning Hall",                           tp:"short",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Short Stories",o:94, t:"Eater of Dreams",                              tp:"short",auth:"Marc Collins"},
+{era:"hh",ser:"HH – Short Stories",o:95, t:"Bloodhowl",                                    tp:"short",auth:"Chris Forrester"},
+{era:"hh",ser:"HH – Short Stories",o:96, t:"Amor Fati",                                    tp:"short",auth:"Michael F. Haspil"},
+{era:"hh",ser:"HH – Short Stories",o:97, t:"The Fields of Abundance",                      tp:"short",auth:"David Annandale"},
+{era:"hh",ser:"HH – Short Stories",o:98, t:"The Shel'tain Affair",                         tp:"short",auth:"Jude Reid"},
+{era:"hh",ser:"HH – Short Stories",o:99, t:"Primacy",                                      tp:"short",auth:"Marc Collins"},
+{era:"hh",ser:"HH – Short Stories",o:100,t:"The Nine",                                     tp:"short",auth:"Justin D Hill"},
+{era:"hh",ser:"HH – Short Stories",o:101,t:"Visage",                                       tp:"short",auth:"Rich McCormick"},
+{era:"hh",ser:"HH – Short Stories",o:102,t:"The Last Loyalist",                            tp:"short",auth:"David Guymer"},
+{era:"hh",ser:"HH – Short Stories",o:103,t:"Anathema",                                     tp:"short",auth:"Jude Reid"},
+
+// ── HH AUDIO DRAMAS ────────────────────────────────────────────
+{era:"hh",ser:"HH – Audio Dramas",o:1, t:"The Dark King and The Lightning Tower",  tp:"audio",auth:"Dan Abnett & Graham McNeill"},
+{era:"hh",ser:"HH – Audio Dramas",o:2, t:"Raven's Flight",                         tp:"audio",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Audio Dramas",o:3, t:"Garro: Oath of Moment",                  tp:"audio",auth:"James Swallow"},
+{era:"hh",ser:"HH – Audio Dramas",o:4, t:"Garro: Legion of One",                   tp:"audio",auth:"James Swallow"},
+{era:"hh",ser:"HH – Audio Dramas",o:5, t:"Butcher's Nails",                        tp:"audio",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Audio Dramas",o:6, t:"Grey Angel",                             tp:"audio",auth:"John French"},
+{era:"hh",ser:"HH – Audio Dramas",o:7, t:"Burden of Duty",                         tp:"audio",auth:"James Swallow"},
+{era:"hh",ser:"HH – Audio Dramas",o:8, t:"Garro: Sword of Truth",                  tp:"audio",auth:"James Swallow"},
+{era:"hh",ser:"HH – Audio Dramas",o:9, t:"Warmaster",                              tp:"audio",auth:"John French"},
+{era:"hh",ser:"HH – Audio Dramas",o:10,t:"Strike and Fade",                        tp:"audio",auth:"Guy Haley"},
+{era:"hh",ser:"HH – Audio Dramas",o:11,t:"Veritas Ferrum",                         tp:"audio",auth:"David Annandale"},
+{era:"hh",ser:"HH – Audio Dramas",o:12,t:"The Sigillite",                          tp:"audio",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Audio Dramas",o:13,t:"Honour to the Dead",                     tp:"audio",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Audio Dramas",o:14,t:"Wolf Hunt",                              tp:"audio",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Audio Dramas",o:15,t:"Censure",                                tp:"audio",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Audio Dramas",o:16,t:"Thief of Revelations",                   tp:"audio",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Audio Dramas",o:17,t:"Kharn: The Eightfold Path",              tp:"audio",auth:"Anthony Reynolds"},
+{era:"hh",ser:"HH – Audio Dramas",o:18,t:"Lucius: The Eternal Blademaster",        tp:"audio",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Audio Dramas",o:19,t:"Cypher: Guardian of Order",             tp:"audio",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Audio Dramas",o:20,t:"Hunter's Moon",                          tp:"audio",auth:"Guy Haley"},
+{era:"hh",ser:"HH – Audio Dramas",o:21,t:"Wolf's Claw",                            tp:"audio",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Audio Dramas",o:22,t:"Templar",                                tp:"audio",auth:"John French"},
+{era:"hh",ser:"HH – Audio Dramas",o:23,t:"Garro: Shield of Lies",                  tp:"audio",auth:"James Swallow"},
+{era:"hh",ser:"HH – Audio Dramas",o:24,t:"Master of the First",                    tp:"audio",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Audio Dramas",o:25,t:"The Long Night",                         tp:"audio",auth:"Aaron Dembski-Bowden"},
+{era:"hh",ser:"HH – Audio Dramas",o:26,t:"Stratagem",                              tp:"audio",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Audio Dramas",o:27,t:"Herald of Sanguinius",                   tp:"audio",auth:"Andy Smillie"},
+{era:"hh",ser:"HH – Audio Dramas",o:28,t:"The Watcher",                            tp:"audio",auth:"C.Z. Dunn"},
+{era:"hh",ser:"HH – Audio Dramas",o:29,t:"The Eagle's Talon",                      tp:"audio",auth:"John French"},
+{era:"hh",ser:"HH – Audio Dramas",o:30,t:"Iron Corpses",                           tp:"audio",auth:"David Annandale"},
+{era:"hh",ser:"HH – Audio Dramas",o:31,t:"Garro: Ashes of Fealty",                 tp:"audio",auth:"James Swallow"},
+{era:"hh",ser:"HH – Audio Dramas",o:32,t:"Raptor",                                 tp:"audio",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Audio Dramas",o:33,t:"Grey Talon",                             tp:"audio",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Audio Dramas",o:34,t:"Red-Marked",                             tp:"audio",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Audio Dramas",o:35,t:"The Either",                             tp:"audio",auth:"Graham McNeill"},
+{era:"hh",ser:"HH – Audio Dramas",o:36,t:"The Heart of the Pharos",                tp:"audio",auth:"Laurie Goulding"},
+{era:"hh",ser:"HH – Audio Dramas",o:37,t:"The Thirteenth Wolf",                    tp:"audio",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Audio Dramas",o:38,t:"Children of Sicarus",                    tp:"audio",auth:"Anthony Reynolds"},
+{era:"hh",ser:"HH – Audio Dramas",o:39,t:"Perpetual",                              tp:"audio",auth:"Dan Abnett"},
+{era:"hh",ser:"HH – Audio Dramas",o:40,t:"The Soul, Severed",                      tp:"audio",auth:"Chris Wraight"},
+{era:"hh",ser:"HH – Audio Dramas",o:41,t:"Valerius",                               tp:"audio",auth:"Gav Thorpe"},
+{era:"hh",ser:"HH – Audio Dramas",o:42,t:"The Binary Succession",                  tp:"audio",auth:"David Annandale"},
+{era:"hh",ser:"HH – Audio Dramas",o:43,t:"Dark Compliance",                        tp:"audio",auth:"John French"},
+{era:"hh",ser:"HH – Audio Dramas",o:44,t:"Blackshields: The False War",            tp:"audio",auth:"Josh Reynolds"},
+{era:"hh",ser:"HH – Audio Dramas",o:45,t:"Blackshields: The Red Fief",             tp:"audio",auth:"Josh Reynolds"},
+{era:"hh",ser:"HH – Audio Dramas",o:46,t:"Hubris of Monarchia",                    tp:"audio",auth:"Andy Smillie"},
+{era:"hh",ser:"HH – Audio Dramas",o:47,t:"Nightfane",                              tp:"audio",auth:"Nick Kyme"},
+{era:"hh",ser:"HH – Audio Dramas",o:48,t:"Blackshields: The Broken Chain",         tp:"audio",auth:"Josh Reynolds"},
+
+// ══════════════════════════════════════════════════════════════════
+// ERA 2 — POST HERESY
+// ══════════════════════════════════════════════════════════════════
+{era:"post",ser:"Eisenhorn",o:1,t:"Xenos",           tp:"novel",auth:"Dan Abnett"},
+{era:"post",ser:"Eisenhorn",o:2,t:"Malleus",          tp:"novel",auth:"Dan Abnett"},
+{era:"post",ser:"Eisenhorn",o:3,t:"Hereticus",        tp:"novel",auth:"Dan Abnett"},
+{era:"post",ser:"Eisenhorn",o:4,t:"The Magos",        tp:"novel",auth:"Dan Abnett"},
+{era:"post",ser:"Ravenor",  o:1,t:"Ravenor",          tp:"novel",auth:"Dan Abnett"},
+{era:"post",ser:"Ravenor",  o:2,t:"Ravenor Returned", tp:"novel",auth:"Dan Abnett"},
+{era:"post",ser:"Ravenor",  o:3,t:"Ravenor Rogue",    tp:"novel",auth:"Dan Abnett"},
+{era:"post",ser:"Space Marine Battles",o:1, t:"Rynn's World",          tp:"novel",auth:"Steve Parker"},
+{era:"post",ser:"Space Marine Battles",o:2, t:"Helsreach",             tp:"novel",auth:"Aaron Dembski-Bowden"},
+{era:"post",ser:"Space Marine Battles",o:3, t:"Battle of the Fang",    tp:"novel",auth:"Chris Wraight"},
+{era:"post",ser:"Space Marine Battles",o:4, t:"Hunt for Voldorius",    tp:"novel",auth:"Andy Hoare"},
+{era:"post",ser:"Space Marine Battles",o:5, t:"Purging of Kadillus",   tp:"novel",auth:"Gav Thorpe"},
+{era:"post",ser:"Space Marine Battles",o:6, t:"Fall of Damnos",        tp:"novel",auth:"Nick Kyme"},
+{era:"post",ser:"Space Marine Battles",o:7, t:"Architect of Fate",     tp:"anthology",auth:"various"},
+{era:"post",ser:"Space Marine Battles",o:8, t:"The Gildar Rift",       tp:"novel",auth:"Sarah Cawkwell"},
+{era:"post",ser:"Space Marine Battles",o:9, t:"Legion of the Damned",  tp:"novel",auth:"Rob Sanders"},
+{era:"post",ser:"Space Marine Battles",o:10,t:"Flesh and Iron",        tp:"novel",auth:"Henry Zou"},
+{era:"post",ser:"Space Marine Battles",o:11,t:"Death of Integrity",    tp:"novel",auth:"Guy Haley"},
+{era:"post",ser:"Space Marine Battles",o:12,t:"The Siege of Castellax",tp:"novel",auth:"C.L. Werner"},
+
+// ══════════════════════════════════════════════════════════════════
+// ERA 3 — CLASSIC 40K
+// ══════════════════════════════════════════════════════════════════
+{era:"cls",ser:"Gaunt's Ghosts",o:1, t:"First and Only",         tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:2, t:"Ghostmaker",             tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:3, t:"Necropolis",             tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:4, t:"Honour Guard",           tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:5, t:"The Guns of Tanith",     tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:6, t:"Straight Silver",        tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:7, t:"Sabbat Martyr",          tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:8, t:"Traitor General",        tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:9, t:"His Last Command",       tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:10,t:"The Armour of Contempt", tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:11,t:"Only in Death",          tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:12,t:"Blood Pact",             tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:13,t:"Salvation's Reach",      tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:14,t:"The Warmaster",          tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:15,t:"Anarch",                 tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Gaunt's Ghosts",o:16,t:"The Vincula Insurgency", tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"Ciaphas Cain",o:1, t:"For the Emperor",          tp:"novel",auth:"Sandy Mitchell"},
+{era:"cls",ser:"Ciaphas Cain",o:2, t:"Caves of Ice",             tp:"novel",auth:"Sandy Mitchell"},
+{era:"cls",ser:"Ciaphas Cain",o:3, t:"The Traitor's Hand",       tp:"novel",auth:"Sandy Mitchell"},
+{era:"cls",ser:"Ciaphas Cain",o:4, t:"Death or Glory",           tp:"novel",auth:"Sandy Mitchell"},
+{era:"cls",ser:"Ciaphas Cain",o:5, t:"Duty Calls",               tp:"novel",auth:"Sandy Mitchell"},
+{era:"cls",ser:"Ciaphas Cain",o:6, t:"Cain's Last Stand",        tp:"novel",auth:"Sandy Mitchell"},
+{era:"cls",ser:"Ciaphas Cain",o:7, t:"The Emperor's Finest",     tp:"novel",auth:"Sandy Mitchell"},
+{era:"cls",ser:"Ciaphas Cain",o:8, t:"The Last Ditch",           tp:"novel",auth:"Sandy Mitchell"},
+{era:"cls",ser:"Ciaphas Cain",o:9, t:"The Greater Good",         tp:"novel",auth:"Sandy Mitchell"},
+{era:"cls",ser:"Ciaphas Cain",o:10,t:"Choose Your Enemies",      tp:"novel",auth:"Sandy Mitchell"},
+{era:"cls",ser:"Ciaphas Cain",o:11,t:"Vainglorious",             tp:"novel",auth:"Sandy Mitchell"},
+{era:"cls",ser:"Ultramarines",o:1,t:"Nightbringer",              tp:"novel",auth:"Graham McNeill"},
+{era:"cls",ser:"Ultramarines",o:2,t:"Warriors of Ultramar",      tp:"novel",auth:"Graham McNeill"},
+{era:"cls",ser:"Ultramarines",o:3,t:"Dead Sky, Black Sun",       tp:"novel",auth:"Graham McNeill"},
+{era:"cls",ser:"Ultramarines",o:4,t:"The Killing Ground",        tp:"novel",auth:"Graham McNeill"},
+{era:"cls",ser:"Ultramarines",o:5,t:"Courage and Honour",        tp:"novel",auth:"Graham McNeill"},
+{era:"cls",ser:"Ultramarines",o:6,t:"The Chapter's Due",         tp:"novel",auth:"Graham McNeill"},
+{era:"cls",ser:"Space Wolves",o:1,t:"Space Wolf",                tp:"novel",auth:"William King"},
+{era:"cls",ser:"Space Wolves",o:2,t:"Ragnar's Claw",             tp:"novel",auth:"William King"},
+{era:"cls",ser:"Space Wolves",o:3,t:"Grey Hunter",               tp:"novel",auth:"William King"},
+{era:"cls",ser:"Space Wolves",o:4,t:"Wolf Blade",                tp:"novel",auth:"William King"},
+{era:"cls",ser:"Space Wolves",o:5,t:"Sons of Fenris",            tp:"novel",auth:"Lee Lightner"},
+{era:"cls",ser:"Space Wolves",o:6,t:"Wolf's Honour",             tp:"novel",auth:"Lee Lightner"},
+{era:"cls",ser:"Blood Angels",o:1,t:"Deus Encarmine",            tp:"novel",auth:"James Swallow"},
+{era:"cls",ser:"Blood Angels",o:2,t:"Deus Sanguinius",           tp:"novel",auth:"James Swallow"},
+{era:"cls",ser:"Blood Angels",o:3,t:"Red Fury",                  tp:"novel",auth:"James Swallow"},
+{era:"cls",ser:"Blood Angels",o:4,t:"Black Tide",                tp:"novel",auth:"James Swallow"},
+{era:"cls",ser:"Dark Angels",o:1,t:"Angels of Darkness",         tp:"novel",auth:"Gav Thorpe"},
+{era:"cls",ser:"Dark Angels",o:2,t:"Ravenwing",                  tp:"novel",auth:"Gav Thorpe"},
+{era:"cls",ser:"Dark Angels",o:3,t:"Master of Sanctity",         tp:"novel",auth:"Gav Thorpe"},
+{era:"cls",ser:"Dark Angels",o:4,t:"The Unforgiven",             tp:"novel",auth:"Gav Thorpe"},
+{era:"cls",ser:"Night Lords",o:1,t:"Soul Hunter",                tp:"novel",auth:"Aaron Dembski-Bowden"},
+{era:"cls",ser:"Night Lords",o:2,t:"Blood Reaver",               tp:"novel",auth:"Aaron Dembski-Bowden"},
+{era:"cls",ser:"Night Lords",o:3,t:"Void Stalker",               tp:"novel",auth:"Aaron Dembski-Bowden"},
+{era:"cls",ser:"Iron Warriors",o:1,t:"Storm of Iron",            tp:"novel",auth:"Graham McNeill"},
+{era:"cls",ser:"Iron Warriors",o:2,t:"Iron Warrior",             tp:"anthology",auth:"Graham McNeill"},
+{era:"cls",ser:"Word Bearers",o:1,t:"Dark Apostle",              tp:"novel",auth:"Anthony Reynolds"},
+{era:"cls",ser:"Word Bearers",o:2,t:"Dark Disciple",             tp:"novel",auth:"Anthony Reynolds"},
+{era:"cls",ser:"Word Bearers",o:3,t:"Dark Creed",                tp:"novel",auth:"Anthony Reynolds"},
+{era:"cls",ser:"Grey Knights",o:1,t:"Grey Knights",              tp:"novel",auth:"Ben Counter"},
+{era:"cls",ser:"Grey Knights",o:2,t:"Dark Adeptus",              tp:"novel",auth:"Ben Counter"},
+{era:"cls",ser:"Grey Knights",o:3,t:"Hammer of Daemons",         tp:"novel",auth:"Ben Counter"},
+{era:"cls",ser:"40k Standalone",o:1,t:"Fifteen Hours",           tp:"novel",auth:"Mitchel Scanlon"},
+{era:"cls",ser:"40k Standalone",o:2,t:"13th Legion",             tp:"novel",auth:"Gav Thorpe"},
+{era:"cls",ser:"40k Standalone",o:3,t:"Lord of the Night",       tp:"novel",auth:"Simon Spurrier"},
+{era:"cls",ser:"40k Standalone",o:4,t:"Double Eagle",            tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"40k Standalone",o:5,t:"Titanicus",               tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"40k Standalone",o:6,t:"Brothers of the Snake",   tp:"novel",auth:"Dan Abnett"},
+{era:"cls",ser:"40k Standalone",o:7,t:"Dead Men Walking",        tp:"novel",auth:"Steve Lyons"},
+
+// ══════════════════════════════════════════════════════════════════
+// ERA 4 — MODERN 40K / POST RIFT
+// ══════════════════════════════════════════════════════════════════
+{era:"rift",ser:"Dark Imperium",o:1,t:"Dark Imperium",           tp:"novel",auth:"Guy Haley"},
+{era:"rift",ser:"Dark Imperium",o:2,t:"Plague War",              tp:"novel",auth:"Guy Haley"},
+{era:"rift",ser:"Dark Imperium",o:3,t:"Godblight",               tp:"novel",auth:"Guy Haley"},
+{era:"rift",ser:"Dawn of Fire",o:1,t:"Avenging Son",             tp:"novel",auth:"Guy Haley"},
+{era:"rift",ser:"Dawn of Fire",o:2,t:"The Gate of Bones",        tp:"novel",auth:"Andy Clark"},
+{era:"rift",ser:"Dawn of Fire",o:4,t:"Throne of Light",          tp:"novel",auth:"Guy Haley"},
+{era:"rift",ser:"Dawn of Fire",o:5,t:"The Iron Kingdom",         tp:"novel",auth:"Nick Kyme"},
+{era:"rift",ser:"Dawn of Fire",o:6,t:"The Sea of Souls",         tp:"novel",auth:"Chris Wraight"},
+{era:"rift",ser:"Dawn of Fire",o:7,t:"The Edge of Silence",      tp:"novel",auth:"various"},
+{era:"rift",ser:"Indomitus",o:1,t:"Indomitus",                   tp:"novel",auth:"Gav Thorpe"},
+{era:"rift",ser:"Vaults of Terra",o:1,t:"The Carrion Throne",    tp:"novel",auth:"Chris Wraight"},
+{era:"rift",ser:"Vaults of Terra",o:2,t:"The Hollow Mountain",   tp:"novel",auth:"Chris Wraight"},
+{era:"rift",ser:"Vaults of Terra",o:3,t:"The Dark City",         tp:"novel",auth:"Chris Wraight"},
+{era:"rift",ser:"Black Legion",o:1,t:"Talon of Horus",           tp:"novel",auth:"Aaron Dembski-Bowden"},
+{era:"rift",ser:"Black Legion",o:2,t:"Black Legion",             tp:"novel",auth:"Aaron Dembski-Bowden"},
+{era:"rift",ser:"Adepta Sororitas",o:1,t:"Faith & Fire",         tp:"novel",auth:"James Swallow"},
+{era:"rift",ser:"Adepta Sororitas",o:2,t:"Hammer & Anvil",       tp:"novel",auth:"James Swallow"},
+{era:"rift",ser:"Adepta Sororitas",o:3,t:"Heart of Flame",       tp:"novel",auth:"James Swallow"},
+{era:"rift",ser:"Adepta Sororitas",o:4,t:"The Book of Martyrs",  tp:"anthology",auth:"various"},
+{era:"rift",ser:"Adepta Sororitas",o:5,t:"The Rose in Darkness", tp:"novel",auth:"Phil Kelly"},
+{era:"rift",ser:"Necrons",o:1,t:"The Infinite and the Divine",   tp:"novel",auth:"Robert Rath"},
+{era:"rift",ser:"Necrons",o:2,t:"Severed",                       tp:"novel",auth:"Nate Crowley"},
+{era:"rift",ser:"Leagues of Votann",o:1,t:"The Twice-Dead King: Ruin",  tp:"novel",auth:"Nate Crowley"},
+{era:"rift",ser:"Leagues of Votann",o:2,t:"The Twice-Dead King: Reign", tp:"novel",auth:"Nate Crowley"},
+{era:"rift",ser:"T'au",o:1,t:"Greater Good",                     tp:"novel",auth:"Sandy Mitchell"},
+{era:"rift",ser:"T'au",o:2,t:"War of Secrets",                   tp:"novel",auth:"Phil Kelly"},
+{era:"rift",ser:"T'au",o:3,t:"Farsight: Crisis of Faith",        tp:"novel",auth:"Phil Kelly"},
+{era:"rift",ser:"T'au",o:4,t:"Farsight: Empire of Lies",         tp:"novel",auth:"Phil Kelly"},
+{era:"rift",ser:"Warhammer Crime",o:1,t:"Bloodlines",            tp:"novel",auth:"Chris Wraight"},
+{era:"rift",ser:"Warhammer Crime",o:2,t:"Flesh and Steel",        tp:"novel",auth:"Guy Haley"},
+{era:"rift",ser:"Warhammer Crime",o:3,t:"No Good Men",            tp:"novel",auth:"various"},
+{era:"rift",ser:"Warhammer Crime",o:4,t:"Grim Repast",            tp:"novel",auth:"Rachel Harrison"},
+{era:"rift",ser:"Warhammer Crime",o:5,t:"The Vorbis Conspiracy",  tp:"novel",auth:"various"},
+{era:"rift",ser:"Warhammer Horror",o:1,t:"Maledictions",          tp:"anthology",auth:"various"},
+{era:"rift",ser:"Warhammer Horror",o:2,t:"Invocations",           tp:"anthology",auth:"various"},
+{era:"rift",ser:"Warhammer Horror",o:3,t:"Harrowed Worlds",       tp:"anthology",auth:"various"},
+{era:"rift",ser:"Warhammer Horror",o:4,t:"Depths of Treachery",   tp:"anthology",auth:"various"},
+{era:"rift",ser:"Warhammer Horror",o:5,t:"Perdition's Flame",     tp:"anthology",auth:"various"},
+{era:"rift",ser:"Space Marine Conquests",o:1,t:"The Devastation of Baal",  tp:"novel",auth:"Guy Haley"},
+{era:"rift",ser:"Space Marine Conquests",o:2,t:"Lazarus: Enmity's Edge",   tp:"novel",auth:"Gav Thorpe"},
+{era:"rift",ser:"Space Marine Conquests",o:3,t:"Apocalypse",               tp:"novel",auth:"Josh Reynolds"},
+{era:"rift",ser:"Space Marine Conquests",o:4,t:"Hour of the Huntress",     tp:"novel",auth:"Robbie MacNiven"},
+{era:"rift",ser:"Orks",o:1,t:"Brutal Kunnin",                         tp:"novel",auth:"Mike Brooks"},
+{era:"rift",ser:"Orks",o:2,t:"Warboss",                               tp:"novel",auth:"Mike Brooks"},
+{era:"rift",ser:"Orks",o:3,t:"Da Big Dakka",                          tp:"novel",auth:"Mike Brooks"},
+{era:"rift",ser:"Orks",o:1,t:"Ghazghkull Thraka prophet of the waaagh",                        tp:"novel",auth:"Denny Flowers"},
+{era:"rift",ser:"Orks",o:2,t:"Grotsnik: Da Mad Dok",                        tp:"novel",auth:"Denny Flowers"},
+{era:"rift",ser:"Orks",o:3,t:"Ghazghull thraka warlord of warlords",                        tp:"novel",auth:"Denny Flowers"},
+{era:"rift",ser:"Orks",o:1,t:"Evil Sun Rising",                               tp:"novel",auth:"Guy Haley"},
+{era:"rift",ser:"Orks",o:2,t:"Klaw of Mork",                                  tp:"audio",auth:"Guy Haley"},
+{era:"rift",ser:"Orks",o:3,t:"Prophets of Waaagh!",                           tp:"audio",auth:"Guy Haley"},
+
 ];
 
-// assign ids
-const books = RAW.map((b,i)=>({...b,id:i}));
+const books=RAW.map((b,i)=>({...b,id:i}));
 
 // ── State ──
 let state={};
-try{state=JSON.parse(localStorage.getItem('wh40k_v3')||'{}')}catch(e){}
+try{state=JSON.parse(localStorage.getItem('wh40k_v5')||'{}')}catch(e){}
 let aEra='all',fSer='',fSt='',fQ='';
 
 const gs=id=>state[id]||'unread';
 function cycle(id){
   const s=gs(id),n=s==='unread'?'reading':s==='reading'?'read':'unread';
   state[id]=n;
-  try{localStorage.setItem('wh40k_v3',JSON.stringify(state))}catch(e){}
+  try{localStorage.setItem('wh40k_v5',JSON.stringify(state))}catch(e){}
   render();
 }
 
-// ── Progress ──
 function updateProg(){
-  // exclude sub-entries from count (they share status tracking with parent context)
-  const countable=books.filter(b=>!b.sub);
-  const tot=countable.length;
-  const rd=countable.filter(b=>gs(b.id)==='read').length;
-  const rg=countable.filter(b=>gs(b.id)==='reading').length;
+  const tot=books.length,rd=books.filter(b=>gs(b.id)==='read').length,rg=books.filter(b=>gs(b.id)==='reading').length;
   const pct=tot?Math.round(rd/tot*100):0;
-  document.getElementById('pn').innerHTML=`${rd} of <strong>${tot}</strong> books (${pct}%)`;
+  document.getElementById('pn').innerHTML=`${rd} of <strong>${tot}</strong> (${pct}%)`;
   document.getElementById('pb').style.width=pct+'%';
   document.getElementById('cr').textContent=rd+' read';
   document.getElementById('cg').textContent=rg+' reading';
   document.getElementById('cu').textContent=(tot-rd-rg)+' unread';
 }
 
-// ── Tabs ──
 function buildTabs(){
-  const c=document.getElementById('tabs');
-  c.innerHTML=[{id:'all',short:'All Eras'},...ERAS].map(e=>`<button class="tab ${e.id===aEra?'on':''}" onclick="setEra('${e.id}')">${e.short}</button>`).join('');
+  document.getElementById('tabs').innerHTML=[{id:'all',short:'All Eras'},...ERAS].map(e=>`<button class="tab ${e.id===aEra?'on':''}" onclick="setEra('${e.id}')">${e.short}</button>`).join('');
 }
 
-// ── Series filter ──
 function popSeries(){
-  const sel=document.getElementById('fsr');
-  const cur=sel.value;
+  const sel=document.getElementById('fsr'),cur=sel.value;
   const src=aEra==='all'?books:books.filter(b=>b.era===aEra);
-  const series=[...new Set(src.filter(b=>!b.sub).map(b=>b.ser))].sort();
+  const series=[...new Set(src.map(b=>b.ser))].sort();
   sel.innerHTML='<option value="">All series</option>'+series.map(s=>`<option value="${s}"${s===cur?' selected':''}>${s}</option>`).join('');
 }
 
@@ -449,9 +677,8 @@ function getFiltered(){
   return books.filter(b=>{
     if(aEra!=='all'&&b.era!==aEra)return false;
     if(fSer&&b.ser!==fSer)return false;
-    if(fSt&&!b.sub&&gs(b.id)!==fSt)return false;
-    if(fSt&&b.sub)return false; // hide sub-entries when filtering by status
-    if(fQ&&!b.t.toLowerCase().includes(fQ.toLowerCase()))return false;
+    if(fSt&&gs(b.id)!==fSt)return false;
+    if(fQ&&!b.t.toLowerCase().includes(fQ.toLowerCase())&&!(b.auth||'').toLowerCase().includes(fQ.toLowerCase()))return false;
     return true;
   });
 }
@@ -462,48 +689,39 @@ function icon(st){
   return`<span style="width:5px;height:5px;border-radius:50%;background:var(--tx2);display:inline-block;"></span>`;
 }
 
-function tpClass(tp){return tp==='anthology'?'ba':tp==='novella'?'bv':tp==='audio'?'bad':'bn';}
-function tpLabel(tp){return tp==='anthology'?'Antho':tp==='novella'?'Novella':tp==='audio'?'Audio':'Novel';}
+const TYPE_CLS={novel:'bn',anthology:'ba',novella:'bv',audio:'bad',short:'bs',omnibus:'bo',saga:'bsg'};
+const TYPE_LBL={novel:'Novel',anthology:'Antho',novella:'Novella',audio:'Audio',short:'Short',omnibus:'Omnibus',saga:'Saga'};
 
 function renderContent(){
   updateProg();
   const filtered=getFiltered();
   const mc=document.getElementById('mc');
   if(!filtered.length){mc.innerHTML='<div class="empty">No books match your filters.</div>';return;}
-
   const erasToShow=aEra==='all'?ERAS.map(e=>e.id):[aEra];
   let html='';
-
   for(const eraId of erasToShow){
     const eraBooks=filtered.filter(b=>b.era===eraId);
     if(!eraBooks.length)continue;
     const eraDef=ERAS.find(e=>e.id===eraId);
-    const allInEra=books.filter(b=>b.era===eraId&&!b.sub).length;
-    const readInEra=books.filter(b=>b.era===eraId&&!b.sub&&gs(b.id)==='read').length;
+    const allInEra=books.filter(b=>b.era===eraId).length;
+    const readInEra=books.filter(b=>b.era===eraId&&gs(b.id)==='read').length;
     const pct=allInEra?Math.round(readInEra/allInEra*100):0;
-
-    const seriesList=[...new Set(eraBooks.map(b=>b.ser))];
-    html+=`<div class="esec">
-      <div class="ehdr">
-        <span class="etitle">${eraDef.name}</span>
-        <div class="epb"><div class="epf" style="width:${pct}%"></div></div>
-        <span class="epct">${pct}%</span>
-        <span class="ecnt">${eraBooks.filter(b=>!b.sub).length}</span>
-      </div>`;
-
-    for(const ser of seriesList){
+    const serList=[...new Set(eraBooks.map(b=>b.ser))];
+    html+=`<div class="esec"><div class="ehdr"><span class="etit">${eraDef.name}</span><div class="epb"><div class="epf" style="width:${pct}%"></div></div><span class="epct">${pct}%</span><span class="ecnt">${eraBooks.length}</span></div>`;
+    for(const ser of serList){
       const sb=eraBooks.filter(b=>b.ser===ser).sort((a,b)=>a.o-b.o);
-      html+=`<div class="sgrp"><div class="stitle">${ser}</div><div class="bks">`;
+      html+=`<div class="sgrp"><div class="stit">${ser}</div><div class="bks">`;
       for(const bk of sb){
-        const st=bk.sub?gs(bk.id):gs(bk.id);
-        const isSub=!!bk.sub;
-        const numStr=isSub?'':String(bk.o%1===0?bk.o:bk.o);
-        const ind=!isSub&&st!=='unread'?`<span class="sind si-${st==='read'?'r':'g'}">${st==='read'?'Read':'Reading'}</span>`:'';
-        html+=`<div class="bk${isSub?' sub':''} s${st==='read'?'r':st==='reading'?'g':''}" onclick="cycle(${bk.id})">
-          <span class="bnum">${isSub?'':numStr}</span>
-          <button class="sbtn" title="Cycle status">${icon(st)}</button>
-          <span class="btitle">${bk.t}</span>
-          <span class="badge ${tpClass(bk.tp)}">${tpLabel(bk.tp)}</span>
+        const st=gs(bk.id);
+        const cls=`bk s${st==='read'?'r':st==='reading'?'g':''}`;
+        const ind=st!=='unread'?`<span class="sind si-${st==='read'?'r':'g'}">${st==='read'?'Read':'Reading'}</span>`:'';
+        const authSpan=bk.auth?`<span style="font-size:9px;color:var(--tx2);flex-shrink:0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${bk.auth}</span>`:'';
+        html+=`<div class="${cls}" onclick="cycle(${bk.id})">
+          <span class="bnum">${bk.o}</span>
+          <button class="sbtn" title="Cycle: Unread → Reading → Read">${icon(st)}</button>
+          <span class="btit">${bk.t}</span>
+          ${authSpan}
+          <span class="badge ${TYPE_CLS[bk.tp]||'bn'}">${TYPE_LBL[bk.tp]||'Novel'}</span>
           ${ind}
         </div>`;
       }
@@ -515,11 +733,9 @@ function renderContent(){
 }
 
 function render(){updateProg();renderContent();}
-
 document.getElementById('fsr').addEventListener('change',e=>{fSer=e.target.value;renderContent();});
 document.getElementById('fst').addEventListener('change',e=>{fSt=e.target.value;renderContent();});
 document.getElementById('q').addEventListener('input',e=>{fQ=e.target.value;renderContent();});
-
 buildTabs();popSeries();render();
 </script>
 </body>
