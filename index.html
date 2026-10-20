@@ -1,156 +1,223 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Librarium Imperialis · Warhammer 40,000 Book Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --gold:#c9a84c;--bg0:#0d0d0d;--bg1:#141414;--bg2:#1a1a1a;--bg3:#202020;
-    --bdr:rgba(201,168,76,.18);--bdr2:rgba(201,168,76,.44);
-    --tx0:#e8e0cc;--tx1:#9a9080;--tx2:#5a5040;
-    --rd:#2e7d32;--rdg:#c07820;--r:5px
-  }
-  @media(prefers-color-scheme:light){:root{
-    --bg0:#f4efe5;--bg1:#ece5d5;--bg2:#faf6ee;--bg3:#f0e8d8;
-    --bdr:rgba(100,70,10,.14);--bdr2:rgba(100,70,10,.36);
-    --tx0:#1a1208;--tx1:#6b5530;--tx2:#a08060;
-    --rd:#1b5e20;--rdg:#7a4a00;--gold:#7a5010
-  }}
-  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg0);color:var(--tx0);min-height:100vh}
-
-  /* ── Header ── */
-  .hdr{background:var(--bg1);border-bottom:1px solid var(--bdr2);padding:13px 15px 11px;position:sticky;top:0;z-index:100}
-  .htop{display:flex;align-items:center;gap:10px;margin-bottom:11px}
-  .atit{font-family:Georgia,serif;font-size:15px;font-weight:700;color:var(--gold);letter-spacing:.05em}
-  .asub{font-size:10px;color:var(--tx2);letter-spacing:.1em;text-transform:uppercase}
-  .prow{display:flex;justify-content:space-between;margin-bottom:4px}
-  .plbl{font-size:10px;color:var(--tx1);letter-spacing:.08em;text-transform:uppercase}
-  .pnum{font-size:11px;color:var(--tx1)}.pnum strong{color:var(--gold)}
-  .pbg{height:5px;background:var(--bg2);border-radius:3px;overflow:hidden;border:1px solid var(--bdr)}
-  .pf{height:100%;background:linear-gradient(90deg,#2e7d32,#4caf50);border-radius:3px;transition:width .4s}
-  .mst{display:flex;gap:12px;margin-top:6px}
-  .ms{font-size:10px;display:flex;align-items:center;gap:4px;color:var(--tx1)}
-  .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-  .dr{background:#4caf50}.dg{background:#f0a030}.du{background:var(--tx2)}
-
-  /* ── Tabs ── */
-  .tabs{display:flex;overflow-x:auto;gap:3px;padding:9px 15px 0;background:var(--bg1);scrollbar-width:none}
-  .tabs::-webkit-scrollbar{display:none}
-  .tab{font-size:11px;padding:5px 10px;border-radius:5px 5px 0 0;background:none;border:1px solid transparent;border-bottom:none;color:var(--tx2);cursor:pointer;white-space:nowrap;font-family:inherit}
-  .tab.on{background:var(--bg2);border-color:var(--bdr);color:var(--gold)}
-  .tab:hover:not(.on){color:var(--tx1)}
-
-  /* ── Filters ── */
-  .flt{display:flex;gap:6px;flex-wrap:wrap;padding:9px 15px;background:var(--bg2);border-bottom:1px solid var(--bdr)}
-  .fsel,.fsrch{font-size:11px;background:var(--bg1);color:var(--tx0);border:1px solid var(--bdr);border-radius:var(--r);padding:5px 8px;outline:none;font-family:inherit}
-  .fsel{flex:1;min-width:120px;cursor:pointer}.fsrch{flex:2;min-width:150px}
-  .fsrch::placeholder{color:var(--tx2)}.fsrch:focus,.fsel:focus{border-color:var(--gold)}
-  .frst{font-size:10px;background:none;color:var(--tx2);border:1px solid var(--bdr);border-radius:var(--r);padding:5px 8px;cursor:pointer;font-family:inherit}
-  .frst:hover{color:var(--gold);border-color:var(--bdr2)}
-
-  /* ── Content ── */
-  .ct{padding:13px 15px}
-  .esec{margin-bottom:22px}
-  .ehdr{display:flex;align-items:center;gap:8px;margin-bottom:11px;padding-bottom:7px;border-bottom:1px solid var(--bdr)}
-  .etit{font-family:Georgia,serif;font-size:13px;font-weight:700;color:var(--gold);flex:1}
-  .epb{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;width:48px;flex-shrink:0}
-  .epf{height:100%;background:var(--gold)}
-  .epct{font-size:10px;color:var(--tx2);min-width:24px;text-align:right}
-  .ecnt{font-size:10px;color:var(--tx2);background:var(--bg3);border:1px solid var(--bdr);border-radius:10px;padding:1px 7px}
-
-  /* ── Series ── */
-  .sgrp{margin-bottom:12px}
-  .stit{font-size:10px;font-weight:700;color:var(--tx1);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;padding-left:7px;border-left:2px solid var(--bdr2)}
-
-  /* ── Book rows ── */
-  .bks{display:flex;flex-direction:column;gap:2px}
-  .bk{display:flex;align-items:center;gap:8px;padding:6px 9px;background:var(--bg2);border-radius:var(--r);border:1px solid var(--bdr);cursor:pointer;transition:border-color .12s,background .12s;min-height:38px}
-  .bk:hover{border-color:var(--bdr2);background:var(--bg3)}
-  .bnum{font-size:9px;color:var(--tx2);min-width:22px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums}
-  .sbtn{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--bdr2);background:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:transform .12s;padding:0}
-  .sbtn:hover{transform:scale(1.2)}
-  .sr .sbtn{background:var(--rd);border-color:var(--rd)}
-  .sg .sbtn{background:var(--rdg);border-color:var(--rdg)}
-  .btit{flex:1;font-size:12px;color:var(--tx0);line-height:1.3}
-  .sr .btit{color:var(--tx1)}.sg .btit{font-weight:600}
-
-  /* ── Badges ── */
-  .badge{font-size:8px;letter-spacing:.05em;text-transform:uppercase;padding:2px 5px;border-radius:3px;flex-shrink:0;border:1px solid}
-  .bn {background:rgba(30,60,120,.2);color:#7090e0;border-color:rgba(60,100,200,.25)}
-  .ba {background:rgba(80,30,80,.2);color:#c070d0;border-color:rgba(140,50,140,.25)}
-  .bv {background:rgba(20,80,60,.2);color:#50c090;border-color:rgba(30,120,90,.25)}
-  .bad{background:rgba(140,90,10,.2);color:#d0a050;border-color:rgba(180,130,20,.25)}
-  .bs {background:rgba(60,100,120,.2);color:#60b0d0;border-color:rgba(40,100,140,.25)}
-  .bo {background:rgba(100,40,20,.2);color:#d07050;border-color:rgba(160,60,30,.25)}
-  .bsg{background:rgba(180,30,30,.2);color:#e07070;border-color:rgba(200,40,40,.25)}
-  @media(prefers-color-scheme:light){
-    .bn {background:rgba(30,60,180,.07);color:#1840a0;border-color:rgba(30,60,180,.2)}
-    .ba {background:rgba(100,20,120,.07);color:#701090;border-color:rgba(100,20,120,.2)}
-    .bv {background:rgba(10,100,60,.07);color:#0a6040;border-color:rgba(10,100,60,.2)}
-    .bad{background:rgba(140,90,10,.07);color:#7a5000;border-color:rgba(140,90,10,.2)}
-    .bs {background:rgba(20,80,120,.07);color:#1a6090;border-color:rgba(20,80,120,.2)}
-    .bo {background:rgba(140,50,20,.07);color:#903010;border-color:rgba(140,50,20,.2)}
-    .bsg{background:rgba(180,20,20,.07);color:#a01010;border-color:rgba(180,20,20,.2)}
-  }
-  .sind{font-size:8px;letter-spacing:.04em;text-transform:uppercase;padding:2px 5px;border-radius:3px;flex-shrink:0;border:1px solid}
-  .si-r{background:rgba(46,125,50,.15);color:#66bb6a;border-color:rgba(46,125,50,.3)}
-  .si-g{background:rgba(192,120,32,.15);color:#ffa040;border-color:rgba(192,120,32,.3)}
-  .empty{text-align:center;padding:32px;color:var(--tx2);font-size:13px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#d4af5a;--gold2:#8a6d2b;--red:#9b1c1c;--red2:#c62828;
+  --bg0:#0a0a0b;--bg1:#121214;--bg2:#18181b;--bg3:#222226;
+  --bdr:rgba(212,175,90,.16);--bdr2:rgba(212,175,90,.45);
+  --tx0:#ece4d0;--tx1:#a39a86;--tx2:#6a6252;
+  --ok:#4caf50;--go:#f0a030;--r:8px;
+  --serif:'Cinzel',Georgia,serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:var(--bg0);color:var(--tx0);min-height:100vh;
+  background-image:radial-gradient(ellipse at top,rgba(155,28,28,.12),transparent 55%),radial-gradient(ellipse at bottom,rgba(212,175,90,.05),transparent 60%);background-attachment:fixed}
+button{font-family:inherit;cursor:pointer}
+a{color:var(--gold)}
+/* ── Header ── */
+.hdr{background:rgba(18,18,20,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--bdr2);padding:14px 22px;position:sticky;top:0;z-index:50}
+.hin{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.atit{font-family:var(--serif);font-size:19px;font-weight:800;color:var(--gold);letter-spacing:.06em}
+.asub{font-size:10px;color:var(--tx2);letter-spacing:.18em;text-transform:uppercase}
+.prog{flex:1;min-width:240px}
+.prow{display:flex;justify-content:space-between;margin-bottom:5px;font-size:11px;color:var(--tx1)}
+.prow strong{color:var(--gold)}
+.pbg{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.pf{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));transition:width .5s}
+.mst{display:flex;gap:14px;margin-top:6px;font-size:11px;color:var(--tx1)}
+.mst span{display:flex;align-items:center;gap:5px}
+.dot{width:8px;height:8px;border-radius:50%}
+.dr{background:var(--ok)}.dg{background:var(--go)}.du{background:var(--tx2)}
+.iconbtn{background:var(--bg2);border:1px solid var(--bdr);color:var(--tx1);border-radius:var(--r);padding:8px 12px;font-size:12px}
+.iconbtn:hover{color:var(--gold);border-color:var(--bdr2)}
+main{max-width:1400px;margin:0 auto;padding:22px}
+.sec-t{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin:6px 0 14px;display:flex;align-items:center;gap:10px}
+.sec-t::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--bdr2),transparent)}
+/* ── Covers ── */
+.cover{position:relative;aspect-ratio:2/3;border-radius:6px;overflow:hidden;background:var(--bg3);box-shadow:0 6px 18px rgba(0,0,0,.55);flex-shrink:0}
+.cover .ph{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:10% 9%;text-align:center;
+  border:1px solid rgba(212,175,90,.25)}
+.cover .ph .pt{font-family:var(--serif);font-weight:600;color:#f0e2b8;font-size:clamp(9px,1.1vw,13px);line-height:1.25;text-shadow:0 1px 3px #000}
+.cover .ph .pa{font-size:clamp(7px,.75vw,10px);color:rgba(240,226,184,.7);letter-spacing:.06em;text-transform:uppercase}
+.cover .ph .aq{font-size:clamp(14px,2vw,26px);color:rgba(212,175,90,.55)}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+.cover img.ld{opacity:1}
+.cover .spin{position:absolute;right:6px;bottom:6px;width:12px;height:12px;border:2px solid rgba(212,175,90,.25);border-top-color:var(--gold);border-radius:50%;animation:sp 1s linear infinite;display:none}
+.cover.loading .spin{display:block}
+@keyframes sp{to{transform:rotate(360deg)}}
+.e-hh .ph{background:linear-gradient(160deg,#3a2a10,#120c04 70%)}
+.e-post .ph{background:linear-gradient(160deg,#16303a,#060d10 70%)}
+.e-cls .ph{background:linear-gradient(160deg,#3a1212,#100404 70%)}
+.e-rift .ph{background:linear-gradient(160deg,#2a1638,#0b0510 70%)}
+/* ── Currently reading ── */
+.now{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:18px;margin-bottom:34px}
+@media(max-width:640px){.now{grid-template-columns:1fr}}
+.nowcard{background:linear-gradient(135deg,var(--bg2),var(--bg1));border:1px solid var(--bdr2);border-radius:12px;padding:16px;display:grid;grid-template-columns:130px 1fr;gap:16px;position:relative;overflow:hidden}
+.nowcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--go)}
+.nowcard .cover{width:130px;cursor:pointer}
+.lbl{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--go);font-weight:600}
+.nt{font-family:var(--serif);font-size:19px;color:var(--tx0);margin:4px 0 2px;line-height:1.25}
+.na{font-size:12px;color:var(--tx1)}
+.nser{font-size:11px;color:var(--tx2);margin-top:3px}
+.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.btn{border-radius:6px;padding:7px 12px;font-size:12px;font-weight:600;border:1px solid var(--bdr2);background:var(--bg3);color:var(--tx0)}
+.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn.gold{background:linear-gradient(180deg,#d9b866,#a8873a);color:#1a1205;border-color:#d9b866}
+.btn.gold:hover{filter:brightness(1.1);color:#1a1205}
+.btn.sm{padding:5px 9px;font-size:11px}
+.next{margin-top:14px;padding-top:12px;border-top:1px dashed var(--bdr);display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:start}
+.next .cover{width:64px;cursor:pointer}
+.next .cover .pa,.next .cover .aq{display:none}.next .cover .ph{justify-content:center;padding:6px}.next .cover .ph .pt{font-size:9px}
+.next .lbl{color:var(--gold)}
+.nx-t{font-family:var(--serif);font-size:14px;margin:3px 0 1px}
+.why{font-size:11px;color:var(--tx1);line-height:1.45;margin-top:3px}
+.comp{margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.comp .cl{font-size:10px;color:var(--tx2);text-transform:uppercase;letter-spacing:.1em;margin-right:2px}
+.chip{font-size:10px;padding:3px 8px;border-radius:12px;border:1px solid var(--bdr);background:var(--bg3);color:var(--tx1);cursor:pointer}
+.chip:hover{color:var(--gold);border-color:var(--bdr2)}
+.emptynow{background:var(--bg1);border:1px dashed var(--bdr2);border-radius:12px;padding:22px;color:var(--tx1);font-size:13px;margin-bottom:34px}
+/* ── Filters ── */
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin-bottom:10px}
+.tab{font-size:12px;padding:8px 14px;border-radius:6px;background:var(--bg1);border:1px solid var(--bdr);color:var(--tx1);white-space:nowrap}
+.tab.on{background:var(--bg3);border-color:var(--bdr2);color:var(--gold)}
+.flt{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.fsel,.fsrch{font-size:12px;background:var(--bg1);color:var(--tx0);border:1px solid var(--bdr);border-radius:6px;padding:8px 10px;outline:none;font-family:inherit}
+.fsrch{flex:2;min-width:180px}.fsel{flex:1;min-width:130px}
+.fsrch:focus,.fsel:focus{border-color:var(--gold)}
+.vt{display:flex;border:1px solid var(--bdr);border-radius:6px;overflow:hidden}
+.vt button{background:var(--bg1);border:none;color:var(--tx2);padding:0 12px;font-size:12px}
+.vt button.on{background:var(--bg3);color:var(--gold)}
+/* ── Library ── */
+.esec{margin-bottom:30px}
+.ehdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--bdr)}
+.etit{font-family:var(--serif);font-size:16px;color:var(--gold);flex:1}
+.epb{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;width:70px}
+.epf{height:100%;background:var(--gold)}
+.ec{font-size:11px;color:var(--tx2)}
+.sgrp{margin-bottom:20px}
+.stit{font-size:11px;font-weight:600;color:var(--tx1);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;padding-left:8px;border-left:2px solid var(--gold2);display:flex;gap:8px}
+.stit small{color:var(--tx2);font-weight:400;letter-spacing:.05em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:16px}
+.card{cursor:pointer;position:relative}
+.card .cover{width:100%;transition:transform .15s,box-shadow .15s}
+.card:hover .cover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.7),0 0 0 1px var(--bdr2)}
+.card .ct{font-size:12px;margin-top:7px;line-height:1.3;color:var(--tx0);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .cm{font-size:10px;color:var(--tx2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card.sr .cover{filter:saturate(.55) brightness(.75)}
+.num{position:absolute;top:6px;left:6px;z-index:2;font-size:10px;font-weight:600;background:rgba(0,0,0,.75);color:var(--gold);padding:2px 6px;border-radius:4px;border:1px solid var(--bdr)}
+.qs{position:absolute;top:6px;right:6px;z-index:2;width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(255,255,255,.4);background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:0}
+.qs:hover{transform:scale(1.15);border-color:var(--gold)}
+.sr .qs{background:var(--ok);border-color:var(--ok)}
+.sg .qs{background:var(--go);border-color:var(--go)}
+.ribbon{position:absolute;bottom:0;left:0;right:0;z-index:2;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;text-align:center;padding:3px;color:#111}
+.sr .ribbon{background:var(--ok)}.sg .ribbon{background:var(--go)}
+.isnext .cover{box-shadow:0 0 0 2px var(--gold),0 0 18px rgba(212,175,90,.45)}
+/* list view */
+.list{display:flex;flex-direction:column;gap:4px}
+.row{display:flex;align-items:center;gap:12px;padding:6px 10px;background:var(--bg1);border:1px solid var(--bdr);border-radius:6px;cursor:pointer}
+.row:hover{border-color:var(--bdr2);background:var(--bg2)}
+.row .cover{width:34px;border-radius:3px}
+.row .cover .ph .pt,.row .cover .ph .pa{display:none}
+.row .rn{font-size:10px;color:var(--tx2);width:26px;text-align:right}
+.row .rt{flex:1;font-size:13px}
+.row .ra{font-size:11px;color:var(--tx2);width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .qs{position:static;width:22px;height:22px}
+.sr .rt{color:var(--tx1)}
+.badge{font-size:9px;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:3px;border:1px solid}
+.bn{color:#7da0f0;border-color:rgba(80,120,220,.35)}.ba{color:#c88ae0;border-color:rgba(160,80,180,.35)}
+.bv{color:#5ccf9c;border-color:rgba(40,150,100,.35)}.bad{color:#e0b060;border-color:rgba(200,150,40,.35)}
+.bs{color:#6cc0e0;border-color:rgba(50,130,170,.35)}.bo{color:#e08060;border-color:rgba(180,80,40,.35)}
+.empty{text-align:center;padding:40px;color:var(--tx2)}
+/* ── Modal ── */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.ov.on{display:flex}
+.modal{background:var(--bg1);border:1px solid var(--bdr2);border-radius:14px;max-width:760px;width:100%;max-height:92vh;overflow:auto;padding:22px;position:relative}
+.mx{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--tx1);font-size:22px}
+.mx:hover{color:var(--gold)}
+.mgrid{display:grid;grid-template-columns:200px 1fr;gap:22px}
+@media(max-width:600px){.mgrid{grid-template-columns:1fr}.mgrid .cover{width:160px;margin:auto}}
+.mgrid .cover{width:200px}
+.mt{font-family:var(--serif);font-size:22px;color:var(--gold);line-height:1.25;padding-right:20px}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:12px;margin:12px 0}
+.meta dt{color:var(--tx2)}.meta dd{color:var(--tx0)}
+.seg{display:flex;border:1px solid var(--bdr2);border-radius:8px;overflow:hidden;margin:10px 0 16px}
+.seg button{flex:1;background:var(--bg2);border:none;color:var(--tx1);padding:9px;font-size:12px;font-weight:600}
+.seg button+button{border-left:1px solid var(--bdr)}
+.seg button.on.u{background:var(--bg3);color:var(--tx0)}
+.seg button.on.g{background:var(--go);color:#111}
+.seg button.on.r{background:var(--ok);color:#111}
+.box{background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;padding:12px;margin-top:12px}
+.box h4{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx2);margin-bottom:8px;font-weight:600}
+.inrow{display:flex;gap:6px;margin-top:8px}
+.inrow input{flex:1;font-size:12px;background:var(--bg0);color:var(--tx0);border:1px solid var(--bdr);border-radius:6px;padding:7px 9px;outline:none}
+.inrow input:focus{border-color:var(--gold)}
+.hint{font-size:11px;color:var(--tx2);line-height:1.5;margin-top:6px}
+.src{font-size:10px;color:var(--tx2);margin-top:6px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg3);border:1px solid var(--bdr2);color:var(--tx0);padding:10px 16px;border-radius:8px;font-size:13px;z-index:200;transition:transform .25s}
+.toast.on{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
-
-<div class="hdr">
-  <div class="htop">
-    <svg width="30" height="30" viewBox="0 0 32 32">
-      <path d="M16 2L18 8L24 6L20 11L26 13L20 15L22 21L16 19L10 21L12 15L6 13L12 11L8 6L14 8Z" fill="#c9a84c" opacity=".9"/>
-      <path d="M5 17L11 19L9 25L5 23L3 27L7 21L3 17Z" fill="#c9a84c" opacity=".7"/>
-      <path d="M27 17L21 19L23 25L27 23L29 27L25 21L29 17Z" fill="#c9a84c" opacity=".7"/>
+<header class="hdr"><div class="hin">
+  <div class="brand">
+    <svg width="38" height="38" viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M32 6c-4 0-7 3-7 7v3h-6l-3 6h9v4c0 4 3 7 7 7s7-3 7-7v-4h9l-3-6h-6v-3c0-4-3-7-7-7z" fill="#d4af5a"/>
+      <path d="M4 22c8 0 14 4 18 10-6-1-11 0-15 3 3-5 2-9-3-13zm56 0c-8 0-14 4-18 10 6-1 11 0 15 3-3-5-2-9 3-13z" fill="#d4af5a" opacity=".75"/>
+      <path d="M28 36h8v20l-4 4-4-4z" fill="#d4af5a" opacity=".9"/>
     </svg>
-    <div>
-      <div class="atit">Librarium Imperialis</div>
-      <div class="asub">Warhammer 40,000 · Reading Tracker</div>
-    </div>
+    <div><div class="atit">LIBRARIUM IMPERIALIS</div><div class="asub">Warhammer 40,000 · Book Tracker</div></div>
   </div>
-  <div>
-    <div class="prow">
-      <span class="plbl">Overall Progress</span>
-      <span class="pnum" id="pn"></span>
-    </div>
-    <div class="pbg"><div class="pf" id="pb" style="width:0%"></div></div>
-    <div class="mst">
-      <div class="ms"><div class="dot dr"></div><span id="cr">0 read</span></div>
-      <div class="ms"><div class="dot dg"></div><span id="cg">0 reading</span></div>
-      <div class="ms"><div class="dot du"></div><span id="cu">0 unread</span></div>
-    </div>
+  <div class="prog">
+    <div class="prow"><span>OVERALL PROGRESS</span><span id="pn"></span></div>
+    <div class="pbg"><div class="pf" id="pb"></div></div>
+    <div class="mst"><span><i class="dot dr"></i><b id="cr">0</b>&nbsp;read</span><span><i class="dot dg"></i><b id="cg">0</b>&nbsp;reading</span><span><i class="dot du"></i><b id="cu">0</b>&nbsp;unread</span></div>
   </div>
-</div>
+  <button class="iconbtn" id="setBtn" title="Settings">⚙ Settings</button>
+</div></header>
 
-<div class="tabs" id="tabs"></div>
+<main>
+  <div class="sec-t">Currently Reading &amp; Next in Order</div>
+  <div id="nowWrap"></div>
 
-<div class="flt">
-  <input class="fsrch" id="q" type="text" placeholder="Search books…"/>
-  <select class="fsel" id="fsr"><option value="">All series</option></select>
-  <select class="fsel" id="fst">
-    <option value="">All statuses</option>
-    <option value="unread">Unread</option>
-    <option value="reading">Reading</option>
-    <option value="read">Read</option>
-  </select>
-  <button class="frst" onclick="resetAll()">Reset</button>
-</div>
+  <div class="sec-t">The Library</div>
+  <div class="tabs" id="tabs"></div>
+  <div class="flt">
+    <input class="fsrch" id="q" type="search" placeholder="Search title or author…">
+    <select class="fsel" id="fsr"><option value="">All series</option></select>
+    <select class="fsel" id="fst">
+      <option value="">All statuses</option><option value="unread">Unread</option><option value="reading">Reading</option><option value="read">Read</option>
+    </select>
+    <select class="fsel" id="ftp">
+      <option value="">All formats</option><option value="novel">Novels</option><option value="novella">Novellas</option><option value="anthology">Anthologies</option><option value="short">Short stories</option><option value="audio">Audio dramas</option><option value="omnibus">Omnibus</option>
+    </select>
+    <div class="vt"><button data-v="grid" class="on">▦ Covers</button><button data-v="list">☰ List</button></div>
+    <button class="iconbtn" id="rst">Reset</button>
+  </div>
+  <div id="lib"></div>
+</main>
 
-<div class="ct" id="mc"></div>
+<div class="ov" id="ov"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+<input type="file" id="impFile" accept="application/json" hidden>
 
 <script>
+/* ════════════════════════════════════════════════════════════════════
+   DATA
+   ════════════════════════════════════════════════════════════════════ */
 const ERAS=[
   {id:"hh",  name:"The Great Crusade & Horus Heresy", short:"Horus Heresy"},
   {id:"post",name:"Post Heresy & Classic 40k Bridge",  short:"Post Heresy"},
   {id:"cls", name:"Classic 40k",                       short:"Classic 40k"},
   {id:"rift",name:"Post Rift – Modern 40k",            short:"Modern 40k"},
 ];
-
 // tp: novel|anthology|novella|audio|short|omnibus|saga
 const RAW=[
 
@@ -587,8 +654,8 @@ const RAW=[
 {era:"rift",ser:"Dawn of Fire",o:2,t:"The Gate of Bones",        tp:"novel",auth:"Andy Clark"},
 {era:"rift",ser:"Dawn of Fire",o:4,t:"Throne of Light",          tp:"novel",auth:"Guy Haley"},
 {era:"rift",ser:"Dawn of Fire",o:5,t:"The Iron Kingdom",         tp:"novel",auth:"Nick Kyme"},
-{era:"rift",ser:"Dawn of Fire",o:6,t:"The Sea of Souls",         tp:"novel",auth:"Chris Wraight"},
-{era:"rift",ser:"Dawn of Fire",o:7,t:"The Edge of Silence",      tp:"novel",auth:"various"},
+{era:"rift",ser:"Dawn of Fire",o:7,t:"Sea of Souls",             tp:"novel",auth:"Chris Wraight"},
+{era:"hh",ser:"Siege of Terra",o:8.5,t:"The Edge of Silence",   tp:"anthology",auth:"various"},
 {era:"rift",ser:"Indomitus",o:1,t:"Indomitus",                   tp:"novel",auth:"Gav Thorpe"},
 {era:"rift",ser:"Vaults of Terra",o:1,t:"The Carrion Throne",    tp:"novel",auth:"Chris Wraight"},
 {era:"rift",ser:"Vaults of Terra",o:2,t:"The Hollow Mountain",   tp:"novel",auth:"Chris Wraight"},
@@ -602,8 +669,8 @@ const RAW=[
 {era:"rift",ser:"Adepta Sororitas",o:5,t:"The Rose in Darkness", tp:"novel",auth:"Phil Kelly"},
 {era:"rift",ser:"Necrons",o:1,t:"The Infinite and the Divine",   tp:"novel",auth:"Robert Rath"},
 {era:"rift",ser:"Necrons",o:2,t:"Severed",                       tp:"novel",auth:"Nate Crowley"},
-{era:"rift",ser:"Necrons",o:1,t:"The Twice-Dead King: Ruin",  tp:"novel",auth:"Nate Crowley"},
-{era:"rift",ser:"Necrons",o:2,t:"The Twice-Dead King: Reign", tp:"novel",auth:"Nate Crowley"},
+{era:"rift",ser:"Necrons – The Twice-Dead King",o:1,t:"The Twice-Dead King: Ruin",  tp:"novel",auth:"Nate Crowley"},
+{era:"rift",ser:"Necrons – The Twice-Dead King",o:2,t:"The Twice-Dead King: Reign", tp:"novel",auth:"Nate Crowley"},
 {era:"rift",ser:"T'au",o:1,t:"Greater Good",                     tp:"novel",auth:"Sandy Mitchell"},
 {era:"rift",ser:"T'au",o:2,t:"War of Secrets",                   tp:"novel",auth:"Phil Kelly"},
 {era:"rift",ser:"T'au",o:3,t:"Farsight: Crisis of Faith",        tp:"novel",auth:"Phil Kelly"},
@@ -632,110 +699,387 @@ const RAW=[
 {era:"rift",ser:"Orks Red sunz",o:2,t:"Klaw of Mork",                                  tp:"audio",auth:"Guy Haley"},
 {era:"rift",ser:"Orks Red sunz",o:3,t:"Prophets of Waaagh!",                           tp:"audio",auth:"Guy Haley"},
 
+// ── additions (appended to keep legacy index mapping stable) ──
+{era:"rift",ser:"Dawn of Fire",o:3,t:"The Wolftime",             tp:"novel",auth:"Gav Thorpe"},
+{era:"rift",ser:"Dawn of Fire",o:6,t:"The Martyr's Tomb",        tp:"novel",auth:"Marc Collins"},
+{era:"rift",ser:"Dawn of Fire",o:8,t:"Hand of Abaddon",          tp:"novel",auth:"Nick Kyme"},
+{era:"rift",ser:"Dawn of Fire",o:9,t:"The Silent King",          tp:"novel",auth:"Guy Haley"},
 ];
+const books=RAW.map((b,i)=>({...b,id:i,key:b.ser+'|'+b.t}));
+const byTitle=new Map(books.map(b=>[b.t.toLowerCase(),b]));
 
-const books=RAW.map((b,i)=>({...b,id:i}));
+/* ════════════════════════════════════════════════════════════════════
+   READING ORDER
+   The main path is the recommended route through the setting.
+   Side series feed back into it; tie-ins are optional companion reads.
+   ════════════════════════════════════════════════════════════════════ */
+const READING_PATH=[
+  "HH – Main Series","Siege of Terra","HH – The Scouring",
+  "Black Legion","Eisenhorn","Ravenor",
+  "Gaunt's Ghosts","Ciaphas Cain","Ultramarines","Space Wolves","Blood Angels","Dark Angels",
+  "Night Lords","Iron Warriors","Word Bearers","Grey Knights","Space Marine Battles","40k Standalone",
+  "Dark Imperium","Indomitus","Dawn of Fire","Vaults of Terra","Space Marine Conquests",
+];
+// Side series → where they plug back into the main path
+const PARENT={
+  "HH – Primarchs":"HH – Main Series","HH – Primarchs (Short Stories)":"HH – Main Series",
+  "HH – Primarchs (Audio Dramas)":"HH – Main Series","HH – Characters":"HH – Main Series",
+  "HH – Official Novellas":"HH – Main Series","HH – Collections & Anthologies":"HH – Main Series",
+  "HH – Omnibus Editions":"HH – Main Series","HH – Short Stories":"HH – Main Series","HH – Audio Dramas":"HH – Main Series",
+};
+// Optional companion reads that pair well right after a given book
+const TIE_INS={
+  "Horus Rising":["The Lightning Tower","The Dark King"],
+  "Fulgrim":["Fulgrim: The Palatine Phoenix","Ferrus Manus: The Gorgon of Medusa"],
+  "Descent of Angels":["Lion El'Jonson: Lord of the First"],
+  "Legion":["Alpharius: Head of the Hydra"],
+  "Mechanicum":["Cybernetica"],
+  "Fallen Angels":["Luther: First of the Fallen","The Lion"],
+  "A Thousand Sons":["Magnus the Red: Master of Prospero"],
+  "The First Heretic":["Lorgar: Bearer of the Word","Zardu Layak: The Crimson Apostle"],
+  "Prospero Burns":["Leman Russ: The Great Wolf","The Razing of Prospero"],
+  "Deliverance Lost":["Corax: Lord of Shadows","Corax: Soulforge"],
+  "Know No Fear":["Roboute Guilliman: Lord of Ultramar","Betrayal at Calth"],
+  "Angel Exterminatus":["Perturabo: The Hammer of Olympia","Feat of Iron"],
+  "Betrayer":["Angron: Slave of Nuceria","Butcher's Nails"],
+  "Vulkan Lives":["Vulkan: Lord of Drakes","Promethean Sun"],
+  "The Unremembered Empire":["Konrad Curze: The Night Haunter","Prince of Crows"],
+  "Scars":["Jaghatai Khan: Warhawk of Chogoris","Brotherhood of the Storm"],
+  "Deathfire":["Sons of the Forge"],
+  "Pharos":["The Heart of the Pharos"],
+  "The Path of Heaven":["Jaghatai Khan: Warhawk of Chogoris"],
+  "Angels of Caliban":["Luther: First of the Fallen","Dreadwing"],
+  "Praetorian of Dorn":["Rogal Dorn: The Emperor's Crusader","The Crimson Fist"],
+  "The Master of Mankind":["Valdor: Birth of the Imperium"],
+  "The Crimson King":["Magnus the Red: Master of Prospero"],
+  "Wolfsbane":["Wolf King"],
+  "The Buried Dagger":["Mortarion: The Pale King","Garro: Vow of Faith"],
+  "The Solar War":["Sigismund: The Eternal Crusader"],
+  "Echoes of Eternity":["Sanguinius: The Great Angel"],
+  "The Lost and the Damned":["Eidolon: The Auric Hammer"],
+  "Ashes of the Imperium":["Talon of Horus"],
+  "Dark Imperium":["Indomitus"],
+  "Plague War":["The Devastation of Baal"],
+  "Avenging Son":["The Carrion Throne"],
+};
 
-// ── State ──
-let state={};
-try{state=JSON.parse(localStorage.getItem('wh40k_v5')||'{}')}catch(e){}
-let aEra='all',fSer='',fSt='',fQ='';
-
-const gs=id=>state[id]||'unread';
-function cycle(id){
-  const s=gs(id),n=s==='unread'?'reading':s==='reading'?'read':'unread';
-  state[id]=n;
-  try{localStorage.setItem('wh40k_v5',JSON.stringify(state))}catch(e){}
-  render();
+/* ════════════════════════════════════════════════════════════════════
+   STATE  (keyed by series|title, migrates the old v5 index-based save)
+   ════════════════════════════════════════════════════════════════════ */
+const SKEY='wh40k_tracker_v6', CKEY='wh40k_covers_v1', OKEY='wh40k_opts_v1';
+let state={}, covers={}, opts={view:'grid',gbKey:''};
+try{state=JSON.parse(localStorage.getItem(SKEY)||'null')}catch(e){}
+if(!state){
+  state={};
+  try{
+    const old=JSON.parse(localStorage.getItem('wh40k_v5')||'{}');
+    for(const [i,s] of Object.entries(old)){const b=books[+i]; if(b&&s&&s!=='unread') state[b.key]={s,t:Date.now()-(1e5-+i)};}
+  }catch(e){}
+  save();
 }
-
-function updateProg(){
-  const tot=books.length,rd=books.filter(b=>gs(b.id)==='read').length,rg=books.filter(b=>gs(b.id)==='reading').length;
-  const pct=tot?Math.round(rd/tot*100):0;
-  document.getElementById('pn').innerHTML=`${rd} of <strong>${tot}</strong> (${pct}%)`;
-  document.getElementById('pb').style.width=pct+'%';
-  document.getElementById('cr').textContent=rd+' read';
-  document.getElementById('cg').textContent=rg+' reading';
-  document.getElementById('cu').textContent=(tot-rd-rg)+' unread';
+try{covers=JSON.parse(localStorage.getItem(CKEY)||'{}')}catch(e){}
+try{opts={...opts,...JSON.parse(localStorage.getItem(OKEY)||'{}')}}catch(e){}
+function save(){try{localStorage.setItem(SKEY,JSON.stringify(state))}catch(e){}}
+function saveCovers(){try{localStorage.setItem(CKEY,JSON.stringify(covers))}catch(e){}}
+function saveOpts(){try{localStorage.setItem(OKEY,JSON.stringify(opts))}catch(e){}}
+const gs=b=>(state[b.key]&&state[b.key].s)||'unread';
+function setStatus(b,s){
+  if(s==='unread') delete state[b.key]; else state[b.key]={s,t:Date.now()};
+  save(); render();
 }
+function cycle(b){const s=gs(b);setStatus(b,s==='unread'?'reading':s==='reading'?'read':'unread');}
 
-function buildTabs(){
-  document.getElementById('tabs').innerHTML=[{id:'all',short:'All Eras'},...ERAS].map(e=>`<button class="tab ${e.id===aEra?'on':''}" onclick="setEra('${e.id}')">${e.short}</button>`).join('');
+/* ════════════════════════════════════════════════════════════════════
+   RECOMMENDATION ENGINE
+   ════════════════════════════════════════════════════════════════════ */
+const seriesBooks=ser=>books.filter(b=>b.ser===ser).sort((a,b)=>a.o-b.o);
+const isFree=b=>gs(b)==='unread';
+function firstUnreadOnPath(fromIdx=0){
+  for(let i=fromIdx;i<READING_PATH.length;i++){
+    const f=seriesBooks(READING_PATH[i]).find(isFree); if(f) return {b:f,ser:READING_PATH[i]};
+  }
+  return null;
 }
-
-function popSeries(){
-  const sel=document.getElementById('fsr'),cur=sel.value;
-  const src=aEra==='all'?books:books.filter(b=>b.era===aEra);
-  const series=[...new Set(src.map(b=>b.ser))].sort();
-  sel.innerHTML='<option value="">All series</option>'+series.map(s=>`<option value="${s}"${s===cur?' selected':''}>${s}</option>`).join('');
+function recommend(anchor){
+  const same=seriesBooks(anchor.ser);
+  const later=same.find(b=>b.o>anchor.o&&isFree(b));
+  const skipped=same.find(b=>b.o<anchor.o&&isFree(b));
+  let rec=null;
+  if(later){
+    rec={b:later,why:`Book ${fmtO(later.o)} of <b>${esc(anchor.ser)}</b> — continues straight on from <i>${esc(anchor.t)}</i>.`};
+    if(skipped&&READING_PATH.includes(anchor.ser)&&skipped.o<later.o)
+      rec.why+=` Note: you skipped <i>${esc(skipped.t)}</i> (#${fmtO(skipped.o)}) earlier in this series.`;
+  }else{
+    const pi=READING_PATH.indexOf(anchor.ser);
+    const gaps=same.filter(b=>b.o<anchor.o&&isFree(b));
+    const gapNote=gaps.length?` You still have ${gaps.length} unread earlier book${gaps.length>1?'s':''} here (first: <i>${esc(gaps[0].t)}</i>).`:'';
+    if(pi>=0){
+      const n=firstUnreadOnPath(pi+1);
+      if(n) rec={b:n.b,why:`That's the last book of <b>${esc(anchor.ser)}</b>. The reading order continues with <b>${esc(n.ser)}</b>.${gapNote}`};
+      else if(skipped) rec={b:skipped,why:`End of the main reading order — fill the gap you skipped in <b>${esc(anchor.ser)}</b>.`};
+    }else if(skipped){
+      rec={b:skipped,why:`End of <b>${esc(anchor.ser)}</b>, but you missed #${fmtO(skipped.o)} — fill the gap before moving on.`};
+    }else{
+      const parent=PARENT[anchor.ser];
+      const ps=parent?seriesBooks(parent).find(isFree):null;
+      if(ps) rec={b:ps,why:`Side series finished — return to the main line, <b>${esc(parent)}</b>, where your next unread is #${fmtO(ps.o)}.`};
+      else{const n=firstUnreadOnPath(0); if(n) rec={b:n.b,why:`Back to the main reading order: next unread in <b>${esc(n.ser)}</b>.`};}
+    }
+  }
+  if(!rec){const any=books.find(b=>b.era===anchor.era&&isFree(b))||books.find(isFree); if(any) rec={b:any,why:'Everything on the main path is done — here is something you haven\u2019t read yet.'};}
+  const comps=(TIE_INS[anchor.t]||[]).map(t=>byTitle.get(t.toLowerCase())).filter(b=>b&&isFree(b)&&(!rec||b.id!==rec.b.id));
+  return {rec,comps};
 }
+const fmtO=o=>Number.isInteger(o)?o:o.toFixed(1);
 
-function setEra(e){aEra=e;fSer='';document.getElementById('fsr').value='';buildTabs();popSeries();renderContent();}
-function resetAll(){aEra='all';fSer='';fSt='';fQ='';document.getElementById('fsr').value='';document.getElementById('fst').value='';document.getElementById('q').value='';buildTabs();popSeries();renderContent();}
-
-function getFiltered(){
-  return books.filter(b=>{
-    if(aEra!=='all'&&b.era!==aEra)return false;
-    if(fSer&&b.ser!==fSer)return false;
-    if(fSt&&gs(b.id)!==fSt)return false;
-    if(fQ&&!b.t.toLowerCase().includes(fQ.toLowerCase())&&!(b.auth||'').toLowerCase().includes(fQ.toLowerCase()))return false;
-    return true;
+/* ════════════════════════════════════════════════════════════════════
+   COVER LOOKUP — Google Books (Google's own catalogue, free & browser-safe),
+   Open Library fallback, manual override + Google Images link.
+   ════════════════════════════════════════════════════════════════════ */
+const norm=s=>s.toLowerCase().replace(/[’']/g,"").replace(/&/g,'and').replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();
+const realAuthor=a=>a&&!/^(various|ed\.)/i.test(a)?a.split(/&|,/)[0].trim():'';
+function titleScore(want,got){
+  const w=norm(want),g=norm(got||''); if(!g) return 0;
+  if(g===w) return 1; if(g.startsWith(w)||w.startsWith(g)) return .85; if(g.includes(w)) return .7;
+  const ws=new Set(w.split(' ')),gs2=g.split(' ');const hit=gs2.filter(x=>ws.has(x)).length;
+  return hit/Math.max(ws.size,1)*.6;
+}
+async function fromGoogleBooks(b){
+  const a=realAuthor(b.auth), ln=a?a.split(' ').pop():'';
+  const qs=[];
+  if(ln) qs.push(`intitle:"${b.t}" inauthor:${ln}`);
+  qs.push(`${b.t} warhammer ${ln}`.trim());
+  for(const q of qs){
+    const url=`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(q)}&maxResults=10&printType=books${opts.gbKey?'&key='+encodeURIComponent(opts.gbKey):''}`;
+    const r=await fetch(url); if(r.status===429) throw new Error('rate'); if(!r.ok) continue;
+    const j=await r.json(); let best=null,bs=0;
+    for(const it of j.items||[]){
+      const v=it.volumeInfo||{}; const img=v.imageLinks&&(v.imageLinks.thumbnail||v.imageLinks.smallThumbnail); if(!img) continue;
+      let s=titleScore(b.t,v.title+(v.subtitle?' '+v.subtitle:''));
+      s=Math.max(s,titleScore(b.t,v.title));
+      const blob=((v.publisher||'')+' '+(v.categories||[]).join(' ')+' '+(v.description||'')+' '+(v.subtitle||'')).toLowerCase();
+      if(/warhammer|black library|games workshop|horus heresy|40,?000/.test(blob)) s+=.25;
+      if(ln&&(v.authors||[]).some(x=>x.toLowerCase().includes(ln.toLowerCase()))) s+=.25;
+      if(s>bs){bs=s;best=img;}
+    }
+    if(best&&bs>=.75) return {url:best.replace(/^http:/,'https:').replace('&edge=curl','').replace(/zoom=\d/,'zoom=1'),src:'Google Books'};
+  }
+  return null;
+}
+async function fromOpenLibrary(b){
+  const a=realAuthor(b.auth);
+  const url=`https://openlibrary.org/search.json?title=${encodeURIComponent(b.t)}${a?'&author='+encodeURIComponent(a):''}&limit=8&fields=title,cover_i`;
+  const r=await fetch(url); if(!r.ok) return null; const j=await r.json();
+  const d=(j.docs||[]).filter(d=>d.cover_i).sort((x,y)=>titleScore(b.t,y.title)-titleScore(b.t,x.title))[0];
+  return d&&titleScore(b.t,d.title)>=.7?{url:`https://covers.openlibrary.org/b/id/${d.cover_i}-M.jpg`,src:'Open Library'}:null;
+}
+const queue=[],inflight=new Set(),netFail=new Set();let active=0,pausedUntil=0;
+function wantCover(b){
+  if(covers[b.key]!==undefined||inflight.has(b.key)||netFail.has(b.key)) return;
+  inflight.add(b.key); queue.push(b); markLoading(b,true); pump();
+}
+function pump(){
+  while(active<3&&queue.length){
+    const wait=pausedUntil-Date.now(); if(wait>0){setTimeout(pump,wait);return;}
+    const b=queue.shift(); active++;
+    (async()=>{
+      let res=null,retry=false,net=0;
+      try{res=await fromGoogleBooks(b);}catch(e){if(e.message==='rate'){retry=true;pausedUntil=Date.now()+8000;}else net++;}
+      if(!res&&!retry){try{res=await fromOpenLibrary(b);}catch(e){net++;}}
+      if(retry&&!res){queue.push(b);}
+      else if(!res&&net===2){inflight.delete(b.key);netFail.add(b.key);markLoading(b,false);} // offline: don't cache, retry next visit
+      else{covers[b.key]=res?{url:res.url,src:res.src}:{url:'',src:'none'};inflight.delete(b.key);saveCovers();paintCover(b);}
+    })().finally(()=>{active--;setTimeout(pump,250);});
+  }
+}
+function markLoading(b,on){document.querySelectorAll(`.cover[data-k="${CSS.escape(b.key)}"]`).forEach(el=>el.classList.toggle('loading',on));}
+function paintCover(b){
+  const c=covers[b.key];
+  document.querySelectorAll(`.cover[data-k="${CSS.escape(b.key)}"]`).forEach(el=>{
+    el.classList.remove('loading');
+    let img=el.querySelector('img');
+    if(!c||!c.url){if(img) img.remove(); return;}
+    if(!img){img=document.createElement('img');img.alt='';img.referrerPolicy='no-referrer';el.appendChild(img);}
+    img.onload=()=>{ if(img.naturalWidth<40){img.remove();} else img.classList.add('ld'); };
+    img.onerror=()=>img.remove();
+    if(img.src!==c.url) img.src=c.url;
   });
 }
-
-function icon(st){
-  if(st==='read')return`<svg width="10"height="10"viewBox="0 0 10 10"><polyline points="1.5,5 3.8,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-  if(st==='reading')return`<svg width="10"height="10"viewBox="0 0 10 10"><circle cx="5"cy="5"r="3"fill="white"/></svg>`;
-  return`<span style="width:5px;height:5px;border-radius:50%;background:var(--tx2);display:inline-block;"></span>`;
+const io=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){io.unobserve(e.target);const b=books[+e.target.dataset.id];if(covers[b.key]!==undefined)paintCover(b);else wantCover(b);}}},{rootMargin:'400px'});
+function coverHTML(b){
+  return `<div class="cover e-${b.era}" data-k="${esc(b.key)}" data-id="${b.id}"><div class="ph"><div class="aq">✠</div><div class="pt">${esc(b.t)}</div><div class="pa">${esc(b.auth||'')}</div></div><div class="spin"></div></div>`;
 }
+function hookCovers(root){root.querySelectorAll('.cover[data-id]').forEach(el=>io.observe(el));}
+const gImg=b=>`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(`${b.t} ${realAuthor(b.auth)} Warhammer 40k book cover`)}`;
 
-const TYPE_CLS={novel:'bn',anthology:'ba',novella:'bv',audio:'bad',short:'bs',omnibus:'bo',saga:'bsg'};
-const TYPE_LBL={novel:'Novel',anthology:'Antho',novella:'Novella',audio:'Audio',short:'Short',omnibus:'Omnibus',saga:'Saga'};
+/* ════════════════════════════════════════════════════════════════════
+   RENDERING
+   ════════════════════════════════════════════════════════════════════ */
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const TYPE_CLS={novel:'bn',anthology:'ba',novella:'bv',audio:'bad',short:'bs',omnibus:'bo'};
+const TYPE_LBL={novel:'Novel',anthology:'Anthology',novella:'Novella',audio:'Audio',short:'Short',omnibus:'Omnibus'};
+let aEra='all',fSer='',fSt='',fTp='',fQ='';
+let nextIds=new Set();
 
-function renderContent(){
-  updateProg();
-  const filtered=getFiltered();
-  const mc=document.getElementById('mc');
-  if(!filtered.length){mc.innerHTML='<div class="empty">No books match your filters.</div>';return;}
-  const erasToShow=aEra==='all'?ERAS.map(e=>e.id):[aEra];
+function updateProg(){
+  const tot=books.length,rd=books.filter(b=>gs(b)==='read').length,rg=books.filter(b=>gs(b)==='reading').length;
+  const pct=tot?Math.round(rd/tot*100):0;
+  pn.innerHTML=`${rd} / <strong>${tot}</strong> · ${pct}%`; pb.style.width=pct+'%';
+  cr.textContent=rd; cg.textContent=rg; cu.textContent=tot-rd-rg;
+}
+function renderNow(){
+  const reading=books.filter(b=>gs(b)==='reading').sort((a,b)=>state[b.key].t-state[a.key].t);
+  nextIds=new Set();
   let html='';
-  for(const eraId of erasToShow){
-    const eraBooks=filtered.filter(b=>b.era===eraId);
-    if(!eraBooks.length)continue;
-    const eraDef=ERAS.find(e=>e.id===eraId);
-    const allInEra=books.filter(b=>b.era===eraId).length;
-    const readInEra=books.filter(b=>b.era===eraId&&gs(b.id)==='read').length;
-    const pct=allInEra?Math.round(readInEra/allInEra*100):0;
-    const serList=[...new Set(eraBooks.map(b=>b.ser))];
-    html+=`<div class="esec"><div class="ehdr"><span class="etit">${eraDef.name}</span><div class="epb"><div class="epf" style="width:${pct}%"></div></div><span class="epct">${pct}%</span><span class="ecnt">${eraBooks.length}</span></div>`;
-    for(const ser of serList){
-      const sb=eraBooks.filter(b=>b.ser===ser).sort((a,b)=>a.o-b.o);
-      html+=`<div class="sgrp"><div class="stit">${ser}</div><div class="bks">`;
-      for(const bk of sb){
-        const st=gs(bk.id);
-        const cls=`bk s${st==='read'?'r':st==='reading'?'g':''}`;
-        const ind=st!=='unread'?`<span class="sind si-${st==='read'?'r':'g'}">${st==='read'?'Read':'Reading'}</span>`:'';
-        const authSpan=bk.auth?`<span style="font-size:9px;color:var(--tx2);flex-shrink:0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${bk.auth}</span>`:'';
-        html+=`<div class="${cls}" onclick="cycle(${bk.id})">
-          <span class="bnum">${bk.o}</span>
-          <button class="sbtn" title="Cycle: Unread → Reading → Read">${icon(st)}</button>
-          <span class="btit">${bk.t}</span>
-          ${authSpan}
-          <span class="badge ${TYPE_CLS[bk.tp]||'bn'}">${TYPE_LBL[bk.tp]||'Novel'}</span>
-          ${ind}
-        </div>`;
-      }
-      html+=`</div></div>`;
-    }
-    html+=`</div>`;
+  if(!reading.length){
+    const read=books.filter(b=>gs(b)==='read').sort((a,b)=>state[b.key].t-state[a.key].t);
+    let rec,head;
+    if(read.length){({rec}=recommend(read[0]));head=`You're not reading anything right now. Your last finished book was <i>${esc(read[0].t)}</i>.`;}
+    else{const n=firstUnreadOnPath(0);rec=n&&{b:n.b,why:'The Horus Heresy is the recommended starting point: it sets up the Imperium, the Primarchs and Chaos that the whole 40k setting is built on.'};head='Welcome, reader. Mark a book as <b>Reading</b> to get personalised recommendations.';}
+    html=`<div class="emptynow">${head}${rec?nextBlock(rec,[], 'Suggested next'):''}</div>`;
+    if(rec) nextIds.add(rec.b.id);
+  }else{
+    html='<div class="now">'+reading.map(b=>{
+      const {rec,comps}=recommend(b); if(rec) nextIds.add(rec.b.id);
+      return `<div class="nowcard"><div data-open="${b.id}">${coverHTML(b)}</div><div>
+        <div class="lbl">Currently reading</div>
+        <div class="nt">${esc(b.t)}</div><div class="na">${esc(b.auth||'')}</div>
+        <div class="nser">${esc(b.ser)} · #${fmtO(b.o)} · ${TYPE_LBL[b.tp]||'Novel'}</div>
+        <div class="acts"><button class="btn gold sm" data-finish="${b.id}">✓ Finished</button><button class="btn sm" data-open="${b.id}">Details</button></div>
+        ${rec?nextBlock(rec,comps,'Up next in reading order'):''}
+      </div></div>`;}).join('')+'</div>';
   }
-  mc.innerHTML=html;
+  nowWrap.innerHTML=html; hookCovers(nowWrap);
 }
+function nextBlock(rec,comps,label){
+  const b=rec.b;
+  return `<div class="next"><div data-open="${b.id}">${coverHTML(b)}</div><div>
+    <div class="lbl">${label}</div><div class="nx-t">${esc(b.t)}</div>
+    <div class="na">${esc(b.auth||'')} · ${esc(b.ser)} #${fmtO(b.o)}</div>
+    <div class="why">${rec.why}</div>
+    <div class="acts"><button class="btn sm" data-start="${b.id}">▶ Start reading</button></div>
+    ${comps.length?`<div class="comp"><span class="cl">Companion reads:</span>${comps.map(c=>`<span class="chip" data-open="${c.id}">${esc(c.t)}</span>`).join('')}</div>`:''}
+  </div></div>`;
+}
+function buildTabs(){
+  tabs.innerHTML=[{id:'all',short:'All Eras'},...ERAS].map(e=>`<button class="tab ${e.id===aEra?'on':''}" data-era="${e.id}">${e.short}</button>`).join('');
+}
+function popSeries(){
+  const src=aEra==='all'?books:books.filter(b=>b.era===aEra);
+  const series=[...new Set(src.map(b=>b.ser))].sort();
+  if(!series.includes(fSer)) fSer='';
+  fsr.innerHTML='<option value="">All series</option>'+series.map(s=>`<option value="${esc(s)}"${s===fSer?' selected':''}>${esc(s)}</option>`).join('');
+}
+function filtered(){
+  const q=fQ.toLowerCase();
+  return books.filter(b=>(aEra==='all'||b.era===aEra)&&(!fSer||b.ser===fSer)&&(!fSt||gs(b)===fSt)&&(!fTp||b.tp===fTp)
+    &&(!q||b.t.toLowerCase().includes(q)||(b.auth||'').toLowerCase().includes(q)));
+}
+const qsIcon=st=>st==='read'?'<svg width="11" height="11" viewBox="0 0 10 10"><polyline points="1.5,5 3.8,7.5 8.5,2.5" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"/></svg>'
+  :st==='reading'?'<svg width="9" height="9" viewBox="0 0 10 10"><circle cx="5" cy="5" r="3.2" fill="#111"/></svg>':'';
+function renderLib(){
+  const list=filtered();
+  if(!list.length){lib.innerHTML='<div class="empty">No books match your filters.</div>';return;}
+  const eras=aEra==='all'?ERAS.map(e=>e.id):[aEra]; let html='';
+  for(const eid of eras){
+    const eb=list.filter(b=>b.era===eid); if(!eb.length) continue;
+    const def=ERAS.find(e=>e.id===eid), all=books.filter(b=>b.era===eid), rd=all.filter(b=>gs(b)==='read').length, pct=Math.round(rd/all.length*100);
+    html+=`<section class="esec"><div class="ehdr"><span class="etit">${def.name}</span><span class="ec">${rd}/${all.length}</span><div class="epb"><div class="epf" style="width:${pct}%"></div></div><span class="ec">${pct}%</span></div>`;
+    for(const ser of [...new Set(eb.map(b=>b.ser))]){
+      const sb=eb.filter(b=>b.ser===ser).sort((a,b)=>a.o-b.o);
+      const sall=books.filter(b=>b.ser===ser), srd=sall.filter(b=>gs(b)==='read').length;
+      const onPath=READING_PATH.includes(ser)?' · main reading order':PARENT[ser]?' · companion series':'';
+      html+=`<div class="sgrp"><div class="stit">${esc(ser)}<small>${srd}/${sall.length} read${onPath}</small></div>`;
+      if(opts.view==='grid'){
+        html+='<div class="grid">'+sb.map(b=>{const st=gs(b);const c=st==='read'?'sr':st==='reading'?'sg':'';
+          return `<div class="card ${c} ${nextIds.has(b.id)?'isnext':''}" data-open="${b.id}" title="${esc(b.t)}">
+            <div style="position:relative">${coverHTML(b)}<span class="num">#${fmtO(b.o)}</span>
+            <button class="qs" data-cycle="${b.id}" title="Unread → Reading → Read">${qsIcon(st)}</button>
+            ${st!=='unread'?`<div class="ribbon">${st==='read'?'Read':'Reading'}</div>`:nextIds.has(b.id)?'<div class="ribbon" style="background:var(--gold)">Up next</div>':''}</div>
+            <div class="ct">${esc(b.t)}</div><div class="cm">${esc(b.auth||'')} · ${TYPE_LBL[b.tp]||'Novel'}</div></div>`;}).join('')+'</div>';
+      }else{
+        html+='<div class="list">'+sb.map(b=>{const st=gs(b);const c=st==='read'?'sr':st==='reading'?'sg':'';
+          return `<div class="row ${c}" data-open="${b.id}"><span class="rn">${fmtO(b.o)}</span><button class="qs" data-cycle="${b.id}">${qsIcon(st)}</button>${coverHTML(b)}
+            <span class="rt">${esc(b.t)}${nextIds.has(b.id)?' <span class="badge bad">Up next</span>':''}</span><span class="ra">${esc(b.auth||'')}</span><span class="badge ${TYPE_CLS[b.tp]||'bn'}">${TYPE_LBL[b.tp]||'Novel'}</span></div>`;}).join('')+'</div>';
+      }
+      html+='</div>';
+    }
+    html+='</section>';
+  }
+  lib.innerHTML=html; hookCovers(lib);
+}
+function render(){updateProg();renderNow();renderLib();if(ov.classList.contains('on')&&openId!=null&&modalMode==='book')openBook(openId);}
 
-function render(){updateProg();renderContent();}
-document.getElementById('fsr').addEventListener('change',e=>{fSer=e.target.value;renderContent();});
-document.getElementById('fst').addEventListener('change',e=>{fSt=e.target.value;renderContent();});
-document.getElementById('q').addEventListener('input',e=>{fQ=e.target.value;renderContent();});
+/* ── Book modal ── */
+let openId=null,modalMode=null;
+function openBook(id){
+  const b=books[id]; openId=id; modalMode='book'; const st=gs(b); const c=covers[b.key];
+  const {rec,comps}=recommend(b);
+  modal.innerHTML=`<button class="mx" data-close>×</button><div class="mgrid"><div>${coverHTML(b)}
+      <div class="src">${c&&c.url?'Cover source: '+esc(c.src):c?'No cover found automatically':'Searching for cover…'}</div></div>
+    <div><div class="mt">${esc(b.t)}</div>
+      <dl class="meta"><dt>Author</dt><dd>${esc(b.auth||'—')}</dd><dt>Series</dt><dd>${esc(b.ser)} · #${fmtO(b.o)}</dd>
+      <dt>Era</dt><dd>${esc(ERAS.find(e=>e.id===b.era).name)}</dd><dt>Format</dt><dd>${TYPE_LBL[b.tp]||'Novel'}</dd></dl>
+      <div class="seg"><button class="u ${st==='unread'?'on':''}" data-set="unread">Unread</button><button class="g ${st==='reading'?'on':''}" data-set="reading">Reading</button><button class="r ${st==='read'?'on':''}" data-set="read">Read</button></div>
+      ${rec?`<div class="box"><h4>After this book, read</h4><div><b class="nx-t">${esc(rec.b.t)}</b> <span class="na">— ${esc(rec.b.auth||'')}</span></div><div class="why">${rec.why}</div>
+        ${comps.length?`<div class="comp"><span class="cl">Companions:</span>${comps.map(x=>`<span class="chip" data-open="${x.id}">${esc(x.t)}</span>`).join('')}</div>`:''}</div>`:''}
+      <div class="box"><h4>Cover image</h4>
+        <div class="acts" style="margin-top:0"><button class="btn sm" data-refetch>↻ Search again</button><a class="btn sm" href="${gImg(b)}" target="_blank" rel="noopener" style="text-decoration:none">🔍 Google Images</a></div>
+        <div class="inrow"><input id="curl" placeholder="Paste an image URL to use as cover…"><button class="btn sm" data-seturl>Use</button></div>
+        <div class="hint">Covers are looked up automatically by title + author. If the match is wrong, open Google Images, right-click the cover → “Copy image address”, and paste it here.</div>
+      </div></div></div>`;
+  ov.classList.add('on'); hookCovers(modal);
+  const cv=modal.querySelector('.mgrid .cover'); if(covers[b.key]!==undefined) paintCover(b); else if(cv) wantCover(b);
+}
+function openSettings(){
+  modalMode='settings';
+  const n=Object.values(covers).filter(c=>c.url).length;
+  modal.innerHTML=`<button class="mx" data-close>×</button><div class="mt">Settings</div>
+    <div class="box"><h4>Google Books API key (optional)</h4>
+      <div class="hint">Covers come from Google's book catalogue without any key. If you track many books and hit the anonymous rate limit, add a free Google Books API key from Google Cloud Console.</div>
+      <div class="inrow"><input id="gbk" value="${esc(opts.gbKey)}" placeholder="AIza…"><button class="btn sm" data-savekey>Save</button></div></div>
+    <div class="box"><h4>Cover cache</h4><div class="hint">${n} covers cached locally.</div>
+      <div class="acts"><button class="btn sm" data-clearmiss>Retry books without a cover</button><button class="btn sm" data-clearcov>Clear all covers</button></div></div>
+    <div class="box"><h4>Progress backup</h4>
+      <div class="acts"><button class="btn sm" data-export>⬇ Export progress</button><button class="btn sm" data-import>⬆ Import progress</button><button class="btn sm" data-wipe style="border-color:var(--red2);color:#f08080">Reset all progress</button></div></div>`;
+  ov.classList.add('on');
+}
+function closeModal(){ov.classList.remove('on');openId=null;modalMode=null;}
+function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>toastEl.classList.remove('on'),2200);}
+const toastEl=document.getElementById('toast');
+
+/* ── Events (delegated) ── */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-cycle],[data-open],[data-finish],[data-start],[data-set],[data-close],[data-refetch],[data-seturl],[data-era],[data-v],[data-savekey],[data-clearcov],[data-clearmiss],[data-export],[data-import],[data-wipe]');
+  if(e.target===ov){closeModal();return;}
+  if(!t) return; const d=t.dataset;
+  if(d.cycle!==undefined){e.stopPropagation();cycle(books[+d.cycle]);return;}
+  if(d.finish!==undefined){const b=books[+d.finish];setStatus(b,'read');toast(`Finished “${b.t}” — Ave Imperator!`);return;}
+  if(d.start!==undefined){const b=books[+d.start];setStatus(b,'reading');toast(`Now reading “${b.t}”`);return;}
+  if(d.set){setStatus(books[openId],d.set);return;}
+  if(d.close!==undefined){closeModal();return;}
+  if(d.refetch!==undefined){const b=books[openId];delete covers[b.key];netFail.delete(b.key);saveCovers();inflight.delete(b.key);wantCover(b);toast('Searching for a cover…');return;}
+  if(d.seturl!==undefined){const v=document.getElementById('curl').value.trim();if(!/^https?:\/\//.test(v)){toast('Paste a valid image URL');return;}
+    const b=books[openId];covers[b.key]={url:v,src:'Manual'};saveCovers();paintCover(b);openBook(openId);toast('Cover updated');return;}
+  if(d.era){aEra=d.era;buildTabs();popSeries();renderLib();return;}
+  if(d.v){opts.view=d.v;saveOpts();document.querySelectorAll('.vt button').forEach(x=>x.classList.toggle('on',x.dataset.v===d.v));renderLib();return;}
+  if(d.savekey!==undefined){opts.gbKey=document.getElementById('gbk').value.trim();saveOpts();toast('API key saved');return;}
+  if(d.clearcov!==undefined){covers={};saveCovers();render();openSettings();toast('Cover cache cleared');return;}
+  if(d.clearmiss!==undefined){for(const k in covers) if(!covers[k].url) delete covers[k];saveCovers();render();openSettings();toast('Retrying missing covers');return;}
+  if(d.export!==undefined){const blob=new Blob([JSON.stringify({state,covers},null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='wh40k-progress.json';a.click();return;}
+  if(d.import!==undefined){impFile.click();return;}
+  if(d.wipe!==undefined){if(confirm('Reset all reading progress?')){state={};save();render();closeModal();}return;}
+  if(d.open!==undefined){openBook(+d.open);return;}
+});
+impFile.addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const j=JSON.parse(await f.text());if(j.state){state=j.state;save();}if(j.covers){covers={...covers,...j.covers};saveCovers();}render();closeModal();toast('Progress imported');}catch(err){toast('Invalid file');}impFile.value='';});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+setBtn.onclick=openSettings;
+fsr.onchange=e=>{fSer=e.target.value;renderLib();};
+fst.onchange=e=>{fSt=e.target.value;renderLib();};
+ftp.onchange=e=>{fTp=e.target.value;renderLib();};
+q.oninput=e=>{fQ=e.target.value;clearTimeout(q.t);q.t=setTimeout(renderLib,150);};
+rst.onclick=()=>{aEra='all';fSer=fSt=fTp=fQ='';fst.value=ftp.value=q.value='';buildTabs();popSeries();renderLib();};
+document.querySelectorAll('.vt button').forEach(x=>x.classList.toggle('on',x.dataset.v===opts.view));
 buildTabs();popSeries();render();
 </script>
 </body>
