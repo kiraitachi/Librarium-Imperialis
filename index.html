@@ -21,7 +21,6 @@ body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:var(--bg0);c
   background-image:radial-gradient(ellipse at top,rgba(155,28,28,.12),transparent 55%),radial-gradient(ellipse at bottom,rgba(212,175,90,.05),transparent 60%);background-attachment:fixed}
 button{font-family:inherit;cursor:pointer}
 a{color:var(--gold)}
-/* ── Header ── */
 .hdr{background:rgba(18,18,20,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--bdr2);padding:14px 22px;position:sticky;top:0;z-index:50}
 .hin{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
@@ -41,10 +40,8 @@ a{color:var(--gold)}
 main{max-width:1400px;margin:0 auto;padding:22px}
 .sec-t{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin:6px 0 14px;display:flex;align-items:center;gap:10px}
 .sec-t::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--bdr2),transparent)}
-/* ── Covers ── */
 .cover{position:relative;aspect-ratio:2/3;border-radius:6px;overflow:hidden;background:var(--bg3);box-shadow:0 6px 18px rgba(0,0,0,.55);flex-shrink:0}
-.cover .ph{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:10% 9%;text-align:center;
-  border:1px solid rgba(212,175,90,.25)}
+.cover .ph{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:10% 9%;text-align:center;border:1px solid rgba(212,175,90,.25)}
 .cover .ph .pt{font-family:var(--serif);font-weight:600;color:#f0e2b8;font-size:clamp(9px,1.1vw,13px);line-height:1.25;text-shadow:0 1px 3px #000}
 .cover .ph .pa{font-size:clamp(7px,.75vw,10px);color:rgba(240,226,184,.7);letter-spacing:.06em;text-transform:uppercase}
 .cover .ph .aq{font-size:clamp(14px,2vw,26px);color:rgba(212,175,90,.55)}
@@ -57,7 +54,6 @@ main{max-width:1400px;margin:0 auto;padding:22px}
 .e-post .ph{background:linear-gradient(160deg,#16303a,#060d10 70%)}
 .e-cls .ph{background:linear-gradient(160deg,#3a1212,#100404 70%)}
 .e-rift .ph{background:linear-gradient(160deg,#2a1638,#0b0510 70%)}
-/* ── Currently reading ── */
 .now{display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:18px;margin-bottom:34px}
 @media(max-width:640px){.now{grid-template-columns:1fr}}
 .nowcard{background:linear-gradient(135deg,var(--bg2),var(--bg1));border:1px solid var(--bdr2);border-radius:12px;padding:16px;display:grid;grid-template-columns:130px 1fr;gap:16px;position:relative;overflow:hidden}
@@ -79,12 +75,13 @@ main{max-width:1400px;margin:0 auto;padding:22px}
 .next .lbl{color:var(--gold)}
 .nx-t{font-family:var(--serif);font-size:14px;margin:3px 0 1px}
 .why{font-size:11px;color:var(--tx1);line-height:1.45;margin-top:3px}
+.tlbar{margin-top:6px;display:flex;align-items:center;gap:8px;font-size:10px;color:var(--tx2);letter-spacing:.06em}
+.tlbar .pbg{flex:1;height:4px}
 .comp{margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;align-items:center}
 .comp .cl{font-size:10px;color:var(--tx2);text-transform:uppercase;letter-spacing:.1em;margin-right:2px}
 .chip{font-size:10px;padding:3px 8px;border-radius:12px;border:1px solid var(--bdr);background:var(--bg3);color:var(--tx1);cursor:pointer}
 .chip:hover{color:var(--gold);border-color:var(--bdr2)}
 .emptynow{background:var(--bg1);border:1px dashed var(--bdr2);border-radius:12px;padding:22px;color:var(--tx1);font-size:13px;margin-bottom:34px}
-/* ── Filters ── */
 .tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin-bottom:10px}
 .tab{font-size:12px;padding:8px 14px;border-radius:6px;background:var(--bg1);border:1px solid var(--bdr);color:var(--tx1);white-space:nowrap}
 .tab.on{background:var(--bg3);border-color:var(--bdr2);color:var(--gold)}
@@ -95,7 +92,6 @@ main{max-width:1400px;margin:0 auto;padding:22px}
 .vt{display:flex;border:1px solid var(--bdr);border-radius:6px;overflow:hidden}
 .vt button{background:var(--bg1);border:none;color:var(--tx2);padding:0 12px;font-size:12px}
 .vt button.on{background:var(--bg3);color:var(--gold)}
-/* ── Library ── */
 .esec{margin-bottom:30px}
 .ehdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--bdr)}
 .etit{font-family:var(--serif);font-size:16px;color:var(--gold);flex:1}
@@ -120,7 +116,6 @@ main{max-width:1400px;margin:0 auto;padding:22px}
 .ribbon{position:absolute;bottom:0;left:0;right:0;z-index:2;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;text-align:center;padding:3px;color:#111}
 .sr .ribbon{background:var(--ok)}.sg .ribbon{background:var(--go)}
 .isnext .cover{box-shadow:0 0 0 2px var(--gold),0 0 18px rgba(212,175,90,.45)}
-/* list view */
 .list{display:flex;flex-direction:column;gap:4px}
 .row{display:flex;align-items:center;gap:12px;padding:6px 10px;background:var(--bg1);border:1px solid var(--bdr);border-radius:6px;cursor:pointer}
 .row:hover{border-color:var(--bdr2);background:var(--bg2)}
@@ -136,7 +131,6 @@ main{max-width:1400px;margin:0 auto;padding:22px}
 .bv{color:#5ccf9c;border-color:rgba(40,150,100,.35)}.bad{color:#e0b060;border-color:rgba(200,150,40,.35)}
 .bs{color:#6cc0e0;border-color:rgba(50,130,170,.35)}.bo{color:#e08060;border-color:rgba(180,80,40,.35)}
 .empty{text-align:center;padding:40px;color:var(--tx2)}
-/* ── Modal ── */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
 .ov.on{display:flex}
 .modal{background:var(--bg1);border:1px solid var(--bdr2);border-radius:14px;max-width:760px;width:100%;max-height:92vh;overflow:auto;padding:22px;position:relative}
@@ -147,7 +141,7 @@ main{max-width:1400px;margin:0 auto;padding:22px}
 .mgrid .cover{width:200px}
 .mt{font-family:var(--serif);font-size:22px;color:var(--gold);line-height:1.25;padding-right:20px}
 .meta{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:12px;margin:12px 0}
-.meta dt{color:var(--tx2)}.meta dd{color:var(--tx0)}
+.meta dt{color:var(--tx2)}.meta dd{color:var(--tx0);display:flex;flex-wrap:wrap;gap:4px}
 .seg{display:flex;border:1px solid var(--bdr2);border-radius:8px;overflow:hidden;margin:10px 0 16px}
 .seg button{flex:1;background:var(--bg2);border:none;color:var(--tx1);padding:9px;font-size:12px;font-weight:600}
 .seg button+button{border-left:1px solid var(--bdr)}
@@ -161,6 +155,8 @@ main{max-width:1400px;margin:0 auto;padding:22px}
 .inrow input:focus{border-color:var(--gold)}
 .hint{font-size:11px;color:var(--tx2);line-height:1.5;margin-top:6px}
 .src{font-size:10px;color:var(--tx2);margin-top:6px}
+.radio{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--tx0)}
+.radio label{display:flex;gap:8px;align-items:center;cursor:pointer}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg3);border:1px solid var(--bdr2);color:var(--tx0);padding:10px 16px;border-radius:8px;font-size:13px;z-index:200;transition:transform .25s}
 .toast.on{transform:translateX(-50%) translateY(0)}
 </style>
@@ -209,9 +205,6 @@ main{max-width:1400px;margin:0 auto;padding:22px}
 <input type="file" id="impFile" accept="application/json" hidden>
 
 <script>
-/* ════════════════════════════════════════════════════════════════════
-   DATA
-   ════════════════════════════════════════════════════════════════════ */
 const ERAS=[
   {id:"hh",  name:"The Great Crusade & Horus Heresy", short:"Horus Heresy"},
   {id:"post",name:"Post Heresy & Classic 40k Bridge",  short:"Post Heresy"},
@@ -707,53 +700,160 @@ const RAW=[
 ];
 const books=RAW.map((b,i)=>({...b,id:i,key:b.ser+'|'+b.t}));
 const byTitle=new Map(books.map(b=>[b.t.toLowerCase(),b]));
-
 /* ════════════════════════════════════════════════════════════════════
-   READING ORDER
-   The main path is the recommended route through the setting.
-   Side series feed back into it; tie-ins are optional companion reads.
+   HORUS HERESY READING GRAPH
+   Transcribed from "Daunt's Horus Heresy Timeline v0.9"
+   (gaming.kylebb.com/hhtimeline/). Each entry: book → books that follow it.
+   A book becomes "ready" once every book pointing at it has been read.
+   Titles not in the library (e.g. Unforged, Sermon of Exodus) are kept
+   so the arrows still connect, but they are skipped automatically.
    ════════════════════════════════════════════════════════════════════ */
+const HH_GRAPH=[
+  // ── Opening trilogy → Flight of the Eisenstein (the big branch point)
+  ["Horus Rising",["False Gods"]],
+  ["False Gods",["Galaxy in Flames"]],
+  ["Galaxy in Flames",["The Flight of the Eisenstein"]],
+  ["The Flight of the Eisenstein",["A Thousand Sons","Fulgrim","Descent of Angels","Legion","The Outcast Dead","Mechanicum","Vengeful Spirit",
+    "Brotherhood of the Storm","The Final Compliance of Sixty-Three Fourteen","The Wolf of Ash and Fire","The Purge","The Dark King","The Crimson Fist",
+    "The Last Remembrancer","Child of Night","Garro: Ashes of Fealty","The Kaban Project","Riven","The Devine Adoratrice","Ordo Sinister","The Last Son of Prospero"]],
+  // ── Thousand Sons & Space Wolves
+  ["A Thousand Sons",["Prospero Burns"]],
+  ["Prospero Burns",["Rebirth","Thief of Revelations","The Thirteenth Wolf","Howl of the Hearthworld","The Crimson King"]],
+  ["Howl of the Hearthworld",["Wolf's Claw"]],["Wolf's Claw",["Wolf King"]],["Wolf King",["Bjorn: Lone Wolf"]],
+  ["The Crimson King",["Slaves to Darkness"]],
+  // ── White Scars
+  ["Rebirth",["Scars"]],["Brotherhood of the Storm",["Scars"]],
+  ["Scars",["The Path of Heaven","Allegiance","Brotherhood of the Moon","Daemonology"]],
+  ["Allegiance",["Grey Talon"]],["Grey Talon",["The Either"]],["The Either",["The Seventh Serpent"]],
+  ["The Path of Heaven",["Restorer"]],
+  // ── Fulgrim, Isstvan V & the Shattered Legions
+  ["Fulgrim",["Nemesis","The First Heretic","Kryptos","The Reflection Crack'd","The Phoenician","Massacre","Veritas Ferrum","Raven's Flight","Artefacts","Promethean Sun"]],
+  ["The Reflection Crack'd",["Angel Exterminatus","The Seventh Serpent"]],
+  ["Angel Exterminatus",["Imperfect","Black Oculus"]],["Imperfect",["Chirurgeon"]],
+  ["Black Oculus",["Tallarn: Executioner"]],["Tallarn: Executioner",["Tallarn: Ironclad"]],["Tallarn: Ironclad",["Tallarn: Siren"]],
+  ["Tallarn: Siren",["Tallarn: Witness"]],["Tallarn: Witness",["The Eagle's Talon"]],["The Eagle's Talon",["Iron Corpses"]],
+  ["Nemesis",["Gunsight"]],
+  ["Veritas Ferrum",["Sermon of Exodus"]],["Sermon of Exodus",["The Damnation of Pythos"]],
+  ["Raven's Flight",["The Face of Treachery"]],["The Face of Treachery",["Deliverance Lost"]],["Deliverance Lost",["Corax"]],
+  ["Artefacts",["Unforged"]],["Unforged",["Unspoken"]],
+  ["Promethean Sun",["Feat of Iron","Scorched Earth"]],["Scorched Earth",["Vulkan Lives"]],
+  ["Vulkan Lives",["The Unremembered Empire"]],
+  // ── Word Bearers, Ultramarines, World Eaters
+  ["The First Heretic",["Battle for the Abyss","Fear to Tread","Aurelian"]],
+  ["Battle for the Abyss",["Know No Fear"]],["Legion",["Know No Fear"]],
+  ["Know No Fear",["Betrayer","The Unburdened","The Honoured","Rules of Engagement","Honour to the Dead","Macragge's Honour","Censure"]],
+  ["Macragge's Honour",["Children of Sicarus"]],
+  ["Butcher's Nails",["Betrayer"]],["After Desh'ea",["Betrayer"]],
+  ["Betrayer",["Mark of Calth","Inheritor"]],["Mark of Calth",["The Unremembered Empire","Perpetual"]],
+  ["Fear to Tread",["The Unremembered Empire"]],
+  // ── Imperial Fists & Sons of Horus
+  ["The Final Compliance of Sixty-Three Fourteen",["Warmaster"]],["The Wolf of Ash and Fire",["Warmaster"]],
+  ["Warmaster",["Little Horus"]],["Little Horus",["Twisted"]],["Twisted",["The Praetorian of Dorn"]],
+  ["The Dark King",["The Lightning Tower"]],["The Lightning Tower",["Templar"]],["The Crimson Fist",["Templar"]],["The Purge",["Templar"]],
+  ["Templar",["The Praetorian of Dorn"]],
+  ["The Praetorian of Dorn",["The Iron Within","Duty Waits","The Binary Succession"]],["Duty Waits",["Now Peals Midnight"]],
+  ["The Iron Within",["The Unremembered Empire","Ironfire"]],
+  // ── Dark Angels
+  ["Descent of Angels",["Call of the Lion"]],["Call of the Lion",["Fallen Angels"]],
+  ["Fallen Angels",["Savage Weapons","Prince of Crows","Cypher: Guardian of Order"]],
+  ["Savage Weapons",["The Lion"]],["The Lion",["By the Lion's Command"]],
+  ["Prince of Crows",["Master of the First","The Long Night"]],
+  // ── Garro & the Knights-Errant
+  ["The Last Remembrancer",["Garro: Oath of Moment","Lost Sons"]],["Garro: Oath of Moment",["Burden of Duty"]],
+  ["Burden of Duty",["Garro: Sword of Truth"]],["Garro: Sword of Truth",["Garro: Legion of One"]],["Garro: Legion of One",["Luna Mendax"]],
+  ["Luna Mendax",["Garro: Shield of Lies","Grey Angel"]],["Garro: Shield of Lies",["Garro: Vow of Faith"]],
+  // ── Mars
+  ["The Kaban Project",["Mechanicum"]],
+  ["Mechanicum",["Vorax","Into Exile","Cybernetica"]],["Cybernetica",["Hands of the Emperor","Myriad"]],
+  // ── Imperium Secundus & the Ruinstorm
+  ["The Unremembered Empire",["Deathfire","Pharos","A Safe and Shadowed Place","Stratagem","The Laurel of Defiance","Herald of Sanguinius"]],
+  ["Stratagem",["Red-Marked"]],["Red-Marked",["Nightfane"]],
+  ["A Safe and Shadowed Place",["Pharos"]],["The Heart of the Pharos",["Pharos"]],
+  ["Herald of Sanguinius",["Sins of the Father"]],["Sins of the Father",["Virtues of the Sons"]],
+  ["Pharos",["Angels of Caliban","The Painted Count"]],
+  ["Deathfire",["Old Earth"]],["Meduson",["The Hand Elect"]],["The Hand Elect",["Old Earth"]],
+  ["Angels of Caliban",["Ruinstorm","Exocytosis"]],
+  ["Ruinstorm",["Wolfsbane","Dreadwing","The Atonement of Fire","All That Remains"]],["The Atonement of Fire",["Spear of Ultramar"]],
+  ["Corax",["The Grey Raven","The Divine Word"]],["The Divine Word",["Valerius"]],["Valerius",["Dreadwing"]],
+  // ── Terra
+  ["The Outcast Dead",["The Master of Mankind","Wolf Hunt","The Keys of Hel"]],["Riven",["The Keys of Hel"]],
+  ["Ordo Sinister",["The Master of Mankind"]],
+  ["The Master of Mankind",["Old Earth","Malcador: First Lord of the Imperium","The Ember Wolves","Magisterium","Bringer of Sorrow","The Board is Set"]],
+  ["The Board is Set",["Prologue to Nikaea"]],
+  ["Malcador: First Lord of the Imperium",["Wolfsbane","Two Metaphysical Blades","The Last Council"]],
+  ["The Devine Adoratrice",["Vengeful Spirit"]],["Vengeful Spirit",["Wolf Mother","Dark Compliance"]],["Wolf Mother",["Old Wounds, New Scars"]],
+  // ── The road to Terra
+  ["Wolfsbane",["Titandeath","Corax"]],["Titandeath",["Slaves to Darkness"]],
+  ["Slaves to Darkness",["The Buried Dagger"]],["The Last Council",["The Buried Dagger"]],["Lantern's Light",["The Buried Dagger"]],
+  ["The Last Son of Prospero",["The Buried Dagger"]],
+  // ── The Siege of Terra
+  ["The Buried Dagger",["The Solar War"]],
+  ["The Solar War",["The Lost and the Damned"]],["The Lost and the Damned",["The First Wall"]],["The First Wall",["Sons of the Selenar"]],
+  ["Sons of the Selenar",["Saturnine"]],["Saturnine",["The Fury of Magnus"]],["The Fury of Magnus",["Mortis"]],["Mortis",["Warhawk"]],
+  ["Warhawk",["Echoes of Eternity"]],["Echoes of Eternity",["Garro: Knight of Grey"]],["Garro: Knight of Grey",["The End and the Death: Volume I"]],
+  ["The End and the Death: Volume I",["The End and the Death: Volume II"]],["The End and the Death: Volume II",["The End and the Death: Volume III"]],
+];
+// Bold "novel" boxes in the diagram — used for the novels-only mode and to prioritise the main line
+const HH_MAIN=new Set(["Horus Rising","False Gods","Galaxy in Flames","The Flight of the Eisenstein","A Thousand Sons","Prospero Burns","Scars",
+  "Fulgrim","Angel Exterminatus","Nemesis","The Damnation of Pythos","Deliverance Lost","Vulkan Lives","The First Heretic","Battle for the Abyss",
+  "Legion","Know No Fear","Fear to Tread","Betrayer","The Praetorian of Dorn","Descent of Angels","Fallen Angels","The Crimson King","The Path of Heaven",
+  "Mechanicum","The Unremembered Empire","Deathfire","Pharos","Old Earth","Angels of Caliban","Ruinstorm","Wolfsbane","Titandeath","Slaves to Darkness",
+  "The Outcast Dead","Vengeful Spirit","The Master of Mankind","The Buried Dagger","The Solar War","The Lost and the Damned","The First Wall","Saturnine",
+  "Mortis","Warhawk","Echoes of Eternity","The End and the Death: Volume I","The End and the Death: Volume II","The End and the Death: Volume III"].map(s=>s.toLowerCase()));
+const ALIAS={"the praetorian of dorn":"praetorian of dorn"};
+
+/* Build the graph */
+const G=new Map(); // name(lower) → {name, b, succ:[], pred:[], main, rank}
+function gnode(n){const k=n.toLowerCase();if(!G.has(k))G.set(k,{name:n,k,b:byTitle.get(ALIAS[k]||k)||null,succ:[],pred:[],main:HH_MAIN.has(k),rank:0});return G.get(k);}
+for(const [a,list] of HH_GRAPH){const A=gnode(a);for(const s of list){const S=gnode(s);if(!A.succ.includes(S)){A.succ.push(S);S.pred.push(A);}}}
+// Topological rank (Kahn), ties broken by order of appearance
+(()=>{const nodes=[...G.values()],deg=new Map(nodes.map(n=>[n,n.pred.length]));const q=nodes.filter(n=>!n.pred.length);let r=0;
+  while(q.length){q.sort((x,y)=>nodes.indexOf(x)-nodes.indexOf(y));const n=q.shift();n.rank=r++;for(const s of n.succ){deg.set(s,deg.get(s)-1);if(!deg.get(s))q.push(s);}}
+  if(r!==nodes.length)console.warn('HH graph has a cycle');})();
+const gByBook=new Map([...G.values()].filter(n=>n.b).map(n=>[n.b.id,n]));
+const gMissing=[...G.values()].filter(n=>!n.b).map(n=>n.name);
+// Compatibility helpers used by the UI
+const tlIndex={has:id=>gByBook.has(id),get:id=>gByBook.has(id)?gByBook.get(id).rank:undefined};
+
+/* After the Heresy timeline, the rest of the setting in series order */
 const READING_PATH=[
-  "HH – Main Series","Siege of Terra","HH – The Scouring",
+  "Siege of Terra","HH – The Scouring",
   "Black Legion","Eisenhorn","Ravenor",
   "Gaunt's Ghosts","Ciaphas Cain","Ultramarines","Space Wolves","Blood Angels","Dark Angels",
   "Night Lords","Iron Warriors","Word Bearers","Grey Knights","Space Marine Battles","40k Standalone",
   "Dark Imperium","Indomitus","Dawn of Fire","Vaults of Terra","Space Marine Conquests",
 ];
-// Side series → where they plug back into the main path
+// Side series → where they plug back into the reading order
 const PARENT={
-  "HH – Primarchs":"HH – Main Series","HH – Primarchs (Short Stories)":"HH – Main Series",
-  "HH – Primarchs (Audio Dramas)":"HH – Main Series","HH – Characters":"HH – Main Series",
-  "HH – Official Novellas":"HH – Main Series","HH – Collections & Anthologies":"HH – Main Series",
-  "HH – Omnibus Editions":"HH – Main Series","HH – Short Stories":"HH – Main Series","HH – Audio Dramas":"HH – Main Series",
+  "HH – Main Series":"__TIMELINE__",
+  "HH – Primarchs":"__TIMELINE__","HH – Primarchs (Short Stories)":"__TIMELINE__",
+  "HH – Primarchs (Audio Dramas)":"__TIMELINE__","HH – Characters":"__TIMELINE__",
+  "HH – Official Novellas":"__TIMELINE__","HH – Collections & Anthologies":"__TIMELINE__",
+  "HH – Omnibus Editions":"__TIMELINE__","HH – Short Stories":"__TIMELINE__","HH – Audio Dramas":"__TIMELINE__",
 };
-// Optional companion reads that pair well right after a given book
+// Optional companion reads that pair well with a given book (not part of the timeline)
 const TIE_INS={
-  "Horus Rising":["The Lightning Tower","The Dark King"],
   "Fulgrim":["Fulgrim: The Palatine Phoenix","Ferrus Manus: The Gorgon of Medusa"],
   "Descent of Angels":["Lion El'Jonson: Lord of the First"],
   "Legion":["Alpharius: Head of the Hydra"],
   "Mechanicum":["Cybernetica"],
-  "Fallen Angels":["Luther: First of the Fallen","The Lion"],
+  "Fallen Angels":["Luther: First of the Fallen"],
   "A Thousand Sons":["Magnus the Red: Master of Prospero"],
   "The First Heretic":["Lorgar: Bearer of the Word","Zardu Layak: The Crimson Apostle"],
   "Prospero Burns":["Leman Russ: The Great Wolf","The Razing of Prospero"],
   "Deliverance Lost":["Corax: Lord of Shadows","Corax: Soulforge"],
   "Know No Fear":["Roboute Guilliman: Lord of Ultramar","Betrayal at Calth"],
-  "Angel Exterminatus":["Perturabo: The Hammer of Olympia","Feat of Iron"],
-  "Betrayer":["Angron: Slave of Nuceria","Butcher's Nails"],
+  "Angel Exterminatus":["Perturabo: The Hammer of Olympia"],
+  "Betrayer":["Angron: Slave of Nuceria"],
   "Vulkan Lives":["Vulkan: Lord of Drakes","Promethean Sun"],
-  "The Unremembered Empire":["Konrad Curze: The Night Haunter","Prince of Crows"],
-  "Scars":["Jaghatai Khan: Warhawk of Chogoris","Brotherhood of the Storm"],
+  "The Unremembered Empire":["Konrad Curze: The Night Haunter"],
+  "Scars":["Jaghatai Khan: Warhawk of Chogoris"],
   "Deathfire":["Sons of the Forge"],
-  "Pharos":["The Heart of the Pharos"],
-  "The Path of Heaven":["Jaghatai Khan: Warhawk of Chogoris"],
   "Angels of Caliban":["Luther: First of the Fallen","Dreadwing"],
-  "Praetorian of Dorn":["Rogal Dorn: The Emperor's Crusader","The Crimson Fist"],
+  "Praetorian of Dorn":["Rogal Dorn: The Emperor's Crusader"],
   "The Master of Mankind":["Valdor: Birth of the Imperium"],
   "The Crimson King":["Magnus the Red: Master of Prospero"],
-  "Wolfsbane":["Wolf King"],
-  "The Buried Dagger":["Mortarion: The Pale King","Garro: Vow of Faith"],
+  "The Buried Dagger":["Mortarion: The Pale King"],
   "The Solar War":["Sigismund: The Eternal Crusader"],
   "Echoes of Eternity":["Sanguinius: The Great Angel"],
   "The Lost and the Damned":["Eidolon: The Auric Hammer"],
@@ -764,10 +864,10 @@ const TIE_INS={
 };
 
 /* ════════════════════════════════════════════════════════════════════
-   STATE  (keyed by series|title, migrates the old v5 index-based save)
+   STATE
    ════════════════════════════════════════════════════════════════════ */
 const SKEY='wh40k_tracker_v6', CKEY='wh40k_covers_v1', OKEY='wh40k_opts_v1';
-let state={}, covers={}, opts={view:'grid',gbKey:''};
+let state={}, covers={}, opts={view:'grid',gbKey:'',tlMode:'full'};
 try{state=JSON.parse(localStorage.getItem(SKEY)||'null')}catch(e){}
 if(!state){
   state={};
@@ -789,48 +889,101 @@ function setStatus(b,s){
 }
 function cycle(b){const s=gs(b);setStatus(b,s==='unread'?'reading':s==='reading'?'read':'unread');}
 
+
 /* ════════════════════════════════════════════════════════════════════
-   RECOMMENDATION ENGINE
+   RECOMMENDATION ENGINE — follows the arrows of the Heresy diagram
+   1. Next = an unread book the current one points to (novels first).
+   2. If that book still has unread prerequisites (other arrows into it),
+      recommend the earliest missing prerequisite instead.
+   3. Branch finished → earliest book in the diagram that is now unlocked.
+   4. Diagram complete → rest of Siege of Terra, The Scouring, then 40k.
    ════════════════════════════════════════════════════════════════════ */
 const seriesBooks=ser=>books.filter(b=>b.ser===ser).sort((a,b)=>a.o-b.o);
 const isFree=b=>gs(b)==='unread';
+const fmtO=o=>Number.isInteger(o)?o:o.toFixed(1);
+const novelsOnly=()=>opts.tlMode==='novels';
+const skipN=n=>!n.b||(novelsOnly()&&!n.main);           // pass-through node
+const doneN=(n,assume)=>skipN(n)||n===assume||gs(n.b)!=='unread';
+function effSucc(n,seen=new Set()){const out=[];for(const s of n.succ){if(seen.has(s))continue;seen.add(s);if(skipN(s))out.push(...effSucc(s,seen));else out.push(s);}return out;}
+function effPred(n,seen=new Set()){const out=[];for(const p of n.pred){if(seen.has(p))continue;seen.add(p);if(skipN(p))out.push(...effPred(p,seen));else out.push(p);}return out;}
+const readyN=(n,assume)=>!doneN(n,assume)&&effPred(n).every(p=>doneN(p,assume));
+const byPrio=(a,b)=>(b.main-a.main)||(a.rank-b.rank);
+const graphNodes=()=>[...G.values()].filter(n=>!skipN(n));
+const tlTotal=()=>graphNodes().length;
+const tlDone=()=>graphNodes().filter(n=>gs(n.b)==='read').length;
+function blocker(n,assume){ // earliest unlocked ancestor that must be read first
+  let cur=n,guard=0;
+  while(!readyN(cur,assume)&&guard++<200){const miss=effPred(cur).filter(p=>!doneN(p,assume)).sort((a,b)=>a.rank-b.rank);if(!miss.length)break;cur=miss[0];}
+  return cur;
+}
+function frontier(assume){return graphNodes().filter(n=>readyN(n,assume)).sort(byPrio);}
 function firstUnreadOnPath(fromIdx=0){
-  for(let i=fromIdx;i<READING_PATH.length;i++){
-    const f=seriesBooks(READING_PATH[i]).find(isFree); if(f) return {b:f,ser:READING_PATH[i]};
-  }
+  for(let i=fromIdx;i<READING_PATH.length;i++){const f=seriesBooks(READING_PATH[i]).find(isFree);if(f)return {b:f,ser:READING_PATH[i]};}
   return null;
 }
-function recommend(anchor){
-  const same=seriesBooks(anchor.ser);
-  const later=same.find(b=>b.o>anchor.o&&isFree(b));
-  const skipped=same.find(b=>b.o<anchor.o&&isFree(b));
-  let rec=null;
-  if(later){
-    rec={b:later,why:`Book ${fmtO(later.o)} of <b>${esc(anchor.ser)}</b> — continues straight on from <i>${esc(anchor.t)}</i>.`};
-    if(skipped&&READING_PATH.includes(anchor.ser)&&skipped.o<later.o)
-      rec.why+=` Note: you skipped <i>${esc(skipped.t)}</i> (#${fmtO(skipped.o)}) earlier in this series.`;
+const arrow=(a,b)=>`<i>${esc(a.name)}</i> → <i>${esc(b.name)}</i>`;
+function graphRec(anchor){ // anchor: graph node or null
+  const succ=anchor?effSucc(anchor).filter(s=>!doneN(s,anchor)):[]; // diagram order: first listed arrow = main path
+  let rec=null,branches=[];
+  const ready=succ.filter(s=>readyN(s,anchor));
+  if(ready.length){
+    const s=ready[0];
+    rec={b:s.b,tl:true,why:`Follows ${arrow(anchor,s)} on the Heresy diagram.`};
+    branches=ready.slice(1);
+  }else if(succ.length){
+    const s=succ[0],bl=blocker(s,anchor);
+    rec={b:bl.b,tl:true,why:`<i>${esc(anchor.name)}</i> leads to <i>${esc(s.name)}</i>, but that book also needs <i>${esc(bl.name)}</i> first.`};
+    branches=succ.slice(1).filter(x=>readyN(x,anchor));
   }else{
-    const pi=READING_PATH.indexOf(anchor.ser);
-    const gaps=same.filter(b=>b.o<anchor.o&&isFree(b));
-    const gapNote=gaps.length?` You still have ${gaps.length} unread earlier book${gaps.length>1?'s':''} here (first: <i>${esc(gaps[0].t)}</i>).`:'';
-    if(pi>=0){
-      const n=firstUnreadOnPath(pi+1);
-      if(n) rec={b:n.b,why:`That's the last book of <b>${esc(anchor.ser)}</b>. The reading order continues with <b>${esc(n.ser)}</b>.${gapNote}`};
-      else if(skipped) rec={b:skipped,why:`End of the main reading order — fill the gap you skipped in <b>${esc(anchor.ser)}</b>.`};
-    }else if(skipped){
-      rec={b:skipped,why:`End of <b>${esc(anchor.ser)}</b>, but you missed #${fmtO(skipped.o)} — fill the gap before moving on.`};
-    }else{
-      const parent=PARENT[anchor.ser];
-      const ps=parent?seriesBooks(parent).find(isFree):null;
-      if(ps) rec={b:ps,why:`Side series finished — return to the main line, <b>${esc(parent)}</b>, where your next unread is #${fmtO(ps.o)}.`};
-      else{const n=firstUnreadOnPath(0); if(n) rec={b:n.b,why:`Back to the main reading order: next unread in <b>${esc(n.ser)}</b>.`};}
+    const f=frontier(anchor);
+    if(f.length){
+      rec={b:f[0].b,tl:true,why:anchor?`This branch of the diagram ends here. Earliest book now unlocked: <i>${esc(f[0].name)}</i>.`:`Start of the Heresy diagram.`};
+      branches=f.slice(1,4);
     }
   }
-  if(!rec){const any=books.find(b=>b.era===anchor.era&&isFree(b))||books.find(isFree); if(any) rec={b:any,why:'Everything on the main path is done — here is something you haven\u2019t read yet.'};}
-  const comps=(TIE_INS[anchor.t]||[]).map(t=>byTitle.get(t.toLowerCase())).filter(b=>b&&isFree(b)&&(!rec||b.id!==rec.b.id));
-  return {rec,comps};
+  return {rec,branches:branches.map(n=>n.b)};
 }
-const fmtO=o=>Number.isInteger(o)?o:o.toFixed(1);
+function startRec(){
+  const {rec}=graphRec(null); if(rec) return rec;
+  const n=firstUnreadOnPath(0); return n?{b:n.b,why:`Heresy diagram complete — continue with <b>${esc(n.ser)}</b>.`}:null;
+}
+function recommend(anchor){
+  let rec=null,branches=[];
+  const node=gByBook.get(anchor.id);
+  if(node&&!skipN(node)){
+    ({rec,branches}=graphRec(node));
+  }else if(node||PARENT[anchor.ser]==='__TIMELINE__'){
+    const f=frontier(null);
+    if(f.length){rec={b:f[0].b,tl:true,why:`<i>${esc(anchor.t)}</i> ${node?'is skipped in novels-only mode':'is a companion read outside the diagram'}. Back to the earliest unlocked book on the Heresy diagram.`};}
+  }
+  if(!rec&&(node||PARENT[anchor.ser]==='__TIMELINE__')){
+    const n=firstUnreadOnPath(0); if(n) rec={b:n.b,why:`You've completed the Horus Heresy diagram. The story continues with <b>${esc(n.ser)}</b>.`};
+  }
+  if(!rec&&!node&&!PARENT[anchor.ser]){
+    const same=seriesBooks(anchor.ser);
+    const later=same.find(b=>b.o>anchor.o&&isFree(b));
+    const skipped=same.find(b=>b.o<anchor.o&&isFree(b));
+    if(later){
+      rec={b:later,why:`Book ${fmtO(later.o)} of <b>${esc(anchor.ser)}</b> — continues straight on from <i>${esc(anchor.t)}</i>.`};
+      if(skipped&&READING_PATH.includes(anchor.ser)) rec.why+=` Note: you skipped <i>${esc(skipped.t)}</i> (#${fmtO(skipped.o)}) earlier in this series.`;
+    }else{
+      const pi=READING_PATH.indexOf(anchor.ser);
+      if(pi>=0){
+        const n=firstUnreadOnPath(pi+1);
+        if(n) rec={b:n.b,why:`That's the last book of <b>${esc(anchor.ser)}</b>. The reading order continues with <b>${esc(n.ser)}</b>.${skipped?` You still have unread earlier books here (first: <i>${esc(skipped.t)}</i>).`:''}`};
+        else if(skipped) rec={b:skipped,why:`End of the reading order — fill the gap you skipped in <b>${esc(anchor.ser)}</b>.`};
+      }else if(skipped){
+        rec={b:skipped,why:`End of <b>${esc(anchor.ser)}</b>, but you missed #${fmtO(skipped.o)} — fill the gap before moving on.`};
+      }else{
+        const f=frontier(null); if(f.length) rec={b:f[0].b,tl:true,why:'Back to the Horus Heresy diagram: earliest unlocked book.'};
+        else{const n=firstUnreadOnPath(0); if(n) rec={b:n.b,why:`Back to the main reading order: next unread in <b>${esc(n.ser)}</b>.`};}
+      }
+    }
+  }
+  if(!rec){const any=books.find(b=>b.era===anchor.era&&isFree(b))||books.find(isFree); if(any) rec={b:any,why:'Everything on the reading order is done — here is something you haven\u2019t read yet.'};}
+  const comps=(TIE_INS[anchor.t]||[]).map(t=>byTitle.get(t.toLowerCase())).filter(b=>b&&isFree(b)&&(!rec||b.id!==rec.b.id)&&!branches.some(x=>x.id===b.id));
+  return {rec,comps,branches:branches.filter(b=>!rec||b.id!==rec.b.id)};
+}
 
 /* ════════════════════════════════════════════════════════════════════
    COVER LOOKUP — Google Books (Google's own catalogue, free & browser-safe),
@@ -887,7 +1040,7 @@ function pump(){
       try{res=await fromGoogleBooks(b);}catch(e){if(e.message==='rate'){retry=true;pausedUntil=Date.now()+8000;}else net++;}
       if(!res&&!retry){try{res=await fromOpenLibrary(b);}catch(e){net++;}}
       if(retry&&!res){queue.push(b);}
-      else if(!res&&net===2){inflight.delete(b.key);netFail.add(b.key);markLoading(b,false);} // offline: don't cache, retry next visit
+      else if(!res&&net===2){inflight.delete(b.key);netFail.add(b.key);markLoading(b,false);} // offline: don't cache
       else{covers[b.key]=res?{url:res.url,src:res.src}:{url:'',src:'none'};inflight.delete(b.key);saveCovers();paintCover(b);}
     })().finally(()=>{active--;setTimeout(pump,250);});
   }
@@ -915,7 +1068,7 @@ const gImg=b=>`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(`${
 /* ════════════════════════════════════════════════════════════════════
    RENDERING
    ════════════════════════════════════════════════════════════════════ */
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 const TYPE_CLS={novel:'bn',anthology:'ba',novella:'bv',audio:'bad',short:'bs',omnibus:'bo'};
 const TYPE_LBL={novel:'Novel',anthology:'Anthology',novella:'Novella',audio:'Audio',short:'Short',omnibus:'Omnibus'};
 let aEra='all',fSer='',fSt='',fTp='',fQ='';
@@ -927,6 +1080,10 @@ function updateProg(){
   pn.innerHTML=`${rd} / <strong>${tot}</strong> · ${pct}%`; pb.style.width=pct+'%';
   cr.textContent=rd; cg.textContent=rg; cu.textContent=tot-rd-rg;
 }
+function tlBar(){
+  const d=tlDone(),t=tlTotal(),p=t?Math.round(d/t*100):0;
+  return `<div class="tlbar"><span>HERESY DIAGRAM ${d}/${t}</span><div class="pbg"><div class="pf" style="width:${p}%"></div></div><span>${p}%</span></div>`;
+}
 function renderNow(){
   const reading=books.filter(b=>gs(b)==='reading').sort((a,b)=>state[b.key].t-state[a.key].t);
   nextIds=new Set();
@@ -935,29 +1092,31 @@ function renderNow(){
     const read=books.filter(b=>gs(b)==='read').sort((a,b)=>state[b.key].t-state[a.key].t);
     let rec,head;
     if(read.length){({rec}=recommend(read[0]));head=`You're not reading anything right now. Your last finished book was <i>${esc(read[0].t)}</i>.`;}
-    else{const n=firstUnreadOnPath(0);rec=n&&{b:n.b,why:'The Horus Heresy is the recommended starting point: it sets up the Imperium, the Primarchs and Chaos that the whole 40k setting is built on.'};head='Welcome, reader. Mark a book as <b>Reading</b> to get personalised recommendations.';}
+    else{rec=startRec();head='Welcome, reader. Mark a book as <b>Reading</b> to get personalised recommendations. The order follows the Horus Heresy diagram, then continues into the 41st Millennium.';}
     html=`<div class="emptynow">${head}${rec?nextBlock(rec,[], 'Suggested next'):''}</div>`;
     if(rec) nextIds.add(rec.b.id);
   }else{
     html='<div class="now">'+reading.map(b=>{
-      const {rec,comps}=recommend(b); if(rec) nextIds.add(rec.b.id);
+      const {rec,comps,branches}=recommend(b); if(rec) nextIds.add(rec.b.id);
       return `<div class="nowcard"><div data-open="${b.id}">${coverHTML(b)}</div><div>
         <div class="lbl">Currently reading</div>
         <div class="nt">${esc(b.t)}</div><div class="na">${esc(b.auth||'')}</div>
         <div class="nser">${esc(b.ser)} · #${fmtO(b.o)} · ${TYPE_LBL[b.tp]||'Novel'}</div>
         <div class="acts"><button class="btn gold sm" data-finish="${b.id}">✓ Finished</button><button class="btn sm" data-open="${b.id}">Details</button></div>
-        ${rec?nextBlock(rec,comps,'Up next in reading order'):''}
+        ${rec?nextBlock(rec,comps,'Up next in reading order',branches):''}
       </div></div>`;}).join('')+'</div>';
   }
   nowWrap.innerHTML=html; hookCovers(nowWrap);
 }
-function nextBlock(rec,comps,label){
+function nextBlock(rec,comps,label,branches=[]){
   const b=rec.b;
   return `<div class="next"><div data-open="${b.id}">${coverHTML(b)}</div><div>
     <div class="lbl">${label}</div><div class="nx-t">${esc(b.t)}</div>
-    <div class="na">${esc(b.auth||'')} · ${esc(b.ser)} #${fmtO(b.o)}</div>
+    <div class="na">${esc(b.auth||'')} · ${esc(b.ser)} #${fmtO(b.o)} · ${TYPE_LBL[b.tp]||'Novel'}</div>
     <div class="why">${rec.why}</div>
+    ${rec.tl?tlBar():''}
     <div class="acts"><button class="btn sm" data-start="${b.id}">▶ Start reading</button></div>
+    ${branches.length?`<div class="comp"><span class="cl">Other open branches:</span>${branches.map(c=>`<span class="chip" data-open="${c.id}">${esc(c.t)}</span>`).join('')}</div>`:''}
     ${comps.length?`<div class="comp"><span class="cl">Companion reads:</span>${comps.map(c=>`<span class="chip" data-open="${c.id}">${esc(c.t)}</span>`).join('')}</div>`:''}
   </div></div>`;
 }
@@ -988,7 +1147,8 @@ function renderLib(){
     for(const ser of [...new Set(eb.map(b=>b.ser))]){
       const sb=eb.filter(b=>b.ser===ser).sort((a,b)=>a.o-b.o);
       const sall=books.filter(b=>b.ser===ser), srd=sall.filter(b=>gs(b)==='read').length;
-      const onPath=READING_PATH.includes(ser)?' · main reading order':PARENT[ser]?' · companion series':'';
+      const onTl=sall.filter(b=>tlIndex.has(b.id)).length;
+      const onPath=READING_PATH.includes(ser)?' · main reading order':onTl?` · ${onTl} on Heresy diagram`:PARENT[ser]?' · companion series':'';
       html+=`<div class="sgrp"><div class="stit">${esc(ser)}<small>${srd}/${sall.length} read${onPath}</small></div>`;
       if(opts.view==='grid'){
         html+='<div class="grid">'+sb.map(b=>{const st=gs(b);const c=st==='read'?'sr':st==='reading'?'sg':'';
@@ -1014,14 +1174,18 @@ function render(){updateProg();renderNow();renderLib();if(ov.classList.contains(
 let openId=null,modalMode=null;
 function openBook(id){
   const b=books[id]; openId=id; modalMode='book'; const st=gs(b); const c=covers[b.key];
-  const {rec,comps}=recommend(b);
+  const {rec,comps,branches}=recommend(b);
+  const gn=gByBook.get(b.id);
+  const chips=l=>l.map(n=>n.b?`<span class="chip" data-open="${n.b.id}">${esc(n.name)}</span>`:`<span class="chip" style="opacity:.5" title="Not in your library">${esc(n.name)}</span>`).join(' ');
   modal.innerHTML=`<button class="mx" data-close>×</button><div class="mgrid"><div>${coverHTML(b)}
       <div class="src">${c&&c.url?'Cover source: '+esc(c.src):c?'No cover found automatically':'Searching for cover…'}</div></div>
     <div><div class="mt">${esc(b.t)}</div>
       <dl class="meta"><dt>Author</dt><dd>${esc(b.auth||'—')}</dd><dt>Series</dt><dd>${esc(b.ser)} · #${fmtO(b.o)}</dd>
-      <dt>Era</dt><dd>${esc(ERAS.find(e=>e.id===b.era).name)}</dd><dt>Format</dt><dd>${TYPE_LBL[b.tp]||'Novel'}</dd></dl>
+      <dt>Era</dt><dd>${esc(ERAS.find(e=>e.id===b.era).name)}</dd><dt>Format</dt><dd>${TYPE_LBL[b.tp]||'Novel'}</dd>
+      ${gn&&gn.pred.length?`<dt>Comes after</dt><dd>${chips(gn.pred)}</dd>`:''}${gn&&gn.succ.length?`<dt>Leads to</dt><dd>${chips(gn.succ)}</dd>`:''}</dl>
       <div class="seg"><button class="u ${st==='unread'?'on':''}" data-set="unread">Unread</button><button class="g ${st==='reading'?'on':''}" data-set="reading">Reading</button><button class="r ${st==='read'?'on':''}" data-set="read">Read</button></div>
       ${rec?`<div class="box"><h4>After this book, read</h4><div><b class="nx-t">${esc(rec.b.t)}</b> <span class="na">— ${esc(rec.b.auth||'')}</span></div><div class="why">${rec.why}</div>
+        ${branches.length?`<div class="comp"><span class="cl">Other branches:</span>${branches.map(x=>`<span class="chip" data-open="${x.id}">${esc(x.t)}</span>`).join('')}</div>`:''}
         ${comps.length?`<div class="comp"><span class="cl">Companions:</span>${comps.map(x=>`<span class="chip" data-open="${x.id}">${esc(x.t)}</span>`).join('')}</div>`:''}</div>`:''}
       <div class="box"><h4>Cover image</h4>
         <div class="acts" style="margin-top:0"><button class="btn sm" data-refetch>↻ Search again</button><a class="btn sm" href="${gImg(b)}" target="_blank" rel="noopener" style="text-decoration:none">🔍 Google Images</a></div>
@@ -1029,12 +1193,18 @@ function openBook(id){
         <div class="hint">Covers are looked up automatically by title + author. If the match is wrong, open Google Images, right-click the cover → “Copy image address”, and paste it here.</div>
       </div></div></div>`;
   ov.classList.add('on'); hookCovers(modal);
-  const cv=modal.querySelector('.mgrid .cover'); if(covers[b.key]!==undefined) paintCover(b); else if(cv) wantCover(b);
+  if(covers[b.key]!==undefined) paintCover(b); else wantCover(b);
 }
 function openSettings(){
   modalMode='settings';
   const n=Object.values(covers).filter(c=>c.url).length;
   modal.innerHTML=`<button class="mx" data-close>×</button><div class="mt">Settings</div>
+    <div class="box"><h4>Horus Heresy recommendations</h4>
+      <div class="radio">
+        <label><input type="radio" name="tlm" value="full" ${opts.tlMode!=='novels'?'checked':''}> Full diagram — novels plus every short story, novella &amp; audio drama (${[...G.values()].filter(n=>n.b).length} books)</label>
+        <label><input type="radio" name="tlm" value="novels" ${opts.tlMode==='novels'?'checked':''}> Novels only — just the main novel boxes (${[...G.values()].filter(n=>n.b&&n.main).length} books)</label>
+      </div>
+      <div class="hint">Recommendations follow the arrows of <a href="https://gaming.kylebb.com/hhtimeline/" target="_blank" rel="noopener">Daunt's Horus Heresy Timeline</a>: a book is suggested once everything pointing to it has been read.</div></div>
     <div class="box"><h4>Google Books API key (optional)</h4>
       <div class="hint">Covers come from Google's book catalogue without any key. If you track many books and hit the anonymous rate limit, add a free Google Books API key from Google Cloud Console.</div>
       <div class="inrow"><input id="gbk" value="${esc(opts.gbKey)}" placeholder="AIza…"><button class="btn sm" data-savekey>Save</button></div></div>
@@ -1045,10 +1215,11 @@ function openSettings(){
   ov.classList.add('on');
 }
 function closeModal(){ov.classList.remove('on');openId=null;modalMode=null;}
-function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>toastEl.classList.remove('on'),2200);}
 const toastEl=document.getElementById('toast');
+function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>toastEl.classList.remove('on'),2200);}
 
 /* ── Events (delegated) ── */
+document.addEventListener('change',e=>{if(e.target.name==='tlm'){opts.tlMode=e.target.value;saveOpts();updateProg();renderNow();renderLib();toast(opts.tlMode==='novels'?'Recommending novels only':'Recommending the full diagram');}});
 document.addEventListener('click',e=>{
   const t=e.target.closest('[data-cycle],[data-open],[data-finish],[data-start],[data-set],[data-close],[data-refetch],[data-seturl],[data-era],[data-v],[data-savekey],[data-clearcov],[data-clearmiss],[data-export],[data-import],[data-wipe]');
   if(e.target===ov){closeModal();return;}
@@ -1065,7 +1236,7 @@ document.addEventListener('click',e=>{
   if(d.v){opts.view=d.v;saveOpts();document.querySelectorAll('.vt button').forEach(x=>x.classList.toggle('on',x.dataset.v===d.v));renderLib();return;}
   if(d.savekey!==undefined){opts.gbKey=document.getElementById('gbk').value.trim();saveOpts();toast('API key saved');return;}
   if(d.clearcov!==undefined){covers={};saveCovers();render();openSettings();toast('Cover cache cleared');return;}
-  if(d.clearmiss!==undefined){for(const k in covers) if(!covers[k].url) delete covers[k];saveCovers();render();openSettings();toast('Retrying missing covers');return;}
+  if(d.clearmiss!==undefined){for(const k in covers) if(!covers[k].url) delete covers[k];netFail.clear();saveCovers();render();openSettings();toast('Retrying missing covers');return;}
   if(d.export!==undefined){const blob=new Blob([JSON.stringify({state,covers},null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='wh40k-progress.json';a.click();return;}
   if(d.import!==undefined){impFile.click();return;}
   if(d.wipe!==undefined){if(confirm('Reset all reading progress?')){state={};save();render();closeModal();}return;}
